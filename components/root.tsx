@@ -7,11 +7,14 @@ import { COPY, type Lang } from "@/lib/i18n";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
 const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jetbrains", display: "swap" });
 
-const ogImage = "https://raw.githubusercontent.com/compilando/norte/main/landing/public/norte-aurora.png";
+const SITE = "https://getnorte.dev";
+/** Served by this site: the card must not depend on another repository's layout. */
+const ogImage = `${SITE}/og.png`;
 
 export function metadataFor(lang: Lang): Metadata {
   const t = COPY[lang].meta;
   return {
+    metadataBase: new URL(SITE),
     title: t.title,
     description: t.description,
     alternates: { languages: { en: "/", es: "/es" } },

@@ -6,18 +6,26 @@
 
 export const REPO = "https://github.com/compilando/norte";
 
+/** Cargo.toml, `version`. */
+const VERSION = "0.3.0-alpha.4";
+/**
+ * Every link names the tag. GitHub's `releases/latest` skips pre-releases, and
+ * every alpha is one: there `latest/download/…` is a 404.
+ */
+const TAG = `${REPO}/releases/tag/v${VERSION}`;
+const DOWNLOAD = `${REPO}/releases/download/v${VERSION}`;
+
 export const RELEASE = {
-  /** Cargo.toml, `version`. */
-  version: "0.3.0-alpha.4",
+  version: VERSION,
   label: "v0.3 alpha",
   /** crates/norte-proto/src/methods.rs, `PROTOCOL_VERSION`. */
   protocol: "0.84.0",
-  /** GitHub renames the window packages on every release (the version is in the
-   *  file name), so the tiles point at the release page, never at a fixed asset. */
-  latest: `${REPO}/releases/latest`,
+  /** The window packages have the version in their names; the tiles point at
+   *  the release page rather than guess them. */
+  latest: TAG,
   all: `${REPO}/releases`,
-  tuiInstaller: `${REPO}/releases/latest/download/norte-tui-installer.sh`,
-  cliInstaller: `${REPO}/releases/latest/download/norte-cli-installer.sh`,
+  tuiInstaller: `${DOWNLOAD}/norte-tui-installer.sh`,
+  cliInstaller: `${DOWNLOAD}/norte-cli-installer.sh`,
 } as const;
 
 /** crates/norte-frontend/src/keymap/catalogue.rs, the `live(…)` entries. */
