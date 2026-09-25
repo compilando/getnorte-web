@@ -1,8 +1,9 @@
 "use client";
 
+import { track } from "@vercel/analytics";
 import { useState } from "react";
 import type { Copy } from "@/lib/i18n";
-import { LINKS, RELEASE } from "@/lib/product";
+import { LINKS, megabytes, RELEASE } from "@/lib/product";
 import { ButtonLink } from "./button-link";
 
 export function CopyRow({ label, command, t }: { label: string; command: string; t: Pick<Copy["cta"], "copy" | "copied"> }) {
@@ -12,6 +13,7 @@ export function CopyRow({ label, command, t }: { label: string; command: string;
     try {
       await navigator.clipboard.writeText(command);
       setCopied(true);
+      track("install_copy", { command: label });
       window.setTimeout(() => setCopied(false), 1800);
     } catch {
       setCopied(false);
@@ -81,7 +83,8 @@ export function FinalCta({ t }: { t: Copy["cta"] }) {
                 {t.packages.map(([ext, target, note]) => (
                   <a
                     key={ext}
-                    href={RELEASE.latest}
+                    href={RELEASE.packages.find((p) => p.ext === ext)?.url ?? RELEASE.latest}
+                    onClick={() => track("package_download", { ext, from: "cta" })}
                     className="group flex items-center gap-4 rounded-xl border border-white/[0.12] bg-black/40 px-4 py-4 backdrop-blur-xl transition hover:border-phosphor/50 hover:bg-black/55"
                   >
                     <span className="font-mono text-base font-semibold tracking-[-0.03em] text-ink">{ext}</span>
@@ -89,7 +92,10 @@ export function FinalCta({ t }: { t: Copy["cta"] }) {
                       <span className="block text-[13px] text-ink/85">{target}</span>
                       <span className="block font-mono text-[9px] text-muted">{note}</span>
                     </span>
-                    <span className="ml-auto text-phosphor transition-transform group-hover:translate-x-0.5">↗</span>
+                    <span className="ml-auto font-mono text-[10px] text-muted">
+                      {megabytes(RELEASE.packages.find((p) => p.ext === ext)?.bytes ?? 0)}
+                    </span>
+                    <span className="text-phosphor transition-transform group-hover:translate-y-0.5">↓</span>
                   </a>
                 ))}
               </div>

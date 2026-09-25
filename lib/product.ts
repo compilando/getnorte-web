@@ -26,7 +26,27 @@ export const RELEASE = {
   all: `${REPO}/releases`,
   tuiInstaller: `${DOWNLOAD}/norte-tui-installer.sh`,
   cliInstaller: `${DOWNLOAD}/norte-cli-installer.sh`,
+  /** The two tar.xz the installers fetch (norte-tui-…, norte-cli-…), in bytes. */
+  binariesBytes: 13_445_392 + 12_928_152,
+  /** The window's packages, as the release lists them; each carries ntc and norte too. */
+  packages: [
+    { ext: ".deb", url: `${DOWNLOAD}/norte_${VERSION}_amd64.deb`, bytes: 46_595_612 },
+    { ext: ".rpm", url: `${DOWNLOAD}/norte-${VERSION}-1.x86_64.rpm`, bytes: 46_597_752 },
+    { ext: ".AppImage", url: `${DOWNLOAD}/norte_${VERSION}_amd64.AppImage`, bytes: 118_987_256 },
+  ],
 } as const;
+
+/** Both installers in one line: the file manager, then the CLI and daemon. */
+const CURL = "curl --proto '=https' --tlsv1.2 -LsSf";
+export const INSTALL_LINE = `${CURL} ${RELEASE.tuiInstaller} | sh && ${CURL} ${RELEASE.cliInstaller} | sh`;
+
+/** From source, where there are no binaries yet (macOS, Windows). */
+export const SOURCE_INSTALL = `cargo install --git ${REPO} --tag v${VERSION} --locked norte-tui norte-cli`;
+
+/** "47 MB": decimal megabytes, the way download sizes are usually read. */
+export function megabytes(bytes: number): string {
+  return `${Math.round(bytes / 1_000_000)} MB`;
+}
 
 /** crates/norte-frontend/src/keymap/catalogue.rs, the `live(…)` entries. */
 export const COMMANDS = 190;

@@ -4,11 +4,11 @@ import { COPY, fill, type Extra, type Lang, type Scene } from "@/lib/i18n";
 import { COMMANDS, LINKS, RELEASE, THEME_ACCENTS, THEMES } from "@/lib/product";
 import { COLS, guiShot, guiVideo, tuiReel, tuiScene, tuiTheme } from "@/lib/shots";
 import { AppFrame } from "./app-frame";
-import { ButtonLink } from "./button-link";
 import { CoreDiagram } from "./core-diagram";
 import { CopyRow, FinalCta } from "./final-cta";
 import { Footer } from "./footer";
 import { GalleryTabs } from "./gallery-tabs";
+import { HeroInstall } from "./hero-install";
 import { HeroStage } from "./hero-stage";
 import { Nav } from "./nav";
 import { SignalStrip } from "./signal-strip";
@@ -104,11 +104,9 @@ export function Landing({ lang }: { lang: Lang }) {
               <p className="max-w-lg text-balance text-base leading-7 sm:text-lg sm:leading-8" style={{ color: "#d8ded9" }}>
                 {t.hero.lede}
               </p>
-              <div className="mt-7 flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">
-                <ButtonLink href="#download" arrow>{t.hero.primary}</ButtonLink>
-                <ButtonLink href={LINKS.readme} variant="secondary">{t.hero.secondary}</ButtonLink>
+              <div className="mt-6">
+                <HeroInstall t={t.hero.install} docs={LINKS.readme} docsLabel={t.hero.secondary} />
               </div>
-              <p className="mt-5 font-mono text-[9px] uppercase tracking-[0.1em] text-[#9aa39c]">{t.hero.platforms}</p>
             </div>
           </div>
 
