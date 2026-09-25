@@ -9,7 +9,23 @@ const TARGETS: Record<string, string> = {
   releases: RELEASE.all,
 };
 
-export function Footer({ t, home }: { t: Copy["footer"]; home: string }) {
+/** `base` prefixes the in-page anchors, for pages other than the home page. */
+export function Footer({
+  t,
+  home,
+  base = "",
+  guides = [],
+}: {
+  t: Copy["footer"];
+  home: string;
+  base?: string;
+  /** The topic pages, [label, path]: linked from every page so they can be found. */
+  guides?: [string, string][];
+}) {
+  const at = (target: string) => {
+    const href = TARGETS[target] ?? target;
+    return href.startsWith("#") ? `${base}${href}` : href;
+  };
   return (
     <footer id="docs" className="px-4 py-16 sm:px-8 lg:px-12 lg:py-20">
       <div className="mx-auto grid max-w-[1340px] gap-14 lg:grid-cols-[1fr_1.2fr]">
@@ -21,14 +37,14 @@ export function Footer({ t, home }: { t: Copy["footer"]; home: string }) {
             v{RELEASE.version} · protocol {RELEASE.protocol}
           </p>
         </div>
-        <div className="grid grid-cols-2 gap-10 sm:grid-cols-3">
-          {t.groups.map(([title, links]) => (
+        <div className={`grid grid-cols-2 gap-10 ${guides.length ? "sm:grid-cols-4" : "sm:grid-cols-3"}`}>
+          {(guides.length ? [...t.groups, [t.guides, guides] as [string, [string, string][]]] : t.groups).map(([title, links]) => (
             <div key={title}>
               <h3 className="font-mono text-[9px] uppercase tracking-[0.15em] text-ink">{title}</h3>
               <ul className="mt-5 space-y-3">
                 {links.map(([label, target]) => (
                   <li key={label}>
-                    <a href={TARGETS[target] ?? target} className="text-sm text-muted transition-colors hover:text-ink">{label}</a>
+                    <a href={at(target)} className="text-sm text-muted transition-colors hover:text-ink">{label}</a>
                   </li>
                 ))}
               </ul>

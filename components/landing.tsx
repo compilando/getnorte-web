@@ -5,15 +5,18 @@ import { COMMANDS, LINKS, RELEASE, THEME_ACCENTS, THEMES } from "@/lib/product";
 import { COLS, guiShot, guiVideo, heroFilm, tuiReel, tuiScene, tuiTheme } from "@/lib/shots";
 import { AgentSteps } from "./agent-steps";
 import { AppFrame } from "./app-frame";
+import { CompareTable, NotFor } from "./compare-table";
 import { CoreDiagram } from "./core-diagram";
 import { CopyRow, FinalCta } from "./final-cta";
 import { Footer } from "./footer";
 import { GalleryTabs } from "./gallery-tabs";
 import { HeroInstall } from "./hero-install";
+import { JsonLd, softwareApp } from "./json-ld";
 import { HeroStage } from "./hero-stage";
 import { Nav } from "./nav";
 import { SignalStrip } from "./signal-strip";
 import { TerminalScreen } from "./terminal-screen";
+import { guidesFor } from "./topic-page";
 import { ThemeCard } from "./theme-card";
 import { Tour } from "./tour";
 
@@ -77,6 +80,7 @@ export function Landing({ lang }: { lang: Lang }) {
 
   return (
     <main className="min-h-screen overflow-x-clip bg-base text-ink">
+      <JsonLd data={softwareApp(t.meta.description, lang)} />
       <Nav t={t.nav} home={home} />
 
       {/* Hero */}
@@ -247,6 +251,23 @@ export function Landing({ lang }: { lang: Lang }) {
         </div>
       </Section>
 
+      {/* Compared */}
+      <Section id="compare" className="border-t border-line/60">
+        <div className="grid gap-10 lg:grid-cols-[.8fr_1.2fr] lg:items-end">
+          <div>
+            <Eyebrow>{t.compare.eyebrow}</Eyebrow>
+            <H2>{t.compare.title}</H2>
+          </div>
+          <p className="max-w-xl text-lg leading-8 text-ink/65">{t.compare.body}</p>
+        </div>
+        <div className="mt-14">
+          <CompareTable t={t.compare} lang={lang} />
+        </div>
+        <div className="mt-16">
+          <NotFor t={t.compare} />
+        </div>
+      </Section>
+
       {/* What's new */}
       <Section id="new" className="border-t border-line/60">
         <Eyebrow>{fill(t.news.eyebrow, { version: RELEASE.label })}</Eyebrow>
@@ -363,7 +384,7 @@ export function Landing({ lang }: { lang: Lang }) {
       </Section>
 
       <FinalCta t={t.cta} />
-      <Footer t={t.footer} home={home} />
+      <Footer t={t.footer} home={home} guides={guidesFor(lang)} />
     </main>
   );
 }

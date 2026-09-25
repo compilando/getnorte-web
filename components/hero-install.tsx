@@ -3,7 +3,7 @@
 import { track } from "@vercel/analytics";
 import { useEffect, useState } from "react";
 import type { Copy } from "@/lib/i18n";
-import { INSTALL_LINE, megabytes, RELEASE, REPO, SOURCE_INSTALL } from "@/lib/product";
+import { INSTALL_LINE, megabytes, NOTIFY, RELEASE, SOURCE_INSTALL } from "@/lib/product";
 
 type Os = "linux" | "macos" | "windows";
 
@@ -109,11 +109,11 @@ export function HeroInstall({ t, docs, docsLabel }: { t: Copy["hero"]["install"]
               <Command line={SOURCE_INSTALL} t={t} os={os} />
             </div>
             <a
-              href={REPO}
-              onClick={() => track("watch_releases", { os })}
+              href={NOTIFY[os]}
+              onClick={() => track("notify_me", { os })}
               className="mt-3 inline-flex items-center gap-2 rounded-md border border-white/[0.14] px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.08em] text-ink transition hover:border-phosphor/60 hover:text-phosphor"
             >
-              ★ {t.notify} ↗
+              👍 {fill(t.notify, { os: t.os[os] })} ↗
             </a>
           </>
         )}

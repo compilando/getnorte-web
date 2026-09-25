@@ -5,6 +5,7 @@
  */
 
 export const REPO = "https://github.com/compilando/norte";
+export const SITE = "https://getnorte.dev";
 
 /** Cargo.toml, `version`. */
 const VERSION = "0.3.0-alpha.4";
@@ -39,6 +40,15 @@ export const RELEASE = {
 /** Both installers in one line: the file manager, then the CLI and daemon. */
 const CURL = "curl --proto '=https' --tlsv1.2 -LsSf";
 export const INSTALL_LINE = `${CURL} ${RELEASE.tuiInstaller} | sh && ${CURL} ${RELEASE.cliInstaller} | sh`;
+
+/**
+ * Where to wait for binaries: one issue per system, so its 👍 count is that
+ * system's demand, and subscribing to it is the notice.
+ */
+export const NOTIFY = {
+  macos: `${REPO}/issues/381`,
+  windows: `${REPO}/issues/382`,
+} as const;
 
 /** From source, where there are no binaries yet (macOS, Windows). */
 export const SOURCE_INSTALL = `cargo install --git ${REPO} --tag v${VERSION} --locked norte-tui norte-cli`;

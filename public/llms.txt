@@ -1,0 +1,37 @@
+# norte
+
+> norte is an open-source, two-pane (orthodox) file manager built around one headless Rust core. The terminal UI (`ntc`), a native window (`norte-gui`), a CLI (`norte`) and AI agents over MCP are all clients of the same core, which can run as a daemon they share. Every file operation is journaled and can be undone; agents work only inside scopes a person grants, under a policy that can require approval for each change.
+
+Status: alpha (v0.3.0-alpha.4). Linux x86_64 binaries; macOS and Windows build from source. License: AGPL-3.0 for the core and frontends; MIT or Apache-2.0 for the protocol, VFS providers, test kit and plugin SDK. No telemetry.
+
+## Install
+
+- Linux one-liner (installs `ntc` and `norte` into ~/.cargo/bin): `curl --proto '=https' --tlsv1.2 -LsSf https://github.com/compilando/norte/releases/download/v0.3.0-alpha.4/norte-tui-installer.sh | sh && curl --proto '=https' --tlsv1.2 -LsSf https://github.com/compilando/norte/releases/download/v0.3.0-alpha.4/norte-cli-installer.sh | sh`
+- Window packages (.deb, .rpm, AppImage): https://github.com/compilando/norte/releases/tag/v0.3.0-alpha.4
+- From source (any OS, Rust 1.94+): `cargo install --git https://github.com/compilando/norte --tag v0.3.0-alpha.4 --locked norte-tui norte-cli`
+
+## What it does
+
+- Two panes with seven keymap presets: orthodox, vim, cua, krusader, far, norton, total-commander.
+- One virtual filesystem: local disks, SFTP, FTP (TLS), S3-compatible storage, ZIP/TAR/RAR archives.
+- Client-server: `norte daemon run`, then `ntc --daemon` from any number of terminals; running tasks, connections, journal and undo are shared.
+- Journal and undo for copies, moves, renames and deletes; `norte undo <session>` reverts a whole agent session.
+- AI agents: `norte mcp serve --session <id>` (MCP over stdio). Tools: list_dir, stat, read_file, copy, move, delete, task_status, request_scope, compare, sync_plan. Scopes are granted with `norte policy grant <id>`; `policy.toml` rules (first match wins) allow, ask or deny per operation, path, scheme and actor.
+- WASM plugins (wasm32-wasip2), sandboxed, each capability approved by a person.
+- Compare and one-way sync of two trees, with a reviewable plan.
+
+## Pages
+
+- [Home](https://getnorte.dev/): overview, real captures, install
+- [Terminal file manager with undo](https://getnorte.dev/terminal-file-manager-with-undo)
+- [SFTP & S3 file manager](https://getnorte.dev/sftp-s3-file-manager)
+- [File manager for AI agents (MCP)](https://getnorte.dev/file-manager-for-ai-agents-mcp)
+- [Total Commander alternative for Linux](https://getnorte.dev/total-commander-alternative-for-linux)
+- [Spanish version](https://getnorte.dev/es)
+
+## Project
+
+- Source: https://github.com/compilando/norte
+- Documentation: https://github.com/compilando/norte/tree/main/docs
+- Architecture: https://github.com/compilando/norte/blob/main/ARCHITECTURE.md
+- Changelog: https://github.com/compilando/norte/blob/main/CHANGELOG.md
