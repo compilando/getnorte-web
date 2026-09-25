@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import type { ReactNode } from "react";
@@ -32,7 +33,10 @@ export function metadataFor(lang: Lang): Metadata {
 export function Root({ lang, children }: { lang: Lang; children: ReactNode }) {
   return (
     <html lang={lang} className="scroll-smooth" suppressHydrationWarning>
-      <body className={`${inter.variable} ${mono.variable}`}>{children}</body>
+      <body className={`${inter.variable} ${mono.variable}`}>
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
