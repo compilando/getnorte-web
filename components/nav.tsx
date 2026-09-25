@@ -9,7 +9,8 @@ export function Nav({ t, home, base = "", otherHref }: { t: Copy["nav"]; home: s
     <header className="fixed inset-x-0 top-0 z-50 border-b border-white/[0.06] bg-base/70 backdrop-blur-2xl">
       <nav className="mx-auto flex h-[68px] max-w-[1440px] items-center justify-between px-4 sm:px-8 lg:px-12" aria-label="Main">
         <a href={home} aria-label="norte"><Brand /></a>
-        <div className="hidden items-center gap-7 lg:flex">
+        {/* Eight links fit on one line from 1280px; narrower screens go without them. */}
+        <div className="hidden items-center gap-6 xl:flex">
           {t.links.map(([label, href]) => (
             <a key={href} href={at(href)} className="text-[14px] text-muted transition-colors hover:text-ink">{label}</a>
           ))}

@@ -287,7 +287,7 @@ export function Landing({ lang }: { lang: Lang }) {
             </article>
           ))}
         </div>
-        <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
           {plain.map(([title, body, tag]) => (
             <article
               key={title}
@@ -356,6 +356,77 @@ export function Landing({ lang }: { lang: Lang }) {
           </div>
           <div className="self-start overflow-hidden rounded-xl border border-white/[0.12] bg-black/45">
             <CopyRow label={t.agents.hookup} command={t.agents.hookupCommand} t={t.cta} />
+          </div>
+        </div>
+      </Section>
+
+      {/* Plugins */}
+      <Section id="plugins" className="border-t border-line/60">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-[.8fr_1.2fr] lg:items-end">
+          <div>
+            <Eyebrow>{t.plugins.eyebrow}</Eyebrow>
+            <H2>{t.plugins.title}</H2>
+          </div>
+          <p className="max-w-xl text-lg leading-8 text-ink/65">{t.plugins.body}</p>
+        </div>
+
+        <div className="mt-14 grid grid-cols-1 gap-12 lg:grid-cols-[1.25fr_.75fr] lg:gap-16">
+          <figure className="rise">
+            <AppFrame title="ada@norte — F12">{screen("grant", t.plugins.grant)}</AppFrame>
+            <figcaption className="mt-3 font-mono text-[12px] text-muted">{t.plugins.grant}</figcaption>
+          </figure>
+          <div className="space-y-6">
+            {t.plugins.points.map(([title, body], i) => (
+              <div key={title} className="flex gap-5 border-t border-line pt-6">
+                <span className="font-mono text-[12px] text-phosphor">{String(i + 1).padStart(2, "0")}</span>
+                <div>
+                  <h3 className="text-lg font-medium tracking-[-0.025em] text-ink">{title}</h3>
+                  <p className="mt-2 text-[15px] leading-6 text-muted">{body}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <h3 className="mt-20 font-mono text-[12px] uppercase tracking-[0.16em] text-phosphor">{t.plugins.kindsTitle}</h3>
+        <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {t.plugins.kinds.map(([kind, body, examples]) => (
+            <article key={kind} className="rise rounded-2xl border border-white/[0.09] bg-surface p-5 transition hover:border-phosphor/40">
+              <p className="font-mono text-[14px] font-semibold text-ink">{kind}</p>
+              <p className="mt-2 text-[15px] leading-6 text-ink/70">{body}</p>
+              <p className="mt-4 font-mono text-[12px] leading-5 text-phosphor/80">{examples}</p>
+            </article>
+          ))}
+        </div>
+
+        <h3 className="mt-20 font-mono text-[12px] uppercase tracking-[0.16em] text-phosphor">{t.plugins.atWork}</h3>
+        <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-3">
+          {t.plugins.shots.map(([scene, caption]) => (
+            <figure key={scene} className="rise">
+              <AppFrame title={`ada@norte — ${caption.split(":")[0]}`}>{screen(scene, caption)}</AppFrame>
+              <figcaption className="mt-3 text-[14px] leading-6 text-muted">{caption}</figcaption>
+            </figure>
+          ))}
+        </div>
+        <p className="mt-6 max-w-3xl text-[14px] leading-6 text-muted">{t.plugins.limits}</p>
+
+        <div className="mt-16 grid grid-cols-1 gap-8 lg:grid-cols-[1.2fr_.8fr] lg:items-center">
+          <div className="overflow-hidden rounded-xl border border-white/[0.12] bg-black/45">
+            <div className="border-b border-white/[0.09] px-4 py-3 font-mono text-[11px] uppercase tracking-[0.12em] text-muted sm:px-5">
+              {t.plugins.build}
+            </div>
+            {t.plugins.buildSteps.map(([label, command]) => (
+              <CopyRow key={command} label={label} command={command} t={t.cta} />
+            ))}
+          </div>
+          <div>
+            <a
+              href={LINKS.plugins}
+              className="group inline-flex items-center gap-2 text-lg font-medium text-ink underline decoration-white/30 underline-offset-4 hover:decoration-phosphor"
+            >
+              {t.plugins.guide}
+              <span className="text-phosphor transition-transform group-hover:translate-x-0.5">↗</span>
+            </a>
           </div>
         </div>
       </Section>
