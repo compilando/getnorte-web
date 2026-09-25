@@ -5,7 +5,7 @@ import type { Lang, Scene } from "./i18n";
 import { PRESETS, type Theme } from "./product";
 
 /**
- * What scripts/landing-shots/shoot.sh wrote, read at build time. The page is
+ * What scripts/shots/shoot.sh wrote, read at build time. The page is
  * static: nothing here runs in the browser.
  */
 

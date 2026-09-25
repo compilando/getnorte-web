@@ -7,7 +7,7 @@
 export const LANGS = ["en", "es"] as const;
 export type Lang = (typeof LANGS)[number];
 
-/** The terminal scenes the tour walks, as named in scripts/landing-shots/scenes/tour.scene. */
+/** The terminal scenes the tour walks, as named in scripts/shots/scenes/tour.scene. */
 export type Scene =
   | "panes"
   | "viewer"
@@ -78,7 +78,7 @@ const en = {
     body: "Same keys, same themes, same layout, same journal. Start in ntc over SSH, carry on in the window at your desk: the tabs, the directories and even what you had marked travel with you.",
     terminal: "ntc — in any terminal, core embedded, nothing to start first",
     window: "norte-gui — a native window that brings its own daemon",
-    missing: "Window captures are taken on a machine with Xvfb: run just landing-shots.",
+    missing: "Window captures are taken on a machine with Xvfb: run make shots.",
     gallery: [
       ["viewer", "The viewer, pixel for pixel"],
       ["goto", "Go anywhere"],
@@ -328,7 +328,7 @@ const es: Copy = {
     body: "Mismas teclas, mismos temas, misma disposición, mismo diario. Empieza en ntc por SSH y sigue en la ventana en tu mesa: las pestañas, los directorios y hasta lo que tenías marcado viajan contigo.",
     terminal: "ntc — en cualquier terminal, con el núcleo dentro: nada que arrancar antes",
     window: "norte-gui — una ventana nativa que trae su propio demonio",
-    missing: "Las capturas de la ventana se sacan en una máquina con Xvfb: ejecuta just landing-shots.",
+    missing: "Las capturas de la ventana se sacan en una máquina con Xvfb: ejecuta make shots.",
     gallery: [
       ["viewer", "El visor, píxel a píxel"],
       ["goto", "Ir a cualquier sitio"],
