@@ -34,7 +34,7 @@ export function GalleryTabs({
             aria-selected={mode === m}
             disabled={m === "window" && !hasWindow}
             onClick={() => setMode(m)}
-            className={`rounded-full px-4 py-1.5 font-mono text-[10px] uppercase tracking-[0.1em] transition disabled:cursor-not-allowed disabled:opacity-35 ${
+            className={`rounded-full px-4 py-1.5 font-mono text-[12px] uppercase tracking-[0.1em] transition disabled:cursor-not-allowed disabled:opacity-35 ${
               mode === m ? "bg-phosphor text-[#0a1008]" : "text-muted hover:text-ink"
             }`}
           >
@@ -42,7 +42,7 @@ export function GalleryTabs({
           </button>
         ))}
       </div>
-      <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {shown.map((item) => (
           <figure key={`${mode}-${item.caption}`} className="animate-[fadein_.35s_ease]">
             <div className="overflow-hidden rounded-lg border border-white/[0.1] transition hover:border-phosphor/40">
@@ -53,7 +53,7 @@ export function GalleryTabs({
                 <img src={item.src ?? ""} alt={item.caption} loading="lazy" className="block w-full" />
               )}
             </div>
-            <figcaption className="mt-2 font-mono text-[10px] text-muted">{item.caption}</figcaption>
+            <figcaption className="mt-2 font-mono text-[12px] text-muted">{item.caption}</figcaption>
           </figure>
         ))}
       </div>

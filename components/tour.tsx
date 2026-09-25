@@ -31,7 +31,7 @@ export function Tour({ steps, screens, cols }: { steps: Step[]; screens: Record<
   const shot = step ? screens[step.scene] : null;
 
   return (
-    <div className="relative grid gap-10 lg:grid-cols-[.8fr_1.2fr] lg:gap-16">
+    <div className="relative grid grid-cols-1 gap-10 lg:grid-cols-[.8fr_1.2fr] lg:gap-16">
       <div className="sticky top-[76px] z-10 order-first self-start lg:order-last lg:top-28">
         <AppFrame title={`ada@norte — ${step?.kicker ?? ""}`}>
           <div key={step?.scene} className="animate-[fadein_.35s_ease]">
@@ -55,7 +55,7 @@ export function Tour({ steps, screens, cols }: { steps: Step[]; screens: Record<
             data-step={i}
             className="flex min-h-[46vh] flex-col justify-center py-10 lg:min-h-[78vh]"
           >
-            <p className={`font-mono text-[10px] uppercase tracking-[0.16em] transition-colors ${i === active ? "text-phosphor" : "text-muted"}`}>
+            <p className={`font-mono text-[12px] uppercase tracking-[0.16em] transition-colors ${i === active ? "text-phosphor" : "text-muted"}`}>
               {String(i + 1).padStart(2, "0")} · {s.kicker}
             </p>
             <h3
@@ -70,7 +70,7 @@ export function Tour({ steps, screens, cols }: { steps: Step[]; screens: Record<
               {s.keys.map((k) => (
                 <kbd
                   key={k}
-                  className="rounded-md border border-white/[0.14] border-b-white/[0.25] bg-white/[0.04] px-2 py-1 font-mono text-[11px] text-ink/80"
+                  className="rounded-md border border-white/[0.14] border-b-white/[0.25] bg-white/[0.04] px-2 py-1 font-mono text-[12px] text-ink/80"
                 >
                   {k}
                 </kbd>

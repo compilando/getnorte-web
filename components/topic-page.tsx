@@ -13,7 +13,7 @@ import { Nav } from "./nav";
 import { TerminalScreen } from "./terminal-screen";
 
 function Eyebrow({ children }: { children: ReactNode }) {
-  return <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-phosphor">{children}</p>;
+  return <p className="font-mono text-[12px] uppercase tracking-[0.18em] text-phosphor">{children}</p>;
 }
 
 /** Every topic, in this language, as the footer's "Guides" column. */
@@ -51,9 +51,9 @@ export function TopicPage({ topic, lang }: { topic: Topic; lang: Lang }) {
 
       <section className="noise relative overflow-hidden pt-[68px]">
         <div className="aurora-bg pointer-events-none absolute inset-x-0 top-0 h-[720px] opacity-80" />
-        <div className="relative mx-auto grid max-w-[1440px] items-end gap-10 px-4 pb-20 pt-16 sm:px-8 lg:grid-cols-[1.25fr_.75fr] lg:px-12 lg:pt-24">
+        <div className="relative mx-auto grid max-w-[1440px] grid-cols-1 items-end gap-10 px-4 pb-20 pt-16 sm:px-8 lg:grid-cols-[1.25fr_.75fr] lg:px-12 lg:pt-24">
           <div>
-            <p className="mb-6 font-mono text-[10px] uppercase tracking-[0.16em] text-ink/70">
+            <p className="mb-6 font-mono text-[12px] uppercase tracking-[0.16em] text-ink/70">
               <a href={home} className="hover:text-ink">norte</a> <span className="text-line">/</span> {c.eyebrow}
             </p>
             <h1 className="max-w-4xl text-balance text-[40px] font-medium leading-[0.98] tracking-[-0.06em] text-ink sm:text-[64px] lg:text-[76px]">
@@ -127,7 +127,7 @@ export function TopicPage({ topic, lang }: { topic: Topic; lang: Lang }) {
             {c.faq.map(([q, a]) => (
               <details key={q} className="group py-5" open>
                 <summary className="cursor-pointer list-none text-lg font-medium tracking-[-0.02em] text-ink">
-                  <span className="mr-3 font-mono text-[11px] text-phosphor transition-transform group-open:rotate-90">›</span>
+                  <span className="mr-3 font-mono text-[12px] text-phosphor transition-transform group-open:rotate-90">›</span>
                   {q}
                 </summary>
                 <p className="mt-3 max-w-3xl pl-6 text-sm leading-7 text-muted">{a}</p>

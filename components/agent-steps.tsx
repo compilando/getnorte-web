@@ -40,8 +40,8 @@ export function AgentSteps({ steps, screens, caption }: { steps: Step[]; screens
                 i === active ? "border-phosphor/50 bg-phosphor/[0.06]" : "border-white/[0.09] bg-surface hover:border-white/20"
               }`}
             >
-              <span className={`font-mono text-[10px] ${i === active ? "text-phosphor" : "text-muted"}`}>{String(i + 1).padStart(2, "0")}</span>
-              <span className={`mt-1 block text-[13px] font-medium leading-5 ${i === active ? "text-ink" : "text-ink/60"}`}>{s.title}</span>
+              <span className={`font-mono text-[12px] ${i === active ? "text-phosphor" : "text-muted"}`}>{String(i + 1).padStart(2, "0")}</span>
+              <span className={`mt-1 block text-[14px] font-medium leading-5 ${i === active ? "text-ink" : "text-ink/60"}`}>{s.title}</span>
               {i === active && auto && (
                 <span key={active} className="absolute inset-x-0 bottom-0 h-0.5 origin-left animate-[step-progress_5.2s_linear] bg-phosphor" />
               )}
@@ -59,7 +59,7 @@ export function AgentSteps({ steps, screens, caption }: { steps: Step[]; screens
           </div>
         ))}
       </div>
-      <p className="mt-3 font-mono text-[10px] text-muted">{caption}</p>
+      <p className="mt-3 font-mono text-[12px] text-muted">{caption}</p>
     </div>
   );
 }

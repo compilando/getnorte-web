@@ -78,16 +78,18 @@ export function HeroStage({
               aria-selected={mode === m}
               disabled={m === "window" && windows.length === 0}
               onClick={() => setMode(m)}
-              className={`rounded-full px-4 py-1.5 font-mono text-[10px] uppercase tracking-[0.1em] transition disabled:cursor-not-allowed disabled:opacity-35 ${
+              className={`whitespace-nowrap rounded-full px-3 py-1.5 font-mono text-[12px] uppercase tracking-[0.1em] transition disabled:cursor-not-allowed disabled:opacity-35 sm:px-4 ${
                 mode === m ? "bg-phosphor text-[#0a1008]" : "text-muted hover:text-ink"
               }`}
             >
-              {labels[m]}
+              {/* "Terminal · ntc": on a phone, just "Terminal". */}
+              {labels[m].split(" · ")[0]}
+              {labels[m].includes(" · ") && <span className="hidden sm:inline"> · {labels[m].split(" · ")[1]}</span>}
             </button>
           ))}
         </div>
         <div className="flex flex-wrap items-center gap-1.5" aria-label={labels.theme}>
-          <span className="mr-1 font-mono text-[9px] uppercase tracking-[0.12em] text-muted">{labels.theme}</span>
+          <span className="mr-1 font-mono text-[11px] uppercase tracking-[0.12em] text-muted">{labels.theme}</span>
           {themes.map((t) => (
             <button
               key={t.id}
@@ -116,13 +118,13 @@ export function HeroStage({
               <button
                 type="button"
                 onClick={() => setPlaying((p) => !p)}
-                className="flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-[0.1em] text-muted hover:text-ink"
+                className="flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.1em] text-muted hover:text-ink"
               >
                 <span className={`h-1.5 w-1.5 rounded-full ${playing ? "bg-[#ff5f57] shadow-[0_0_8px_#ff5f57]" : "bg-muted"}`} />
                 {playing ? labels.live : labels.play}
               </button>
             ) : (
-              <span className="font-mono text-[9px] uppercase tracking-[0.1em] text-muted">{mode === "film" ? "" : (theme ?? "")}</span>
+              <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-muted">{mode === "film" ? "" : (theme ?? "")}</span>
             )
           }
         >

@@ -11,26 +11,26 @@ export function Nav({ t, home, base = "", otherHref }: { t: Copy["nav"]; home: s
         <a href={home} aria-label="norte"><Brand /></a>
         <div className="hidden items-center gap-7 lg:flex">
           {t.links.map(([label, href]) => (
-            <a key={href} href={at(href)} className="text-[13px] text-muted transition-colors hover:text-ink">{label}</a>
+            <a key={href} href={at(href)} className="text-[14px] text-muted transition-colors hover:text-ink">{label}</a>
           ))}
         </div>
         <div className="flex items-center gap-2">
           <a
             href={otherHref ?? t.otherHref}
             hrefLang={t.otherHref === "/" ? "en" : "es"}
-            className="inline-flex h-9 items-center rounded-full px-3 font-mono text-[11px] uppercase tracking-[0.08em] text-muted transition hover:text-ink"
+            className="inline-flex h-9 items-center rounded-full px-3 font-mono text-[12px] uppercase tracking-[0.08em] text-muted transition hover:text-ink"
           >
             {t.other}
           </a>
           <a
             href={at("#download")}
-            className="hidden h-9 items-center rounded-full bg-phosphor px-4 font-mono text-[11px] font-semibold uppercase tracking-[0.08em] text-[#0a1008] transition hover:bg-[#c6ff74] sm:inline-flex"
+            className="hidden h-9 items-center rounded-full bg-phosphor px-4 font-mono text-[12px] font-semibold uppercase tracking-[0.08em] text-[#0a1008] transition hover:bg-[#c6ff74] sm:inline-flex"
           >
             {t.download}
           </a>
           <a
             href={REPO}
-            className="group inline-flex h-9 items-center gap-2 rounded-full border border-line bg-white/[0.03] px-4 font-mono text-[11px] uppercase tracking-[0.08em] text-ink transition hover:border-muted/70 hover:bg-white/[0.06]"
+            className="group inline-flex h-9 items-center gap-2 rounded-full border border-line bg-white/[0.03] px-4 font-mono text-[12px] uppercase tracking-[0.08em] text-ink transition hover:border-muted/70 hover:bg-white/[0.06]"
           >
             GitHub
             <span className="text-phosphor transition-transform group-hover:translate-x-0.5">↗</span>

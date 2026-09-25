@@ -20,7 +20,7 @@ export function AppFrame({
           <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]/80" />
           <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]/80" />
         </span>
-        <span className="min-w-0 flex-1 truncate text-center font-mono text-[10px] text-muted">{title}</span>
+        <span className="min-w-0 flex-1 truncate text-center font-mono text-[12px] text-muted">{title}</span>
         <span className="flex shrink-0 items-center gap-2">{right}</span>
       </div>
       {children}

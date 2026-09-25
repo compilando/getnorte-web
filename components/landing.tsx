@@ -21,7 +21,7 @@ import { ThemeCard } from "./theme-card";
 import { Tour } from "./tour";
 
 function Eyebrow({ children }: { children: ReactNode }) {
-  return <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-phosphor">{children}</p>;
+  return <p className="font-mono text-[12px] uppercase tracking-[0.18em] text-phosphor">{children}</p>;
 }
 
 function H2({ children }: { children: ReactNode }) {
@@ -88,9 +88,9 @@ export function Landing({ lang }: { lang: Lang }) {
         <div className="aurora-bg pointer-events-none absolute inset-x-0 top-0 h-[860px] opacity-95" />
         <div className="page-grid pointer-events-none absolute inset-x-0 top-0 h-[1080px] opacity-45 [mask-image:linear-gradient(to_bottom,black,transparent_78%)]" />
         <div className="relative mx-auto max-w-[1440px] px-4 pb-20 pt-14 sm:px-8 sm:pt-20 lg:px-12 lg:pb-28 lg:pt-20">
-          <div className="grid items-end gap-10 lg:grid-cols-[1.35fr_.65fr]">
+          <div className="grid grid-cols-1 items-end gap-10 lg:grid-cols-[1.35fr_.65fr]">
             <div className="max-w-5xl">
-              <div className="mb-7 inline-flex flex-wrap items-center gap-x-3 gap-y-2 rounded-full border border-white/[0.12] bg-black/20 px-3.5 py-2 font-mono text-[9px] uppercase tracking-[0.16em] text-ink/80 backdrop-blur-xl sm:text-[10px]">
+              <div className="mb-7 inline-flex flex-wrap items-center gap-x-3 gap-y-2 rounded-full border border-white/[0.12] bg-black/20 px-3.5 py-2 font-mono text-[11px] uppercase tracking-[0.16em] text-ink/80 backdrop-blur-xl sm:text-[12px]">
                 <span className="flex items-center gap-2">
                   <span className="h-1.5 w-1.5 rounded-full bg-phosphor shadow-[0_0_9px_#B7FF52]" />
                   {RELEASE.version}
@@ -125,7 +125,7 @@ export function Landing({ lang }: { lang: Lang }) {
               film={heroFilm(lang)}
               labels={{ ...t.hero.tabs, theme: t.hero.theme, live: t.hero.live, play: t.hero.play, pause: t.hero.pause }}
             />
-            <p className="mt-6 text-center font-mono text-[10px] uppercase tracking-[0.1em] text-muted">
+            <p className="mt-6 text-center font-mono text-[12px] uppercase tracking-[0.1em] text-muted">
               <span className="text-phosphor">●</span> {t.hero.caption}
             </p>
           </div>
@@ -136,17 +136,17 @@ export function Landing({ lang }: { lang: Lang }) {
 
       {/* Two frontends */}
       <Section>
-        <div className="grid gap-10 lg:grid-cols-[.8fr_1.2fr] lg:items-end">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-[.8fr_1.2fr] lg:items-end">
           <div>
             <Eyebrow>{t.duo.eyebrow}</Eyebrow>
             <H2>{t.duo.title}</H2>
           </div>
           <p className="max-w-xl text-lg leading-8 text-ink/65">{t.duo.body}</p>
         </div>
-        <div className="mt-14 grid gap-6 lg:grid-cols-2">
+        <div className="mt-14 grid grid-cols-1 gap-6 lg:grid-cols-2">
           <figure className="rise">
             <AppFrame title="ntc">{tuiPanes && <TerminalScreen screen={tuiPanes} cols={COLS} label={t.duo.terminal} />}</AppFrame>
-            <figcaption className="mt-3 font-mono text-[10px] text-muted">{t.duo.terminal}</figcaption>
+            <figcaption className="mt-3 font-mono text-[12px] text-muted">{t.duo.terminal}</figcaption>
           </figure>
           <figure className="rise">
             <AppFrame title="norte-gui">
@@ -154,10 +154,10 @@ export function Landing({ lang }: { lang: Lang }) {
                 // eslint-disable-next-line @next/next/no-img-element -- a capture, served as-is
                 <img src={guiPanes} alt={t.duo.window} className="block w-full" />
               ) : (
-                <div className="grid aspect-[132/38] place-items-center p-6 text-center font-mono text-[11px] text-muted">{t.duo.missing}</div>
+                <div className="grid aspect-[132/38] place-items-center p-6 text-center font-mono text-[12px] text-muted">{t.duo.missing}</div>
               )}
             </AppFrame>
-            <figcaption className="mt-3 font-mono text-[10px] text-muted">{t.duo.window}</figcaption>
+            <figcaption className="mt-3 font-mono text-[12px] text-muted">{t.duo.window}</figcaption>
           </figure>
         </div>
         <GalleryTabs items={gallery} labels={t.duo.galleryTabs} cols={COLS} />
@@ -165,7 +165,7 @@ export function Landing({ lang }: { lang: Lang }) {
 
       {/* Client–server */}
       <Section id="core" className="border-t border-line/60">
-        <div className="grid gap-10 lg:grid-cols-[.8fr_1.2fr] lg:items-end">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-[.8fr_1.2fr] lg:items-end">
           <div>
             <Eyebrow>{t.core.eyebrow}</Eyebrow>
             <H2>{t.core.title}</H2>
@@ -177,7 +177,7 @@ export function Landing({ lang }: { lang: Lang }) {
           <CoreDiagram t={t.core} />
         </div>
 
-        <div className="mt-6 grid gap-6 lg:grid-cols-2">
+        <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
           {(
             [
               ["daemon-a", "ada@norte — ntc #1", t.core.first],
@@ -186,7 +186,7 @@ export function Landing({ lang }: { lang: Lang }) {
           ).map(([scene, title, caption]) => (
             <figure key={scene} className="rise">
               <AppFrame title={title}>{screen(scene, caption)}</AppFrame>
-              <figcaption className="mt-3 flex items-start gap-2 font-mono text-[10px] text-muted">
+              <figcaption className="mt-3 flex items-start gap-2 font-mono text-[12px] text-muted">
                 <span className="mt-[3px] h-1.5 w-1.5 shrink-0 rounded-full bg-phosphor shadow-[0_0_8px_#B7FF52]" />
                 {caption}
               </figcaption>
@@ -194,11 +194,11 @@ export function Landing({ lang }: { lang: Lang }) {
           ))}
         </div>
 
-        <div className="mt-16 grid gap-12 lg:grid-cols-[1.1fr_.9fr] lg:gap-16">
+        <div className="mt-16 grid grid-cols-1 gap-12 lg:grid-cols-[1.1fr_.9fr] lg:gap-16">
           <div className="space-y-6">
             {t.core.points.map(([title, body], i) => (
               <div key={title} className="flex gap-5 border-t border-line pt-6">
-                <span className="font-mono text-[10px] text-phosphor">{String(i + 1).padStart(2, "0")}</span>
+                <span className="font-mono text-[12px] text-phosphor">{String(i + 1).padStart(2, "0")}</span>
                 <div>
                   <h3 className="text-lg font-medium tracking-[-0.025em] text-ink">{title}</h3>
                   <p className="mt-2 max-w-md text-sm leading-6 text-muted">{body}</p>
@@ -208,14 +208,14 @@ export function Landing({ lang }: { lang: Lang }) {
           </div>
           <div>
             <div className="overflow-hidden rounded-xl border border-white/[0.12] bg-black/45">
-              <div className="border-b border-white/[0.09] px-4 py-3 font-mono text-[8px] uppercase tracking-[0.12em] text-muted sm:px-5">
+              <div className="border-b border-white/[0.09] px-4 py-3 font-mono text-[11px] uppercase tracking-[0.12em] text-muted sm:px-5">
                 {t.core.tryIt}
               </div>
               {t.core.commands.map(([label, command]) => (
                 <CopyRow key={command} label={label} command={command} t={t.cta} />
               ))}
             </div>
-            <p className="mt-4 font-mono text-[10px] leading-5 text-muted">{t.core.local}</p>
+            <p className="mt-4 font-mono text-[12px] leading-5 text-muted">{t.core.local}</p>
           </div>
         </div>
       </Section>
@@ -231,19 +231,19 @@ export function Landing({ lang }: { lang: Lang }) {
 
       {/* Remotes, archives, compare and sync */}
       <Section id="remotes" className="border-t border-line/60">
-        <div className="grid gap-10 lg:grid-cols-[.8fr_1.2fr] lg:items-end">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-[.8fr_1.2fr] lg:items-end">
           <div>
             <Eyebrow>{t.remotes.eyebrow}</Eyebrow>
             <H2>{t.remotes.title}</H2>
           </div>
           <p className="max-w-xl text-lg leading-8 text-ink/65">{t.remotes.body}</p>
         </div>
-        <div className="mt-14 grid gap-x-6 gap-y-10 md:grid-cols-2">
+        <div className="mt-14 grid grid-cols-1 gap-x-6 gap-y-10 md:grid-cols-2">
           {t.remotes.tiles.map(([scene, tag, caption]) => (
             <figure key={scene} className="rise">
               <AppFrame title={`ada@norte — ${tag}`}>{screen(scene, caption)}</AppFrame>
               <figcaption className="mt-3">
-                <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-phosphor">{tag}</span>
+                <span className="font-mono text-[12px] uppercase tracking-[0.14em] text-phosphor">{tag}</span>
                 <span className="mt-1 block text-sm leading-6 text-muted">{caption}</span>
               </figcaption>
             </figure>
@@ -253,7 +253,7 @@ export function Landing({ lang }: { lang: Lang }) {
 
       {/* Compared */}
       <Section id="compare" className="border-t border-line/60">
-        <div className="grid gap-10 lg:grid-cols-[.8fr_1.2fr] lg:items-end">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-[.8fr_1.2fr] lg:items-end">
           <div>
             <Eyebrow>{t.compare.eyebrow}</Eyebrow>
             <H2>{t.compare.title}</H2>
@@ -272,7 +272,7 @@ export function Landing({ lang }: { lang: Lang }) {
       <Section id="new" className="border-t border-line/60">
         <Eyebrow>{fill(t.news.eyebrow, { version: RELEASE.label })}</Eyebrow>
         <H2>{t.news.title}</H2>
-        <div className="mt-14 grid gap-3 lg:grid-cols-2">
+        <div className="mt-14 grid grid-cols-1 gap-3 lg:grid-cols-2">
           {featured.map(([title, body, tag, ref]) => (
             <article
               key={title}
@@ -280,20 +280,20 @@ export function Landing({ lang }: { lang: Lang }) {
             >
               <div className="border-b border-white/[0.08]">{ref && shot(ref, title)}</div>
               <div className="p-6">
-                <p className="font-mono text-[10px] text-phosphor">{tag}</p>
+                <p className="font-mono text-[12px] text-phosphor">{tag}</p>
                 <h3 className="mt-4 text-xl font-medium tracking-[-0.03em] text-ink">{title}</h3>
                 <p className="mt-2 text-sm leading-6 text-muted">{body}</p>
               </div>
             </article>
           ))}
         </div>
-        <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {plain.map(([title, body, tag]) => (
             <article
               key={title}
               className="rise sheen relative overflow-hidden rounded-2xl border border-white/[0.09] bg-surface p-6 transition hover:border-phosphor/40"
             >
-              <p className="font-mono text-[10px] text-phosphor">{tag}</p>
+              <p className="font-mono text-[12px] text-phosphor">{tag}</p>
               <h3 className="mt-6 text-xl font-medium tracking-[-0.03em] text-ink">{title}</h3>
               <p className="mt-3 text-sm leading-6 text-muted">{body}</p>
             </article>
@@ -303,14 +303,14 @@ export function Landing({ lang }: { lang: Lang }) {
 
       {/* Themes */}
       <Section id="themes" className="border-t border-line/60">
-        <div className="grid gap-10 lg:grid-cols-[.8fr_1.2fr] lg:items-end">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-[.8fr_1.2fr] lg:items-end">
           <div>
             <Eyebrow>{t.themes.eyebrow}</Eyebrow>
             <H2>{t.themes.title}</H2>
           </div>
           <div>
             <p className="max-w-xl text-lg leading-8 text-ink/65">{t.themes.body}</p>
-            <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.1em] text-muted">{t.themes.pick}</p>
+            <p className="mt-3 font-mono text-[12px] uppercase tracking-[0.1em] text-muted">{t.themes.pick}</p>
           </div>
         </div>
         <div className="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
@@ -326,7 +326,7 @@ export function Landing({ lang }: { lang: Lang }) {
 
       {/* Agents */}
       <Section id="agents" className="border-t border-line/60">
-        <div className="grid gap-10 lg:grid-cols-[.8fr_1.2fr] lg:items-end">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-[.8fr_1.2fr] lg:items-end">
           <div>
             <Eyebrow>{t.agents.eyebrow}</Eyebrow>
             <H2>{t.agents.title}</H2>
@@ -342,11 +342,11 @@ export function Landing({ lang }: { lang: Lang }) {
           />
         </div>
 
-        <div className="mt-16 grid gap-12 lg:grid-cols-[1.1fr_.9fr] lg:gap-16">
+        <div className="mt-16 grid grid-cols-1 gap-12 lg:grid-cols-[1.1fr_.9fr] lg:gap-16">
           <div className="space-y-6">
             {t.agents.points.map(([title, body], i) => (
               <div key={title} className="flex gap-5 border-t border-line pt-6">
-                <span className="font-mono text-[10px] text-phosphor">{String(i + 1).padStart(2, "0")}</span>
+                <span className="font-mono text-[12px] text-phosphor">{String(i + 1).padStart(2, "0")}</span>
                 <div>
                   <h3 className="text-lg font-medium tracking-[-0.025em] text-ink">{title}</h3>
                   <p className="mt-2 max-w-md text-sm leading-6 text-muted">{body}</p>
@@ -362,7 +362,7 @@ export function Landing({ lang }: { lang: Lang }) {
 
       {/* Principles */}
       <Section className="border-t border-line/60">
-        <div className="grid gap-12 lg:grid-cols-[.7fr_1.3fr] lg:gap-20">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-[.7fr_1.3fr] lg:gap-20">
           <div>
             <Eyebrow>{t.principles.eyebrow}</Eyebrow>
             <p className="mt-5 max-w-xs text-sm leading-6 text-muted">{t.principles.lead}</p>
@@ -372,10 +372,10 @@ export function Landing({ lang }: { lang: Lang }) {
             <span className="text-muted">{t.principles.muted}</span>
           </h2>
         </div>
-        <div className="mt-20 grid border-y border-line sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-20 grid grid-cols-1 border-y border-line sm:grid-cols-2 lg:grid-cols-4">
           {t.principles.items.map(([n, title, body], i) => (
             <article key={n} className={`py-8 sm:px-6 lg:py-10 ${i > 0 ? "border-t border-line sm:border-t-0 sm:border-l" : ""} ${i === 0 ? "sm:pl-0" : ""}`}>
-              <span className="font-mono text-[9px] text-phosphor">{n}</span>
+              <span className="font-mono text-[11px] text-phosphor">{n}</span>
               <h3 className="mt-3 text-lg font-medium tracking-[-0.025em] text-ink">{title}</h3>
               <p className="mt-3 text-sm leading-6 text-muted">{body}</p>
             </article>

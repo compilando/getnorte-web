@@ -22,16 +22,16 @@ export function CopyRow({ label, command, t }: { label: string; command: string;
 
   return (
     <div className="border-t border-white/[0.08] first:border-t-0">
-      <p className="px-4 pt-3 font-mono text-[8px] uppercase tracking-[0.12em] text-muted sm:px-5">{label}</p>
+      <p className="px-4 pt-3 font-mono text-[11px] uppercase tracking-[0.12em] text-muted sm:px-5">{label}</p>
       <div className="flex items-start gap-3 px-4 pb-3 pt-1.5 sm:px-5">
-        <code className="min-w-0 flex-1 overflow-x-auto whitespace-nowrap font-mono text-[9px] text-ink sm:text-[11px]">
+        <code className="min-w-0 flex-1 overflow-x-auto whitespace-nowrap font-mono text-[11px] text-ink sm:text-[12px]">
           <span className="mr-3 text-phosphor">$</span>
           {command}
         </code>
         <button
           type="button"
           onClick={copy}
-          className="shrink-0 rounded-md border border-white/[0.14] px-2.5 py-1 font-mono text-[8px] uppercase tracking-[0.1em] text-muted transition hover:border-phosphor/60 hover:text-phosphor"
+          className="shrink-0 rounded-md border border-white/[0.14] px-2.5 py-1 font-mono text-[11px] uppercase tracking-[0.1em] text-muted transition hover:border-phosphor/60 hover:text-phosphor"
         >
           {copied ? t.copied : t.copy}
         </button>
@@ -52,17 +52,17 @@ export function FinalCta({ t }: { t: Copy["cta"] }) {
         <div className="page-grid absolute inset-0 opacity-30 [mask-image:linear-gradient(to_right,black,transparent)]" />
 
         <div className="relative mx-auto max-w-[1340px]">
-          <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-phosphor">{t.eyebrow}</p>
+          <p className="font-mono text-[12px] uppercase tracking-[0.18em] text-phosphor">{t.eyebrow}</p>
           <h2 className="mt-7 max-w-5xl text-balance text-5xl font-medium leading-[.9] tracking-[-0.075em] text-ink sm:text-8xl lg:text-[112px]">
             {t.title}
           </h2>
 
-          <div className="mt-12 grid gap-8 lg:grid-cols-[1.15fr_.85fr] lg:gap-12">
+          <div className="mt-12 grid grid-cols-1 gap-8 lg:grid-cols-[1.15fr_.85fr] lg:gap-12">
             <div className="min-w-0">
               <p className="max-w-xl text-base leading-7 text-ink/65 sm:text-lg">{t.body}</p>
 
               <div className="mt-8 overflow-hidden rounded-xl border border-white/[0.12] bg-black/45 backdrop-blur-xl">
-                <div className="flex items-center border-b border-white/[0.09] px-4 py-3 font-mono text-[8px] uppercase tracking-[0.12em] text-muted sm:px-5">
+                <div className="flex items-center border-b border-white/[0.09] px-4 py-3 font-mono text-[11px] uppercase tracking-[0.12em] text-muted sm:px-5">
                   <span>{t.terminal}</span>
                   <span className="ml-auto text-phosphor">v{RELEASE.version}</span>
                 </div>
@@ -78,7 +78,7 @@ export function FinalCta({ t }: { t: Copy["cta"] }) {
             </div>
 
             <div>
-              <p className="font-mono text-[9px] uppercase tracking-[0.14em] text-muted">{t.window}</p>
+              <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted">{t.window}</p>
               <div className="mt-4 space-y-2">
                 {t.packages.map(([ext, target, note]) => (
                   <a
@@ -89,18 +89,18 @@ export function FinalCta({ t }: { t: Copy["cta"] }) {
                   >
                     <span className="font-mono text-base font-semibold tracking-[-0.03em] text-ink">{ext}</span>
                     <span className="min-w-0">
-                      <span className="block text-[13px] text-ink/85">{target}</span>
-                      <span className="block font-mono text-[9px] text-muted">{note}</span>
+                      <span className="block text-[14px] text-ink/85">{target}</span>
+                      <span className="block font-mono text-[11px] text-muted">{note}</span>
                     </span>
-                    <span className="ml-auto font-mono text-[10px] text-muted">
+                    <span className="ml-auto font-mono text-[12px] text-muted">
                       {megabytes(RELEASE.packages.find((p) => p.ext === ext)?.bytes ?? 0)}
                     </span>
                     <span className="text-phosphor transition-transform group-hover:translate-y-0.5">↓</span>
                   </a>
                 ))}
               </div>
-              <p className="mt-5 text-[13px] leading-5 text-ink/55">{t.carries}</p>
-              <p className="mt-4 border-t border-white/[0.09] pt-4 font-mono text-[9px] leading-5 text-muted">{t.platforms}</p>
+              <p className="mt-5 text-[14px] leading-5 text-ink/55">{t.carries}</p>
+              <p className="mt-4 border-t border-white/[0.09] pt-4 font-mono text-[11px] leading-5 text-muted">{t.platforms}</p>
             </div>
           </div>
         </div>

@@ -13,7 +13,7 @@ const config: Config = {
         elevated: "#151A1D",
         line: "#252B2D",
         ink: "#F1F5EF",
-        muted: "#89938C",
+        muted: "#9DA69F",
         phosphor: "#B7FF52",
         cyan: "#87DDD7",
         amber: "#FFC46B",

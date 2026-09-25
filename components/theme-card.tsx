@@ -15,7 +15,7 @@ export function ThemeCard({ id, children }: { id: string; children: ReactNode })
       className="group block w-full overflow-hidden rounded-lg border border-white/[0.1] text-left transition hover:-translate-y-1 hover:border-phosphor/50 hover:shadow-glow"
     >
       <div className="pointer-events-none">{children}</div>
-      <div className="flex items-center justify-between bg-[#0c0f10] px-3 py-2 font-mono text-[10px] text-muted group-hover:text-ink">
+      <div className="flex items-center justify-between bg-[#0c0f10] px-3 py-2 font-mono text-[12px] text-muted group-hover:text-ink">
         <span>{id}</span>
         <span className="text-phosphor opacity-0 transition group-hover:opacity-100">↑</span>
       </div>
