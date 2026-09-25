@@ -35,6 +35,7 @@ export type Extra =
   | "compare"
   | "sync"
   | "jump"
+  | "jobs-paused"
   | "agent-scope"
   | "agent-ask"
   | "agent-timeline"
@@ -251,10 +252,10 @@ const en = {
     title: "What landed since the last alpha.",
     items: [
       ["Terminal in a panel", "A shell below the listings, in both frontends, sharing one emulator.", "Ctrl+Alt+S", "tui:terminal"],
-      ["Status bar progress", "One light bar for running work, and a quiet ✓ when it is done.", "ADR 0146", "tui:daemon-a"],
+      ["Pause and resume", "A copy stops at the end of its chunk and carries on where it left off.", "Ctrl+Alt+K", "tui:jobs-paused"],
       ["Type to jump", "In the Krusader preset a letter jumps to the first name that starts with it.", "ADR 0155", "tui:jump"],
       ["A window like VS Code", "Activity bar, panels you drag between edges, tabs, a marks ruler, custom title bar.", "ADR 0131–0138", "gui:panes-vscode-dark"],
-      ["Pause and resume", "A copy stops at the end of its chunk and carries on where it left off.", "Ctrl+Alt+K"],
+      ["Status bar progress", "One light bar for running work, and a quiet ✓ when it is done.", "ADR 0146"],
       ["A queue for transfers", "One at a time on a spinning disk, reordered while they wait.", "Ctrl+Alt+Q"],
       ["Retry what failed", "The last failed transfer again, same options, one key.", "Ctrl+Alt+R"],
       ["--lang es|en", "The language of one run, in all three binaries, without touching the config.", "ntc · norte · gui"],
@@ -544,10 +545,10 @@ const es: Copy = {
     title: "Lo que ha llegado desde la última alfa.",
     items: [
       ["Terminal en un panel", "Un shell bajo los listados, en los dos frontends, con un único emulador.", "Ctrl+Alt+S", "tui:terminal"],
-      ["Progreso en la barra", "Una barra ligera para el trabajo en curso, y un ✓ discreto al terminar.", "ADR 0146", "tui:daemon-a"],
+      ["Pausar y reanudar", "Una copia para al final de su bloque y sigue donde lo dejó.", "Ctrl+Alt+K", "tui:jobs-paused"],
       ["Teclear para saltar", "En el preset Krusader, una letra salta al primer nombre que empieza por ella.", "ADR 0155", "tui:jump"],
       ["Una ventana como VS Code", "Barra de actividad, paneles que se arrastran entre bordes, pestañas, regla de marcas, barra de título propia.", "ADR 0131–0138", "gui:panes-vscode-dark"],
-      ["Pausar y reanudar", "Una copia para al final de su bloque y sigue donde lo dejó.", "Ctrl+Alt+K"],
+      ["Progreso en la barra", "Una barra ligera para el trabajo en curso, y un ✓ discreto al terminar.", "ADR 0146"],
       ["Cola de transferencias", "De una en una en un disco mecánico, reordenables mientras esperan.", "Ctrl+Alt+Q"],
       ["Repetir lo que falló", "La última transferencia fallida otra vez, con sus opciones, en una tecla.", "Ctrl+Alt+R"],
       ["--lang es|en", "El idioma de una ejecución, en los tres binarios, sin tocar la configuración.", "ntc · norte · gui"],
