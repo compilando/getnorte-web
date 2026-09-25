@@ -75,9 +75,7 @@ extra() {
 		mkdir -p "$out/tui/$lang"
 		for f in "$work/$scene"/*.ansi; do
 			case $(basename "$f") in
-			# jobs-paused: a paused copy still shows a decaying rate and an
-			# ETA of hours, so it stays out of the page until that is fixed.
-			reel.ansi | trace-* | connect.ansi | jobs-paused.ansi) ;;
+			reel.ansi | trace-* | connect.ansi) ;;
 			*) mv "$f" "$out/tui/$lang/" ;;
 			esac
 		done

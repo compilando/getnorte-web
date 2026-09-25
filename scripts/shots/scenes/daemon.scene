@@ -20,9 +20,7 @@ frame
 shot connect
 keys Enter
 wait 3.5
-# The bucket's root is 2025-abisko, 2026-01-tromso: no `..` there. Its
-# prefixes are drawn as `/2025-abisko` with no icon, so no shot is taken at
-# the root.
+# The bucket's root is 2025-abisko, 2026-01-tromso: no `..` there.
 keys Home Down
 wait 1
 open
