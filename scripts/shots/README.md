@@ -17,6 +17,7 @@ overrides it), built first there with `just link link-gui` and `just plugins`.
 | `scenes/*.scene` | the scripts: `run`, `keys`, `open`, `type`, `wait`, `shot`, `frame`, and for the terminal also `session` and `sh` |
 | `serve-s3.sh` | inside the sandbox: an S3 bucket served by `rclone` on `:9000`, throttled, and an `archive` connection to it |
 | `serve-sftp.sh` | inside the sandbox: an unprivileged `sshd` on `:2222` playing a Raspberry Pi, a key, and a `raspberry` connection |
+| `play-agent.py` | inside the sandbox: a scripted MCP client (not an AI) that asks for a scope and renames four photos through `norte mcp serve` |
 
 Needs `bwrap`, `tmux`, `magick`, `zip`, `zstd`, `rclone`, `sshd`; for the
 window also `Xvfb`, `xdotool`, `ffmpeg`.
@@ -25,8 +26,11 @@ window also `Xvfb`, `xdotool`, `ffmpeg`.
 the background, and `session <name>` points the steps after it at a second
 tmux session, where a `run` starts a second `ntc`. Every sandbox of a scene
 shares one runtime dir (`RUN_DIR`), so they all meet on the daemon's socket.
-`scenes/daemon.scene` is the example. `ONLY=extra make shots` retakes just
-the scenes with servers (`daemon`, `sftp`, `archive`, `compare`, `jump`).
+`scenes/daemon.scene` is the example. `term <cmd>` starts any other program
+in a session, a shell or the agent: `scenes/agent.scene` puts ntc, ada's
+shell and `play-agent.py` on one daemon, with `[[rule]] action = "ask"` for
+agents. `ONLY=extra make shots` retakes just the scenes with servers
+(`daemon`, `sftp`, `archive`, `compare`, `jump`, `agent`).
 
 **Why a sandbox and not `HOME=`.** Setting `HOME` does not isolate norte: the
 session, the config and the runtime dir each have their own XDG variable. One

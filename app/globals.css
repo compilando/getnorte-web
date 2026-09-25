@@ -188,6 +188,11 @@ body {
   animation: wire-flow 1.6s linear infinite;
 }
 
+@keyframes step-progress {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
 @keyframes wire-flow {
   to { stroke-dashoffset: -34; }
 }

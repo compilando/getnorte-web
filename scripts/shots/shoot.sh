@@ -46,8 +46,9 @@ mkdir -p "$bin"
 for b in ntc norte norte-gui; do
 	if [ -x "$build/$b" ]; then cp "$build/$b" "$bin/"; fi
 done
-# The servers the remote scenes talk to run inside the sandbox: on ada's PATH.
-cp "$here"/serve-*.sh "$bin/"
+# The servers the remote scenes talk to, and the scripted MCP client of the
+# agent scene, run inside the sandbox: on ada's PATH.
+cp "$here"/serve-*.sh "$here/play-agent.py" "$bin/"
 
 echo "== ada's home, and the plugins she approved"
 rm -rf "$home"
@@ -61,11 +62,12 @@ if [ "$("$here/sandbox.sh" "$home" "$bin" norte plugin list | grep -c 'NOT appro
 fi
 
 # The scenes with a daemon and servers: two clients on one daemon, S3, SFTP,
-# an archive, compare and sync, type-to-jump. Each runs in a scratch dir, and
-# only its shots are kept: a reel there would overwrite the tour's.
+# an archive, compare and sync, type-to-jump, an agent over MCP. Each runs in
+# a scratch dir, and only its shots are kept: a reel there would overwrite the
+# tour's.
 extra() {
 	local lang=$1 scene f
-	for scene in daemon sftp archive compare jump; do
+	for scene in daemon sftp archive compare jump agent; do
 		echo "== $scene ($lang)"
 		"$here/demo-tree.sh" "$home"
 		rm -rf "${work:?}/$scene"

@@ -3,6 +3,7 @@ import type { Packed } from "@/lib/ansi";
 import { COPY, fill, type Extra, type Lang, type Scene } from "@/lib/i18n";
 import { COMMANDS, LINKS, RELEASE, THEME_ACCENTS, THEMES } from "@/lib/product";
 import { COLS, guiShot, guiVideo, tuiReel, tuiScene, tuiTheme } from "@/lib/shots";
+import { AgentSteps } from "./agent-steps";
 import { AppFrame } from "./app-frame";
 import { CoreDiagram } from "./core-diagram";
 import { CopyRow, FinalCta } from "./final-cta";
@@ -303,27 +304,37 @@ export function Landing({ lang }: { lang: Lang }) {
 
       {/* Agents */}
       <Section id="agents" className="border-t border-line/60">
-        <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
+        <div className="grid gap-10 lg:grid-cols-[.8fr_1.2fr] lg:items-end">
           <div>
             <Eyebrow>{t.agents.eyebrow}</Eyebrow>
             <H2>{t.agents.title}</H2>
-            <p className="mt-6 max-w-xl text-lg leading-8 text-ink/65">{t.agents.body}</p>
-            <div className="mt-10 space-y-6">
-              {t.agents.points.map(([title, body], i) => (
-                <div key={title} className="flex gap-5 border-t border-line pt-6">
-                  <span className="font-mono text-[10px] text-phosphor">{String(i + 1).padStart(2, "0")}</span>
-                  <div>
-                    <h3 className="text-lg font-medium tracking-[-0.025em] text-ink">{title}</h3>
-                    <p className="mt-2 max-w-md text-sm leading-6 text-muted">{body}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
-          <figure className="rise self-center">
-            <AppFrame title="ada@norte — F12">{screen("grant", t.agents.grant)}</AppFrame>
-            <figcaption className="mt-3 font-mono text-[10px] text-muted">{t.agents.grant}</figcaption>
-          </figure>
+          <p className="max-w-xl text-lg leading-8 text-ink/65">{t.agents.body}</p>
+        </div>
+
+        <div className="rise mt-14">
+          <AgentSteps
+            steps={t.agents.steps.map(([, title, body, frame]) => ({ title, body, frame }))}
+            screens={t.agents.steps.map(([scene, title]) => screen(scene, title))}
+            caption={t.agents.stepsCaption}
+          />
+        </div>
+
+        <div className="mt-16 grid gap-12 lg:grid-cols-[1.1fr_.9fr] lg:gap-16">
+          <div className="space-y-6">
+            {t.agents.points.map(([title, body], i) => (
+              <div key={title} className="flex gap-5 border-t border-line pt-6">
+                <span className="font-mono text-[10px] text-phosphor">{String(i + 1).padStart(2, "0")}</span>
+                <div>
+                  <h3 className="text-lg font-medium tracking-[-0.025em] text-ink">{title}</h3>
+                  <p className="mt-2 max-w-md text-sm leading-6 text-muted">{body}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="self-start overflow-hidden rounded-xl border border-white/[0.12] bg-black/45">
+            <CopyRow label={t.agents.hookup} command={t.agents.hookupCommand} t={t.cta} />
+          </div>
         </div>
       </Section>
 

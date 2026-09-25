@@ -34,7 +34,11 @@ export type Extra =
   | "archive"
   | "compare"
   | "sync"
-  | "jump";
+  | "jump"
+  | "agent-scope"
+  | "agent-ask"
+  | "agent-timeline"
+  | "agent-undo";
 
 const en = {
   meta: {
@@ -273,7 +277,15 @@ const en = {
       ["One gate", "The policy engine sits in the core. There is no side door for a plugin, an agent or a frontend."],
       ["Plugins ask first", "A WASM plugin arrives unapproved. It runs only after you grant what it asked for, and a changed binary asks again."],
     ] as [string, string][],
-    grant: "Installing is not consenting: a plugin's capabilities are granted by a person.",
+    steps: [
+      ["agent-scope", "It has to ask", "Outside a scope an agent gets nothing, not even a listing. It asks for a folder, the operations it wants and for how long, and waits.", "photo-helper — an MCP client"],
+      ["agent-ask", "You say yes, one change at a time", "You grant the scope with norte policy grant. Even then, your policy can hold every change until you press y in ntc — here, each of four renames.", "ada@norte — ntc"],
+      ["agent-timeline", "All of it on the record", "Every change lands in the journal under the agent's session, next to yours, in the same timeline.", "ada@norte — ntc · timeline"],
+      ["agent-undo", "Changed your mind? One command", "norte undo photo-helper reverts everything that session did, newest first, even after the agent has gone.", "ada@norte — bash"],
+    ] as [Extra, string, string, string][],
+    stepsCaption: "photo-helper is an MCP client scripted for these captures, not an AI. Everything else on screen is norte.",
+    hookup: "Hook up Claude Code — or any MCP client",
+    hookupCommand: "claude mcp add norte -- norte mcp serve --session claude",
   },
   principles: {
     eyebrow: "Why norte",
@@ -558,7 +570,15 @@ const es: Copy = {
       ["Una sola puerta", "El motor de políticas vive en el núcleo. No hay puerta lateral para un plugin, un agente ni un frontend."],
       ["Los plugins preguntan", "Un plugin WASM llega sin aprobar. Solo corre cuando concedes lo que pidió, y un binario cambiado vuelve a preguntar."],
     ],
-    grant: "Instalar no es consentir: los permisos de un plugin los concede una persona.",
+    steps: [
+      ["agent-scope", "Tiene que pedirlo", "Fuera de un ámbito concedido un agente no obtiene nada, ni siquiera un listado. Pide una carpeta, las operaciones que quiere y por cuánto tiempo, y espera.", "photo-helper — un cliente MCP"],
+      ["agent-ask", "Tú dices que sí, cambio a cambio", "Concedes el ámbito con norte policy grant. Aun así, tu política puede retener cada cambio hasta que pulses y en ntc: aquí, cada uno de cuatro renombrados.", "ada@norte — ntc"],
+      ["agent-timeline", "Todo queda anotado", "Cada cambio cae en el diario bajo la sesión del agente, junto a los tuyos, en la misma línea de tiempo.", "ada@norte — ntc · línea de tiempo"],
+      ["agent-undo", "¿Te lo has pensado mejor? Un comando", "norte undo photo-helper revierte todo lo que hizo esa sesión, de lo más nuevo a lo más viejo, aunque el agente ya se haya ido.", "ada@norte — bash"],
+    ],
+    stepsCaption: "photo-helper es un cliente MCP con guion para estas capturas, no una IA. Todo lo demás en pantalla es norte.",
+    hookup: "Conecta Claude Code, o cualquier cliente MCP",
+    hookupCommand: "claude mcp add norte -- norte mcp serve --session claude",
   },
   principles: {
     eyebrow: "Por qué norte",

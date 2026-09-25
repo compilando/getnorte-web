@@ -1,0 +1,61 @@
+# An agent over MCP, governed: play-agent.py (a scripted MCP client, not an
+# AI) asks norte to date-prefix four photos. It has to ask for a scope, a
+# person grants it from a shell, every rename waits for `y` in ntc, and the
+# whole session is undone at the end. Everything but the agent is norte.
+sh printf '[[rule]]\nactor = "agent"\naction = "ask"\n' >.config/norte/policy.toml && exec norte daemon run
+wait 2
+# ada's shell, where the grant and the undo are typed.
+session shell
+term bash
+# ntc on the daemon, in the folder the agent works on: approvals land here.
+session shot
+run --daemon Photos
+# Photos is .., 2026-01 Tromsø, 東京 2025, Café de Flore.jpg, profile.png.
+keys Home Down
+open
+# The agent starts, is refused, asks for a scope and waits.
+session agent
+term play-agent.py
+wait 3
+frame
+shot agent-scope
+# ada grants it. A fresh daemon numbers its first request 0.
+session shell
+type norte policy grant 0
+keys Enter
+wait 2
+# The first rename is held for her approval in ntc.
+session shot
+wait 1.5
+frame
+shot agent-ask
+keys y
+wait 1.5
+keys y
+wait 1.5
+keys y
+wait 1.5
+keys y
+wait 2
+frame
+shot agent-done
+session agent
+shot agent-log
+# The journal: four renames by the agent.
+session shot
+keys C-p
+type timeline
+keys Enter
+wait 1
+frame
+shot agent-timeline
+# Changed her mind: the agent's whole session, undone.
+session shell
+type norte undo photo-helper
+keys Enter
+wait 3
+shot agent-undo
+session shot
+wait 1.5
+frame
+shot agent-undone

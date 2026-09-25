@@ -13,6 +13,7 @@
 #   shot <name>        write <out-dir>/<name>.ansi
 #   frame              append the screen to <out-dir>/reel.ansi (a clip)
 #   run <cmd>          start ntc with these arguments (first line)
+#   term <cmd>         like run, for any other program: a shell, an agent
 #   session <name>     the steps after it act on this tmux session; a `run`
 #                      after it starts a second ntc next to the first
 #   sh <cmd>           run a shell command as ada, in the background (a daemon,
@@ -65,13 +66,15 @@ while IFS= read -r line || [ -n "$line" ]; do
 	arg=${line#"$verb"}
 	arg=${arg# }
 	case $verb in
-	run)
+	run | term)
 		# No user tmux.conf, and the width of a VS16 emoji decided before ntc
 		# draws its first frame.
 		t -f /dev/null start-server \; set -s variation-selector-always-wide "${VS16_WIDE:-on}"
+		# `run` starts ntc; `term` any other program, a shell or the agent.
+		[ "$verb" = run ] && program=(ntc) || program=()
 		# shellcheck disable=SC2086 # the scene's arguments are words on purpose
 		t new-session -d -s "$target" -x "$cols" -y "$rows" \
-			env RUN_DIR="$RUN_DIR" "$here/sandbox.sh" "$home" "$bin" env LANG="$locale" LC_ALL="$locale" ntc $arg
+			env RUN_DIR="$RUN_DIR" "$here/sandbox.sh" "$home" "$bin" env LANG="$locale" LC_ALL="$locale" "${program[@]}" $arg
 		# Keys sent before the first frame is up are lost, not queued.
 		sleep 2.5
 		;;

@@ -1,0 +1,38 @@
+[1m[32mada@norte[0m:[1m[34m~[0m$ norte policy grant 0
+scope granted
+[1m[32mada@norte[0m:[1m[34m~[0m$ norte undo photo-helper
+0 bytes — 4/4 entries
+4 reverted, 0 irreversible skipped
+session photo-helper undone
+[1m[32mada@norte[0m:[1m[34m~[0m$
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

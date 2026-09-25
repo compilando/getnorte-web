@@ -157,7 +157,12 @@ export function parseScreen(raw: string, cols?: number): Screen {
   return { rows, ...dominant(rows) };
 }
 
-/** The colours most of the screen is painted in: the frame around the text. */
+/**
+ * The colours most of the screen is painted in: the frame around the text.
+ * Text with no colour of its own counts too (as ""), so a plain shell, where
+ * most text is in the terminal's default, is not painted in the one colour
+ * its prompt happens to use.
+ */
 function dominant(rows: Run[][]): { bg?: string; fg?: string } {
   const bgs = new Map<string, number>();
   const fgs = new Map<string, number>();
@@ -165,10 +170,10 @@ function dominant(rows: Run[][]): { bg?: string; fg?: string } {
     for (const r of row) {
       const n = cells(r.text);
       if (r.bg) bgs.set(r.bg, (bgs.get(r.bg) ?? 0) + n);
-      if (r.fg && r.text.trim()) fgs.set(r.fg, (fgs.get(r.fg) ?? 0) + n);
+      if (r.text.trim()) fgs.set(r.fg ?? "", (fgs.get(r.fg ?? "") ?? 0) + n);
     }
   const top = (m: Map<string, number>) => [...m].sort((a, b) => b[1] - a[1])[0]?.[0];
-  return { bg: top(bgs), fg: top(fgs) };
+  return { bg: top(bgs), fg: top(fgs) || undefined };
 }
 
 /**
