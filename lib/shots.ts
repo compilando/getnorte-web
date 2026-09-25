@@ -39,6 +39,15 @@ export function guiShot(lang: Lang, name: string): string | null {
   return existsSync(path.join(ROOT, "public", rel)) ? rel : null;
 }
 
+/** The hero film, when scripts/video/make-hero.py has made it for this language. */
+export function heroFilm(lang: Lang): { webm: string; mp4: string; poster: string } | null {
+  const base = `/video/hero-${lang}`;
+  const has = (ext: string) => existsSync(path.join(ROOT, "public", `${base}${ext}`));
+  return has(".webm") && has(".mp4") && has("-poster.webp")
+    ? { webm: `${base}.webm`, mp4: `${base}.mp4`, poster: `${base}-poster.webp` }
+    : null;
+}
+
 /** The window's recorded tour, when shoot.sh could record it. */
 export function guiVideo(lang: Lang): string | null {
   const rel = `/shots/gui/${lang}/tour.webm`;

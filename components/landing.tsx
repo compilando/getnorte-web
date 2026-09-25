@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import type { Packed } from "@/lib/ansi";
 import { COPY, fill, type Extra, type Lang, type Scene } from "@/lib/i18n";
 import { COMMANDS, LINKS, RELEASE, THEME_ACCENTS, THEMES } from "@/lib/product";
-import { COLS, guiShot, guiVideo, tuiReel, tuiScene, tuiTheme } from "@/lib/shots";
+import { COLS, guiShot, guiVideo, heroFilm, tuiReel, tuiScene, tuiTheme } from "@/lib/shots";
 import { AgentSteps } from "./agent-steps";
 import { AppFrame } from "./app-frame";
 import { CoreDiagram } from "./core-diagram";
@@ -118,6 +118,7 @@ export function Landing({ lang }: { lang: Lang }) {
               cols={COLS}
               windows={windows}
               video={guiVideo(lang)}
+              film={heroFilm(lang)}
               labels={{ ...t.hero.tabs, theme: t.hero.theme, live: t.hero.live, play: t.hero.play, pause: t.hero.pause }}
             />
             <p className="mt-6 text-center font-mono text-[10px] uppercase tracking-[0.1em] text-muted">
