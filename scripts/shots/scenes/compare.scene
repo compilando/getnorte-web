@@ -1,0 +1,29 @@
+# Two trees compared, then synced: the project on the left, last week's copy
+# of it in Backup on the right, with a few changes made since.
+sh mkdir -p Backup && cp -a projects/aurora Backup/aurora && printf '\n## Stations\n\nTromsø, Abisko, Kiruna.\n' >>projects/aurora/README.md && printf 'pub fn read() -> f32 {\n    0.0\n}\n' >projects/aurora/src/sensor.rs && rm Backup/aurora/LICENSE && touch -d '2026-09-24 18:40' projects/aurora/README.md projects/aurora/src/sensor.rs
+wait 1
+# A sync is journalled, so it runs on the daemon.
+sh exec norte daemon run
+wait 1.5
+run --daemon projects/aurora
+# The right pane walks to Backup/aurora: ~ is .., Backup, Documents, …
+keys Tab
+keys Home
+open
+keys Home
+open
+keys Home Down
+open
+keys Home Down
+open
+keys Tab
+keys S-F2
+wait 1.5
+frame
+shot compare
+# `s` syncs left onto right from the comparison: the plan comes first.
+keys s
+wait 1.5
+frame
+shot sync
+keys Escape

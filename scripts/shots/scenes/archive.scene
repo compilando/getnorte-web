@@ -1,0 +1,20 @@
+# An archive is a directory: Downloads on the left, the inside of
+# wallpaper-pack.zip on the right.
+run Downloads
+# Downloads is .., aurora-backup.tar.zst, debian-13.1.0-amd64-netinst.iso,
+# norte-0.3.0-alpha.4.AppImage, wallpaper-pack.zip.
+keys Tab
+keys Home
+open
+keys Home Down Down
+open
+keys Tab
+keys Home Down Down Down Down
+open
+wait 1
+# The zip holds one folder, 2026-01 Tromsø.
+keys Home Down
+open
+wait 1
+frame
+shot archive

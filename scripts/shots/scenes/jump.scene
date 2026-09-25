@@ -1,0 +1,11 @@
+# Type to jump, in the Krusader preset: a letter opens the quick search and
+# moves the cursor to the first name that starts with what was typed.
+run --preset krusader Photos
+# Photos is .., 2026-01 Tromsø, 東京 2025, Café de Flore.jpg, profile.png.
+keys Home Down
+open
+type fj
+wait 0.6
+frame
+shot jump
+keys Escape

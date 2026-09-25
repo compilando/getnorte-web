@@ -1,0 +1,52 @@
+# One daemon, two ntc, one S3 bucket. The daemon holds the connection and the
+# work; a copy started from the first client shows up, live, in the jobs panel
+# of the second. serve-s3.sh serves the bucket on localhost, throttled so the
+# copy is still running when the shots are taken.
+sh mkdir -p Backup && exec serve-s3.sh
+wait 8
+sh AWS_ACCESS_KEY_ID=ada AWS_SECRET_ACCESS_KEY=northernlights exec norte daemon run
+wait 2
+# The second client first, waiting in Backup with its jobs panel open.
+session second
+run --daemon Backup
+keys M-j
+# The first one: Backup on the left, the bucket on the right.
+session shot
+run --daemon Backup
+keys Tab
+keys C-n
+wait 1
+frame
+shot connect
+keys Enter
+wait 3.5
+# The bucket's root is 2025-abisko, 2026-01-tromso: no `..` there. Its
+# prefixes are drawn as `/2025-abisko` with no icon, so no shot is taken at
+# the root.
+keys Home Down
+wait 1
+open
+wait 2
+# 2026-01-tromso is .., four photos and night-sky-8k.mov, last.
+keys Home Down Down Down Down Down
+frame
+shot s3
+# The film is big: copy it down to Backup.
+keys Insert
+keys F5
+wait 0.6
+keys Enter
+wait 5
+keys M-j
+wait 0.4
+frame
+shot daemon-a
+session second
+shot daemon-b
+# Paused from the first client: it stops at the end of its chunk.
+session shot
+keys Escape
+keys C-M-k
+wait 1.5
+frame
+shot jobs-paused

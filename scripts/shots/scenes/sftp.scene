@@ -1,0 +1,20 @@
+# A Raspberry Pi over SFTP: the first connection asks to trust its host key,
+# then its files are just another pane. serve-sftp.sh plays the Pi.
+sh serve-sftp.sh
+wait 3
+run Photos
+keys Tab
+keys C-n
+wait 1
+keys Enter
+wait 2
+frame
+shot sftp-trust
+keys y
+wait 2.5
+# The Pi's folder is .., logs, timelapse, station.toml.
+keys Home Down Down
+open
+wait 1.5
+frame
+shot sftp
