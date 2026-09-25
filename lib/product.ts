@@ -38,8 +38,23 @@ export const THEMES = [
 ] as const;
 export type Theme = (typeof THEMES)[number];
 
-/** crates/norte-frontend/presets/keymap/*.toml */
-export const PRESETS = ["orthodox", "vim", "cua", "krusader", "far", "norton", "total-commander"] as const;
+/**
+ * Each theme's accent: the `bg` of `selection` in its preset,
+ * crates/norte-theme/presets/<theme>.toml. Copied here because the site no
+ * longer builds inside a norte checkout; retake them when a preset changes.
+ */
+export const THEME_ACCENTS: Record<Theme, string> = {
+  "catppuccin-mocha": "#89b4fa",
+  default: "#5fafd7",
+  nord: "#88c0d0",
+  "gruvbox-dark": "#83a598",
+  "vscode-dark": "#04395e",
+  "retro-crt": "#2ee65c",
+  "retro-crt-amber": "#ffb000",
+  "catppuccin-latte": "#1e66f5",
+  "gruvbox-light": "#b57614",
+  "vscode-light": "#e8e8e8",
+};
 
 export const LINKS = {
   docs: `${REPO}/tree/main/docs`,

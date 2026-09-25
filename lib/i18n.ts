@@ -23,6 +23,19 @@ export type Scene =
   | "menu"
   | "help";
 
+/** The shots outside the tour: grant.scene, and the scenes shoot.sh's `extra` takes. */
+export type Extra =
+  | "grant"
+  | "daemon-a"
+  | "daemon-b"
+  | "s3"
+  | "sftp-trust"
+  | "sftp"
+  | "archive"
+  | "compare"
+  | "sync"
+  | "jump";
+
 const en = {
   meta: {
     title: "norte — the open-source file commander for the agent era",
@@ -31,10 +44,11 @@ const en = {
   },
   nav: {
     links: [
+      ["Client–server", "#core"],
       ["Tour", "#tour"],
+      ["Remotes", "#remotes"],
       ["What's new", "#new"],
       ["Themes", "#themes"],
-      ["Keys", "#keys"],
       ["Agents", "#agents"],
     ],
     download: "Download",
@@ -79,12 +93,55 @@ const en = {
     terminal: "ntc — in any terminal, core embedded, nothing to start first",
     window: "norte-gui — a native window that brings its own daemon",
     missing: "Window captures are taken on a machine with Xvfb: run make shots.",
+    galleryTabs: { terminal: "In the terminal", window: "In the window" },
     gallery: [
       ["viewer", "The viewer, pixel for pixel"],
       ["goto", "Go anywhere"],
       ["terminal", "A shell in a panel"],
       ["settings", "Settings with real controls"],
+    ] as [Scene, string][],
+  },
+  core: {
+    eyebrow: "Client–server",
+    title: "One core. As many screens as you like.",
+    body: "norte is a daemon and its clients. The core holds your connections, the running work, the journal and the policy; ntc, the window, the CLI and your agents attach to it over a local socket. Close a terminal mid-copy and the copy goes on. Open another and it is already there.",
+    daemon: "norte daemon",
+    daemonNote: "connections · tasks · journal · policy",
+    socket: "local socket",
+    clients: [
+      ["ntc", "terminal"],
+      ["norte-gui", "window"],
+      ["norte", "CLI · scripts"],
+      ["MCP", "agents"],
     ] as [string, string][],
+    first: "ntc #1 — starts a copy out of an S3 bucket",
+    second: "ntc #2 — another terminal, same daemon: the copy is there, live",
+    tryIt: "Try it",
+    commands: [
+      ["Start the core", "norte daemon run"],
+      ["Attach a terminal", "ntc --daemon"],
+      ["…and another one", "ntc --daemon ~/Backup"],
+      ["Or script it", "norte --daemon cp ~/big.iso /mnt/nas/"],
+    ] as [string, string][],
+    points: [
+      ["Work outlives the screen", "Quit ntc in the middle of a copy: the daemon keeps copying, and any other client shows it at the same percentage."],
+      ["One journal for everyone", "What you did in the terminal, in the window, from a script or through an agent lands in the same journal, and a sync runs there so it can be undone."],
+      ["Hand off, don't start over", "Begin in ntc over SSH and carry on in the window at your desk: tabs, directories and marks come along (ntc --attach)."],
+    ] as [string, string][],
+    local: "A Unix socket in your runtime directory, checked against your user. No port is opened.",
+  },
+  remotes: {
+    eyebrow: "Everywhere your files are",
+    title: "A Raspberry Pi, a bucket, a zip. Just another pane.",
+    body: "Local disks, SFTP, FTP, S3 and archives go through one virtual filesystem: the same keys, the same copy dialog, the same undo. The daemon keeps the connections open for every client.",
+    tiles: [
+      ["sftp-trust", "SFTP", "First contact asks: the host key's fingerprint, before a single byte moves."],
+      ["sftp", "SFTP", "Then the Pi is a pane like any other: browse it, view it, copy from it."],
+      ["s3", "S3", "Buckets and prefixes as folders. AWS, MinIO, anything that speaks S3."],
+      ["archive", "Archives", "ZIP, TAR (gz, zst…) and RAR open as directories. No extracting first."],
+      ["compare", "Compare", "Two trees side by side: the same, different, only here, only there."],
+      ["sync", "Sync", "A plan first and one approval, and all of it can be undone afterwards."],
+    ] as [Extra, string, string][],
   },
   tour: {
     eyebrow: "A tour, in real captures",
@@ -180,41 +237,23 @@ const en = {
     eyebrow: "New in {version}",
     title: "What landed since the last alpha.",
     items: [
-      ["Terminal in a panel", "A shell below the listings, in both frontends, sharing one emulator.", "Ctrl+Alt+S"],
+      ["Terminal in a panel", "A shell below the listings, in both frontends, sharing one emulator.", "Ctrl+Alt+S", "tui:terminal"],
+      ["Status bar progress", "One light bar for running work, and a quiet ✓ when it is done.", "ADR 0146", "tui:daemon-a"],
+      ["Type to jump", "In the Krusader preset a letter jumps to the first name that starts with it.", "ADR 0155", "tui:jump"],
+      ["A window like VS Code", "Activity bar, panels you drag between edges, tabs, a marks ruler, custom title bar.", "ADR 0131–0138", "gui:panes-vscode-dark"],
       ["Pause and resume", "A copy stops at the end of its chunk and carries on where it left off.", "Ctrl+Alt+K"],
       ["A queue for transfers", "One at a time on a spinning disk, reordered while they wait.", "Ctrl+Alt+Q"],
       ["Retry what failed", "The last failed transfer again, same options, one key.", "Ctrl+Alt+R"],
-      ["Type to jump", "In the Krusader preset a letter jumps to the first name that starts with it.", "ADR 0155"],
-      ["A window like VS Code", "Activity bar, panels you drag between edges, tabs, a marks ruler, custom title bar.", "ADR 0131–0138"],
       ["--lang es|en", "The language of one run, in all three binaries, without touching the config.", "ntc · norte · gui"],
       ["Owners by name", "Owner and group columns as ls -l shows them, and every attribute column sorts.", "ADR 0144–0145"],
       ["Search, narrowed", "Size, date, type, depth, hidden, links: ten filters on fs.search.", "protocol 0.81"],
-      ["Status bar progress", "One light bar for running work, and a quiet ✓ when it is done.", "ADR 0146"],
-    ] as [string, string, string][],
+    ] as [string, string, string, string?][],
   },
   themes: {
     eyebrow: "Ten themes, both frontends",
     title: "Make it look like the rest of your desk.",
     body: "Catppuccin, Gruvbox, Nord, VS Code, two CRT phosphors and norte's own. One theme file paints the terminal and the window alike, follows your desktop's light and dark, and can be written from scratch.",
     pick: "Click one to try it in the hero.",
-  },
-  keys: {
-    eyebrow: "Seven keymaps",
-    title: "Your fingers already know it.",
-    body: "Transcribed from the managers they are named after, not guessed. Every command exists in all seven, or the preset's header says why not.",
-    command: "Command",
-    commands: {
-      "cursor.down": "Next row",
-      "cursor.top": "First row",
-      "nav.parent": "Parent folder",
-      "pane.copy": "Copy",
-      "pane.search": "Search",
-      "pane.tab-new": "New tab",
-      "pane.tab-next": "Next tab",
-      "pane.swap": "Swap panes",
-      "app.palette": "Palette",
-      "app.quit": "Quit",
-    } as Record<string, string>,
   },
   agents: {
     eyebrow: "Agents, governed",
@@ -263,7 +302,7 @@ const en = {
     tagline: "The open-source file commander for people, terminals, windows and agents.",
     promise: "Built in Rust. No telemetry. Ever.",
     groups: [
-      ["Product", [["Tour", "#tour"], ["What's new", "#new"], ["Themes", "#themes"], ["Keys", "#keys"], ["Download", "#download"]]],
+      ["Product", [["Tour", "#tour"], ["Client–server", "#core"], ["Remotes", "#remotes"], ["What's new", "#new"], ["Themes", "#themes"], ["Download", "#download"]]],
       ["Build", [["Documentation", "docs"], ["Architecture map", "architecture"], ["Specification", "spec"], ["Decision records", "adr"], ["Plugin authoring", "plugins"]]],
       ["Open source", [["Source code", "repo"], ["Releases", "releases"], ["Changelog", "changelog"], ["Contributing", "contributing"], ["Security", "security"]]],
     ] as [string, [string, string][]][],
@@ -281,10 +320,11 @@ const es: Copy = {
   },
   nav: {
     links: [
+      ["Cliente-servidor", "#core"],
       ["Recorrido", "#tour"],
+      ["Remotos", "#remotes"],
       ["Novedades", "#new"],
       ["Temas", "#themes"],
-      ["Teclas", "#keys"],
       ["Agentes", "#agents"],
     ],
     download: "Descargar",
@@ -329,11 +369,54 @@ const es: Copy = {
     terminal: "ntc — en cualquier terminal, con el núcleo dentro: nada que arrancar antes",
     window: "norte-gui — una ventana nativa que trae su propio demonio",
     missing: "Las capturas de la ventana se sacan en una máquina con Xvfb: ejecuta make shots.",
+    galleryTabs: { terminal: "En la terminal", window: "En la ventana" },
     gallery: [
       ["viewer", "El visor, píxel a píxel"],
       ["goto", "Ir a cualquier sitio"],
       ["terminal", "Un shell en un panel"],
       ["settings", "Ajustes con controles de verdad"],
+    ],
+  },
+  core: {
+    eyebrow: "Cliente-servidor",
+    title: "Un núcleo. Tantas pantallas como quieras.",
+    body: "norte es un demonio y sus clientes. El núcleo guarda tus conexiones, el trabajo en marcha, el diario y la política; ntc, la ventana, la CLI y tus agentes se enganchan a él por un socket local. Cierra una terminal a mitad de copia y la copia sigue. Abre otra y ya está ahí.",
+    daemon: "norte daemon",
+    daemonNote: "conexiones · tareas · diario · política",
+    socket: "socket local",
+    clients: [
+      ["ntc", "terminal"],
+      ["norte-gui", "ventana"],
+      ["norte", "CLI · scripts"],
+      ["MCP", "agentes"],
+    ],
+    first: "ntc #1 — lanza una copia desde un bucket S3",
+    second: "ntc #2 — otra terminal, el mismo demonio: la copia está ahí, en directo",
+    tryIt: "Pruébalo",
+    commands: [
+      ["Arranca el núcleo", "norte daemon run"],
+      ["Engancha una terminal", "ntc --daemon"],
+      ["…y otra más", "ntc --daemon ~/Backup"],
+      ["O hazlo desde un script", "norte --daemon cp ~/big.iso /mnt/nas/"],
+    ],
+    points: [
+      ["El trabajo sobrevive a la pantalla", "Sal de ntc en mitad de una copia: el demonio sigue copiando, y cualquier otro cliente la enseña en el mismo porcentaje."],
+      ["Un diario para todos", "Lo que hiciste en la terminal, en la ventana, desde un script o a través de un agente cae en el mismo diario, y una sincronización corre ahí para poder deshacerse."],
+      ["Pasa el testigo, no empieces de cero", "Empieza en ntc por SSH y sigue en la ventana en tu mesa: pestañas, directorios y marcas viajan contigo (ntc --attach)."],
+    ],
+    local: "Un socket Unix en tu directorio de ejecución, comprobado contra tu usuario. No se abre ningún puerto.",
+  },
+  remotes: {
+    eyebrow: "Donde estén tus ficheros",
+    title: "Una Raspberry Pi, un bucket, un zip. Un panel más.",
+    body: "Discos locales, SFTP, FTP, S3 y archivos comprimidos pasan por un único sistema de ficheros virtual: las mismas teclas, el mismo diálogo de copia, el mismo deshacer. El demonio mantiene las conexiones abiertas para todos los clientes.",
+    tiles: [
+      ["sftp-trust", "SFTP", "El primer contacto pregunta: la huella de la clave del servidor, antes de mover un solo byte."],
+      ["sftp", "SFTP", "Después la Pi es un panel como otro cualquiera: recórrela, mira, copia."],
+      ["s3", "S3", "Buckets y prefijos como carpetas. AWS, MinIO, cualquier cosa que hable S3."],
+      ["archive", "Comprimidos", "ZIP, TAR (gz, zst…) y RAR se abren como directorios. Sin descomprimir antes."],
+      ["compare", "Comparar", "Dos árboles lado a lado: igual, distinto, solo aquí, solo allí."],
+      ["sync", "Sincronizar", "Primero un plan y una aprobación, y todo se puede deshacer después."],
     ],
   },
   tour: {
@@ -430,16 +513,16 @@ const es: Copy = {
     eyebrow: "Nuevo en {version}",
     title: "Lo que ha llegado desde la última alfa.",
     items: [
-      ["Terminal en un panel", "Un shell bajo los listados, en los dos frontends, con un único emulador.", "Ctrl+Alt+S"],
+      ["Terminal en un panel", "Un shell bajo los listados, en los dos frontends, con un único emulador.", "Ctrl+Alt+S", "tui:terminal"],
+      ["Progreso en la barra", "Una barra ligera para el trabajo en curso, y un ✓ discreto al terminar.", "ADR 0146", "tui:daemon-a"],
+      ["Teclear para saltar", "En el preset Krusader, una letra salta al primer nombre que empieza por ella.", "ADR 0155", "tui:jump"],
+      ["Una ventana como VS Code", "Barra de actividad, paneles que se arrastran entre bordes, pestañas, regla de marcas, barra de título propia.", "ADR 0131–0138", "gui:panes-vscode-dark"],
       ["Pausar y reanudar", "Una copia para al final de su bloque y sigue donde lo dejó.", "Ctrl+Alt+K"],
       ["Cola de transferencias", "De una en una en un disco mecánico, reordenables mientras esperan.", "Ctrl+Alt+Q"],
       ["Repetir lo que falló", "La última transferencia fallida otra vez, con sus opciones, en una tecla.", "Ctrl+Alt+R"],
-      ["Teclear para saltar", "En el preset Krusader, una letra salta al primer nombre que empieza por ella.", "ADR 0155"],
-      ["Una ventana como VS Code", "Barra de actividad, paneles que se arrastran entre bordes, pestañas, regla de marcas, barra de título propia.", "ADR 0131–0138"],
       ["--lang es|en", "El idioma de una ejecución, en los tres binarios, sin tocar la configuración.", "ntc · norte · gui"],
       ["Dueños por nombre", "Columnas de dueño y grupo como las enseña ls -l, y toda columna de atributo ordena.", "ADR 0144–0145"],
       ["Búsqueda acotada", "Tamaño, fecha, tipo, profundidad, ocultos, enlaces: diez filtros en fs.search.", "protocolo 0.81"],
-      ["Progreso en la barra", "Una barra ligera para el trabajo en curso, y un ✓ discreto al terminar.", "ADR 0146"],
     ],
   },
   themes: {
@@ -447,24 +530,6 @@ const es: Copy = {
     title: "Que se parezca al resto de tu escritorio.",
     body: "Catppuccin, Gruvbox, Nord, VS Code, dos fósforos CRT y el propio de norte. Un solo fichero de tema pinta la terminal y la ventana, sigue el claro y oscuro de tu escritorio y se puede escribir desde cero.",
     pick: "Pulsa uno para probarlo arriba.",
-  },
-  keys: {
-    eyebrow: "Siete teclados",
-    title: "Tus dedos ya se lo saben.",
-    body: "Transcritos de los gestores cuyo nombre llevan, no inventados. Cada orden existe en los siete, o la cabecera del preset explica por qué no.",
-    command: "Orden",
-    commands: {
-      "cursor.down": "Fila siguiente",
-      "cursor.top": "Primera fila",
-      "nav.parent": "Carpeta padre",
-      "pane.copy": "Copiar",
-      "pane.search": "Buscar",
-      "pane.tab-new": "Pestaña nueva",
-      "pane.tab-next": "Pestaña siguiente",
-      "pane.swap": "Intercambiar paneles",
-      "app.palette": "Paleta",
-      "app.quit": "Salir",
-    },
   },
   agents: {
     eyebrow: "Agentes, con reglas",
@@ -513,7 +578,7 @@ const es: Copy = {
     tagline: "El gestor de ficheros libre para personas, terminales, ventanas y agentes.",
     promise: "Hecho en Rust. Sin telemetría. Nunca.",
     groups: [
-      ["Producto", [["Recorrido", "#tour"], ["Novedades", "#new"], ["Temas", "#themes"], ["Teclas", "#keys"], ["Descargar", "#download"]]],
+      ["Producto", [["Recorrido", "#tour"], ["Cliente-servidor", "#core"], ["Remotos", "#remotes"], ["Novedades", "#new"], ["Temas", "#themes"], ["Descargar", "#download"]]],
       ["Construir", [["Documentación", "docs"], ["Mapa de arquitectura", "architecture"], ["Especificación", "spec"], ["Decisiones (ADR)", "adr"], ["Escribir plugins", "plugins"]]],
       ["Código abierto", [["Código fuente", "repo"], ["Versiones", "releases"], ["Cambios", "changelog"], ["Contribuir", "contributing"], ["Seguridad", "security"]]],
     ],

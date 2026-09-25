@@ -14,10 +14,19 @@ overrides it), built first there with `just link link-gui` and `just plugins`.
 | `plugins.sh` | installs the official plugins the shots show |
 | `tui.sh` | plays a scene against `ntc` in a detached tmux, keeps each screen as `.ansi` |
 | `gui.sh` | plays the same scene against `norte-gui` on Xvfb, keeps PNGs and, with `RECORD`, a video |
-| `scenes/*.scene` | the scripts: `run`, `keys`, `open`, `type`, `wait`, `shot`, `frame` |
+| `scenes/*.scene` | the scripts: `run`, `keys`, `open`, `type`, `wait`, `shot`, `frame`, and for the terminal also `session` and `sh` |
+| `serve-s3.sh` | inside the sandbox: an S3 bucket served by `rclone` on `:9000`, throttled, and an `archive` connection to it |
+| `serve-sftp.sh` | inside the sandbox: an unprivileged `sshd` on `:2222` playing a Raspberry Pi, a key, and a `raspberry` connection |
 
-Needs `bwrap`, `tmux`, `magick`, `zip`, `zstd`; for the window also `Xvfb`,
-`xdotool`, `ffmpeg`.
+Needs `bwrap`, `tmux`, `magick`, `zip`, `zstd`, `rclone`, `sshd`; for the
+window also `Xvfb`, `xdotool`, `ffmpeg`.
+
+**Two clients on one daemon.** `sh <cmd>` runs a daemon or a server as ada in
+the background, and `session <name>` points the steps after it at a second
+tmux session, where a `run` starts a second `ntc`. Every sandbox of a scene
+shares one runtime dir (`RUN_DIR`), so they all meet on the daemon's socket.
+`scenes/daemon.scene` is the example. `ONLY=extra make shots` retakes just
+the scenes with servers (`daemon`, `sftp`, `archive`, `compare`, `jump`).
 
 **Why a sandbox and not `HOME=`.** Setting `HOME` does not isolate norte: the
 session, the config and the runtime dir each have their own XDG variable. One

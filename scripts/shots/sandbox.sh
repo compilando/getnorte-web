@@ -22,6 +22,15 @@ printf 'root:x:0:\nada:x:%s:\n' "$(id -g)" >"$ids/group"
 # /proc/mounts, and binding `/` carried every mount of the real machine (the
 # user's network drives by name) into the Places sidebar, /home hidden or not.
 run=/run/user/$(id -u)
+# RUN_DIR shares one runtime dir between sandboxes: a daemon started in one
+# and the clients in the others then see the same socket. Without it each
+# sandbox has a runtime dir of its own.
+if [ -n "${RUN_DIR:-}" ]; then
+	mkdir -p "$RUN_DIR" && chmod 0700 "$RUN_DIR"
+	runtime=(--bind "$RUN_DIR" "$run")
+else
+	runtime=(--dir "$run" --chmod 0700 "$run")
+fi
 bwrap \
 	--die-with-parent \
 	--unshare-pid \
@@ -42,8 +51,7 @@ bwrap \
 	--tmpfs /home \
 	--bind "$home" /home/ada \
 	--tmpfs /run \
-	--dir "$run" \
-	--chmod 0700 "$run" \
+	"${runtime[@]}" \
 	--tmpfs /opt \
 	--ro-bind "$bin" /opt/norte \
 	--chdir /home/ada \

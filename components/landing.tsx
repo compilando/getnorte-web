@@ -1,12 +1,14 @@
 import type { ReactNode } from "react";
 import type { Packed } from "@/lib/ansi";
-import { COPY, fill, type Lang, type Scene } from "@/lib/i18n";
-import { COMMANDS, LINKS, PRESETS, RELEASE, THEMES } from "@/lib/product";
-import { COLS, guiShot, guiVideo, presetKeys, themeAccent, tuiReel, tuiScene, tuiTheme } from "@/lib/shots";
+import { COPY, fill, type Extra, type Lang, type Scene } from "@/lib/i18n";
+import { COMMANDS, LINKS, RELEASE, THEME_ACCENTS, THEMES } from "@/lib/product";
+import { COLS, guiShot, guiVideo, tuiReel, tuiScene, tuiTheme } from "@/lib/shots";
 import { AppFrame } from "./app-frame";
 import { ButtonLink } from "./button-link";
-import { FinalCta } from "./final-cta";
+import { CoreDiagram } from "./core-diagram";
+import { CopyRow, FinalCta } from "./final-cta";
 import { Footer } from "./footer";
+import { GalleryTabs } from "./gallery-tabs";
 import { HeroStage } from "./hero-stage";
 import { Nav } from "./nav";
 import { SignalStrip } from "./signal-strip";
@@ -37,9 +39,17 @@ function Section({ id, children, className = "" }: { id?: string; children: Reac
 export function Landing({ lang }: { lang: Lang }) {
   const t = COPY[lang];
   const home = lang === "en" ? "/" : "/es";
-  const screen = (scene: Scene | "grant", label: string) => {
+  const screen = (scene: Scene | Extra, label: string) => {
     const s = tuiScene(lang, scene);
     return s ? <TerminalScreen screen={s} cols={COLS} label={label} /> : null;
+  };
+  // A "tui:<scene>" or "gui:<name>" reference, as the news items carry them.
+  const shot = (ref: string, label: string) => {
+    const [kind, name] = ref.split(":");
+    if (kind === "tui") return screen(name as Scene | Extra, label);
+    const src = guiShot(lang, name);
+    // eslint-disable-next-line @next/next/no-img-element -- a capture, served as-is
+    return src ? <img src={src} alt={label} loading="lazy" className="block w-full" /> : null;
   };
 
   // The hero: the clip, then one still per theme.
@@ -47,7 +57,7 @@ export function Landing({ lang }: { lang: Lang }) {
   const themes = THEMES.flatMap((id) => {
     const s = tuiTheme(lang, id);
     if (!s) return [];
-    return [{ id, screen: s, swatch: [s.bg ?? "#000", themeAccent(id) ?? s.fg ?? "#fff"] as [string, string] }];
+    return [{ id, screen: s, swatch: [s.bg ?? "#000", THEME_ACCENTS[id]] as [string, string] }];
   });
   const windows = THEMES.flatMap((id) => {
     const src = guiShot(lang, `panes-${id}`);
@@ -58,14 +68,11 @@ export function Landing({ lang }: { lang: Lang }) {
   for (const step of t.tour.steps) screens[step.scene] = tuiScene(lang, step.scene);
   const steps = t.tour.steps.map((s) => ({ ...s, body: fill(s.body, { commands: COMMANDS }) }));
 
-  const commands = Object.keys(t.keys.commands);
-  const keys = presetKeys(commands);
   const guiPanes = guiShot(lang, "panes-catppuccin-mocha") ?? windows[0]?.src ?? null;
   const tuiPanes = tuiScene(lang, "panes");
-  const gallery = t.duo.gallery.flatMap(([name, caption]) => {
-    const src = guiShot(lang, name);
-    return src ? [[src, caption] as const] : [];
-  });
+  const gallery = t.duo.gallery.map(([name, caption]) => ({ caption, screen: tuiScene(lang, name), src: guiShot(lang, name) }));
+  const featured = t.news.items.filter((item) => item[3]);
+  const plain = t.news.items.filter((item) => !item[3]);
 
   return (
     <main className="min-h-screen overflow-x-clip bg-base text-ink">
@@ -149,19 +156,64 @@ export function Landing({ lang }: { lang: Lang }) {
             <figcaption className="mt-3 font-mono text-[10px] text-muted">{t.duo.window}</figcaption>
           </figure>
         </div>
-        {gallery.length > 0 && (
-          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {gallery.map(([src, caption]) => (
-              <figure key={src} className="rise">
-                <div className="overflow-hidden rounded-lg border border-white/[0.1] transition hover:border-phosphor/40">
-                  {/* eslint-disable-next-line @next/next/no-img-element -- a capture, served as-is */}
-                  <img src={src} alt={caption} loading="lazy" className="block w-full" />
+        <GalleryTabs items={gallery} labels={t.duo.galleryTabs} cols={COLS} />
+      </Section>
+
+      {/* Client–server */}
+      <Section id="core" className="border-t border-line/60">
+        <div className="grid gap-10 lg:grid-cols-[.8fr_1.2fr] lg:items-end">
+          <div>
+            <Eyebrow>{t.core.eyebrow}</Eyebrow>
+            <H2>{t.core.title}</H2>
+          </div>
+          <p className="max-w-xl text-lg leading-8 text-ink/65">{t.core.body}</p>
+        </div>
+
+        <div className="page-grid rise mt-14 rounded-2xl border border-white/[0.09] bg-surface/60 p-4 sm:p-8">
+          <CoreDiagram t={t.core} />
+        </div>
+
+        <div className="mt-6 grid gap-6 lg:grid-cols-2">
+          {(
+            [
+              ["daemon-a", "ada@norte — ntc #1", t.core.first],
+              ["daemon-b", "ada@norte — ntc #2", t.core.second],
+            ] as const
+          ).map(([scene, title, caption]) => (
+            <figure key={scene} className="rise">
+              <AppFrame title={title}>{screen(scene, caption)}</AppFrame>
+              <figcaption className="mt-3 flex items-start gap-2 font-mono text-[10px] text-muted">
+                <span className="mt-[3px] h-1.5 w-1.5 shrink-0 rounded-full bg-phosphor shadow-[0_0_8px_#B7FF52]" />
+                {caption}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+
+        <div className="mt-16 grid gap-12 lg:grid-cols-[1.1fr_.9fr] lg:gap-16">
+          <div className="space-y-6">
+            {t.core.points.map(([title, body], i) => (
+              <div key={title} className="flex gap-5 border-t border-line pt-6">
+                <span className="font-mono text-[10px] text-phosphor">{String(i + 1).padStart(2, "0")}</span>
+                <div>
+                  <h3 className="text-lg font-medium tracking-[-0.025em] text-ink">{title}</h3>
+                  <p className="mt-2 max-w-md text-sm leading-6 text-muted">{body}</p>
                 </div>
-                <figcaption className="mt-2 font-mono text-[10px] text-muted">{caption}</figcaption>
-              </figure>
+              </div>
             ))}
           </div>
-        )}
+          <div>
+            <div className="overflow-hidden rounded-xl border border-white/[0.12] bg-black/45">
+              <div className="border-b border-white/[0.09] px-4 py-3 font-mono text-[8px] uppercase tracking-[0.12em] text-muted sm:px-5">
+                {t.core.tryIt}
+              </div>
+              {t.core.commands.map(([label, command]) => (
+                <CopyRow key={command} label={label} command={command} t={t.cta} />
+              ))}
+            </div>
+            <p className="mt-4 font-mono text-[10px] leading-5 text-muted">{t.core.local}</p>
+          </div>
+        </div>
       </Section>
 
       {/* Tour */}
@@ -173,17 +225,52 @@ export function Landing({ lang }: { lang: Lang }) {
         </div>
       </Section>
 
+      {/* Remotes, archives, compare and sync */}
+      <Section id="remotes" className="border-t border-line/60">
+        <div className="grid gap-10 lg:grid-cols-[.8fr_1.2fr] lg:items-end">
+          <div>
+            <Eyebrow>{t.remotes.eyebrow}</Eyebrow>
+            <H2>{t.remotes.title}</H2>
+          </div>
+          <p className="max-w-xl text-lg leading-8 text-ink/65">{t.remotes.body}</p>
+        </div>
+        <div className="mt-14 grid gap-x-6 gap-y-10 md:grid-cols-2">
+          {t.remotes.tiles.map(([scene, tag, caption]) => (
+            <figure key={scene} className="rise">
+              <AppFrame title={`ada@norte — ${tag}`}>{screen(scene, caption)}</AppFrame>
+              <figcaption className="mt-3">
+                <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-phosphor">{tag}</span>
+                <span className="mt-1 block text-sm leading-6 text-muted">{caption}</span>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </Section>
+
       {/* What's new */}
       <Section id="new" className="border-t border-line/60">
         <Eyebrow>{fill(t.news.eyebrow, { version: RELEASE.label })}</Eyebrow>
         <H2>{t.news.title}</H2>
-        <div className="mt-14 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          {t.news.items.map(([title, body, tag], i) => (
+        <div className="mt-14 grid gap-3 lg:grid-cols-2">
+          {featured.map(([title, body, tag, ref]) => (
             <article
               key={title}
-              className={`rise sheen relative overflow-hidden rounded-2xl border border-white/[0.09] bg-surface p-6 transition hover:border-phosphor/40 ${
-                i === 0 || i === 5 ? "lg:col-span-2" : ""
-              }`}
+              className="rise relative overflow-hidden rounded-2xl border border-white/[0.09] bg-surface transition hover:border-phosphor/40"
+            >
+              <div className="border-b border-white/[0.08]">{ref && shot(ref, title)}</div>
+              <div className="p-6">
+                <p className="font-mono text-[10px] text-phosphor">{tag}</p>
+                <h3 className="mt-4 text-xl font-medium tracking-[-0.03em] text-ink">{title}</h3>
+                <p className="mt-2 text-sm leading-6 text-muted">{body}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+        <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {plain.map(([title, body, tag]) => (
+            <article
+              key={title}
+              className="rise sheen relative overflow-hidden rounded-2xl border border-white/[0.09] bg-surface p-6 transition hover:border-phosphor/40"
             >
               <p className="font-mono text-[10px] text-phosphor">{tag}</p>
               <h3 className="mt-6 text-xl font-medium tracking-[-0.03em] text-ink">{title}</h3>
@@ -213,45 +300,6 @@ export function Landing({ lang }: { lang: Lang }) {
               </ThemeCard>
             </div>
           ))}
-        </div>
-      </Section>
-
-      {/* Keys */}
-      <Section id="keys" className="border-t border-line/60">
-        <div className="grid gap-10 lg:grid-cols-[.8fr_1.2fr] lg:items-end">
-          <div>
-            <Eyebrow>{t.keys.eyebrow}</Eyebrow>
-            <H2>{t.keys.title}</H2>
-          </div>
-          <p className="max-w-xl text-lg leading-8 text-ink/65">{t.keys.body}</p>
-        </div>
-        <div className="mt-14 overflow-x-auto rounded-2xl border border-white/[0.09] bg-surface">
-          <table className="w-full min-w-[760px] border-collapse text-left">
-            <thead>
-              <tr className="border-b border-white/[0.09]">
-                <th className="px-5 py-4 font-mono text-[10px] font-normal uppercase tracking-[0.12em] text-muted">{t.keys.command}</th>
-                {PRESETS.map((p) => (
-                  <th key={p} className="px-3 py-4 font-mono text-[11px] font-medium text-ink">{p}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {commands.map((cmd) => (
-                <tr key={cmd} className="border-b border-white/[0.05] last:border-0 hover:bg-white/[0.02]">
-                  <td className="px-5 py-3 text-sm text-ink/80">{t.keys.commands[cmd]}</td>
-                  {PRESETS.map((p) => (
-                    <td key={p} className="px-3 py-3">
-                      {keys[p][cmd] ? (
-                        <kbd className="rounded border border-white/[0.12] bg-white/[0.04] px-1.5 py-0.5 font-mono text-[11px] text-ink/85">{keys[p][cmd]}</kbd>
-                      ) : (
-                        <span className="text-muted/50">—</span>
-                      )}
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
         </div>
       </Section>
 

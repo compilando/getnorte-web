@@ -13,6 +13,13 @@
 #   shot <name>        write <out-dir>/<name>.ansi
 #   frame              append the screen to <out-dir>/reel.ansi (a clip)
 #   run <cmd>          start ntc with these arguments (first line)
+#   session <name>     the steps after it act on this tmux session; a `run`
+#                      after it starts a second ntc next to the first
+#   sh <cmd>           run a shell command as ada, in the background (a daemon,
+#                      a server, a long copy); stopped when the scene ends
+#
+# Every sandbox of one scene shares a runtime dir, so a daemon started with
+# `sh` and an `ntc --daemon` started with `run` meet on the same socket.
 set -euo pipefail
 
 home=${1:?home} bin=${2:?bin dir} scene=${3:?scene} out=${4:?out dir}
@@ -37,8 +44,19 @@ EOF
 # Each run starts with no session, no history and an empty journal.
 rm -rf "$home/.local/state" "$home/.cache" "$home"/.config/norte/{journal,index}.db*
 
+export RUN_DIR=${TMPDIR:-/tmp}/norte-landing-run
+rm -rf "$RUN_DIR"
+target=shot
+bg=()
+
 t() { tmux -L "$sock" "$@"; }
-snap() { t capture-pane -e -p -t shot; }
+snap() { t capture-pane -e -p -t "$target"; }
+cleanup() {
+	t kill-server 2>/dev/null || true
+	for pid in "${bg[@]}"; do kill "$pid" 2>/dev/null || true; done
+	wait 2>/dev/null || true
+}
+trap cleanup EXIT
 
 t kill-server 2>/dev/null || true
 while IFS= read -r line || [ -n "$line" ]; do
@@ -52,24 +70,31 @@ while IFS= read -r line || [ -n "$line" ]; do
 		# draws its first frame.
 		t -f /dev/null start-server \; set -s variation-selector-always-wide "${VS16_WIDE:-on}"
 		# shellcheck disable=SC2086 # the scene's arguments are words on purpose
-		t new-session -d -s shot -x "$cols" -y "$rows" \
-			"$here/sandbox.sh" "$home" "$bin" env LANG="$locale" LC_ALL="$locale" ntc $arg
+		t new-session -d -s "$target" -x "$cols" -y "$rows" \
+			env RUN_DIR="$RUN_DIR" "$here/sandbox.sh" "$home" "$bin" env LANG="$locale" LC_ALL="$locale" ntc $arg
 		# Keys sent before the first frame is up are lost, not queued.
 		sleep 2.5
 		;;
+	session) target=$arg ;;
+	sh)
+		"$here/sandbox.sh" "$home" "$bin" env LANG="$locale" LC_ALL="$locale" bash -c "$arg" \
+			>>"$out/sh.log" 2>&1 &
+		bg+=($!)
+		sleep "$settle"
+		;;
 	keys)
 		# shellcheck disable=SC2086
-		t send-keys -t shot $arg
+		t send-keys -t "$target" $arg
 		sleep "$settle"
 		;;
 	open)
 		# Enter into a directory: the listing loads asynchronously, and a key
 		# sent before it lands acts on the OLD one.
-		t send-keys -t shot Enter
+		t send-keys -t "$target" Enter
 		sleep 1.2
 		;;
 	type)
-		t send-keys -t shot -l "$arg"
+		t send-keys -t "$target" -l "$arg"
 		sleep "$settle"
 		;;
 	wait) sleep "$arg" ;;
@@ -86,8 +111,9 @@ while IFS= read -r line || [ -n "$line" ]; do
 	# TRACE=1 keeps the screen after every step: the way to see which key missed.
 	if [ -n "${TRACE:-}" ]; then
 		step=$((${step:-0} + 1))
-		{ echo "## $line"; snap; } >"$out/trace-$(printf %03d "$step").ansi"
+		{ echo "## $target: $line"; snap 2>/dev/null || true; } >"$out/trace-$(printf %03d "$step").ansi"
 	fi
 done <"$scene"
-t kill-server 2>/dev/null || true
+cleanup
 [ -s "$out/reel.ansi" ] || rm -f "$out/reel.ansi"
+[ -s "$out/sh.log" ] || rm -f "$out/sh.log"

@@ -28,7 +28,7 @@ themes=(default catppuccin-mocha catppuccin-latte gruvbox-dark gruvbox-light nor
 	retro-crt retro-crt-amber vscode-dark vscode-light)
 hero_theme=${HERO_THEME:-catppuccin-mocha}
 
-for tool in bwrap tmux magick zip zstd; do
+for tool in bwrap tmux magick zip zstd rclone sshd ssh-keygen; do
 	command -v "$tool" >/dev/null || { echo "shoot.sh: needs $tool" >&2; exit 1; }
 done
 [ -x "$build/ntc" ] && [ -x "$build/norte" ] || { echo "shoot.sh: build ntc and norte first" >&2; exit 1; }
@@ -46,6 +46,8 @@ mkdir -p "$bin"
 for b in ntc norte norte-gui; do
 	if [ -x "$build/$b" ]; then cp "$build/$b" "$bin/"; fi
 done
+# The servers the remote scenes talk to run inside the sandbox: on ada's PATH.
+cp "$here"/serve-*.sh "$bin/"
 
 echo "== ada's home, and the plugins she approved"
 rm -rf "$home"
@@ -56,6 +58,33 @@ if [ "$("$here/sandbox.sh" "$home" "$bin" norte plugin list | grep -c 'NOT appro
 	echo "shoot.sh: approve.scene should leave only media-info unapproved" >&2
 	"$here/sandbox.sh" "$home" "$bin" norte plugin list >&2
 	exit 1
+fi
+
+# The scenes with a daemon and servers: two clients on one daemon, S3, SFTP,
+# an archive, compare and sync, type-to-jump. Each runs in a scratch dir, and
+# only its shots are kept: a reel there would overwrite the tour's.
+extra() {
+	local lang=$1 scene f
+	for scene in daemon sftp archive compare jump; do
+		echo "== $scene ($lang)"
+		"$here/demo-tree.sh" "$home"
+		rm -rf "${work:?}/$scene"
+		"$here/tui.sh" "$home" "$bin" "$here/scenes/$scene.scene" "$work/$scene" "$hero_theme" "$lang"
+		mkdir -p "$out/tui/$lang"
+		for f in "$work/$scene"/*.ansi; do
+			case $(basename "$f") in
+			# jobs-paused: a paused copy still shows a decaying rate and an
+			# ETA of hours, so it stays out of the page until that is fixed.
+			reel.ansi | trace-* | connect.ansi | jobs-paused.ansi) ;;
+			*) mv "$f" "$out/tui/$lang/" ;;
+			esac
+		done
+	done
+}
+# ONLY=extra takes just those, and leaves every other shot as it was.
+if [ "${ONLY:-}" = extra ]; then
+	for lang in "${langs[@]}"; do extra "$lang"; done
+	exit 0
 fi
 
 # ONLY=tui or ONLY=gui retakes one half and leaves the other as it was.
@@ -74,6 +103,7 @@ for lang in "${langs[@]}"; do
 		mkdir -p "$out/tui/$lang/themes"
 		mv "$work/themes/panes.ansi" "$out/tui/$lang/themes/$theme.ansi"
 	done
+	extra "$lang"
 done
 if [ "${ONLY:-}" = tui ]; then
 	exit 0

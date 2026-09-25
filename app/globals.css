@@ -177,6 +177,16 @@ body {
   animation: task-flow 2.4s ease-in-out infinite;
 }
 
+/* The client–server diagram: traffic walking along a wire. */
+.wire-flow {
+  stroke-dasharray: 3 14;
+  animation: wire-flow 1.6s linear infinite;
+}
+
+@keyframes wire-flow {
+  to { stroke-dashoffset: -34; }
+}
+
 @keyframes compass-pulse {
   0%, 100% { box-shadow: 0 0 0 0 rgba(183, 255, 82, 0.24); }
   50% { box-shadow: 0 0 0 8px rgba(183, 255, 82, 0); }
