@@ -5,7 +5,7 @@ import type { Copy } from "@/lib/i18n";
 import { LINKS, RELEASE } from "@/lib/product";
 import { ButtonLink } from "./button-link";
 
-function CopyRow({ label, command, t }: { label: string; command: string; t: Copy["cta"] }) {
+export function CopyRow({ label, command, t }: { label: string; command: string; t: Pick<Copy["cta"], "copy" | "copied"> }) {
   const [copied, setCopied] = useState(false);
 
   const copy = async () => {
