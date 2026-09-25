@@ -113,6 +113,11 @@ body {
    the screen's columns fill it exactly: JetBrains Mono advances 0.6em. */
 .term {
   container-type: inline-size;
+  /* The screen's own shape: a cell is 0.6em wide and 1.2em tall. Known before
+     layout, so an off-screen screen is skipped at its real size. */
+  aspect-ratio: calc(var(--cols) * 0.6) / calc(var(--rows, 38) * 1.2);
+  overflow: hidden;
+  content-visibility: auto;
 }
 
 .term pre {
