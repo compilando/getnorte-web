@@ -416,7 +416,7 @@ const en = {
   footer: {
     tagline: "The open-source file commander for people, terminals, windows and agents.",
     promise: "Built in Rust. No telemetry. Ever.",
-    thanks: "Made with love for Midnight Commander, Far Manager, Total Commander, Double Commander, yazi and every orthodox file manager that came first.",
+    thanks: "Made with love for Midnight Commander, Far Manager, Total Commander, Double Commander, Krusader, yazi and every orthodox file manager that came first.",
     groups: [
       ["Product", [["Why norte", "#why"], ["Agents", "#agents"], ["Plugins", "#plugins"], ["All features", "/features"], ["Themes", "/features#themes"], ["Comparison", "/compare"], ["Download", "#download"]]],
       ["Build", [["Documentation", "docs"], ["Architecture map", "architecture"], ["Specification", "spec"], ["Decision records", "adr"], ["Plugin authoring", "plugins"]]],
@@ -828,7 +828,7 @@ const es: Copy = {
   footer: {
     tagline: "El gestor de ficheros libre para personas, terminales, ventanas y agentes.",
     promise: "Hecho en Rust. Sin telemetría. Nunca.",
-    thanks: "Hecho con cariño por Midnight Commander, Far Manager, Total Commander, Double Commander, yazi y cada gestor ortodoxo que vino antes.",
+    thanks: "Hecho con cariño por Midnight Commander, Far Manager, Total Commander, Double Commander, Krusader, yazi y cada gestor ortodoxo que vino antes.",
     groups: [
       ["Producto", [["Por qué norte", "#why"], ["Agentes", "#agents"], ["Plugins", "#plugins"], ["Todas las funciones", "/es/funciones"], ["Temas", "/es/funciones#themes"], ["Comparación", "/es/comparar"], ["Descargar", "#download"]]],
       ["Construir", [["Documentación", "docs"], ["Mapa de arquitectura", "architecture"], ["Especificación", "spec"], ["Decisiones (ADR)", "adr"], ["Escribir plugins", "plugins"]]],
