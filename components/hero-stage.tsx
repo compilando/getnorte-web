@@ -6,6 +6,8 @@ import { AppFrame } from "./app-frame";
 import { TerminalScreen } from "./terminal-screen";
 
 export const THEME_EVENT = "norte:theme";
+/** The hero's "watch the demo": the film, from the start. */
+export const DEMO_EVENT = "norte:demo";
 
 type Labels = { film: string; terminal: string; window: string; theme: string; live: string; play: string; pause: string };
 type Film = { webm: string; mp4: string; poster: string };
@@ -39,6 +41,7 @@ export function HeroStage({
   const [playing, setPlaying] = useState(true);
   const [still, setStill] = useState(false);
   const filmRef = useRef<HTMLVideoElement>(null);
+  const hasFilm = Boolean(film);
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -51,9 +54,25 @@ export function HeroStage({
       setTheme((e as CustomEvent<string>).detail);
       setMode("terminal");
     };
+    const onDemo = () => {
+      setTheme(null);
+      setMode(hasFilm ? "film" : "terminal");
+      setPlaying(true);
+      // Asked for, the film plays from the start, reduced motion or not.
+      window.setTimeout(() => {
+        const v = filmRef.current;
+        if (!v) return;
+        v.currentTime = 0;
+        void v.play().catch(() => {});
+      }, 50);
+    };
     window.addEventListener(THEME_EVENT, onTheme);
-    return () => window.removeEventListener(THEME_EVENT, onTheme);
-  }, []);
+    window.addEventListener(DEMO_EVENT, onDemo);
+    return () => {
+      window.removeEventListener(THEME_EVENT, onTheme);
+      window.removeEventListener(DEMO_EVENT, onDemo);
+    };
+  }, [hasFilm]);
 
   useEffect(() => {
     if (!playing || theme !== null || mode !== "terminal" || reel.length < 2) return;

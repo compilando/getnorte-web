@@ -23,7 +23,7 @@ export const ROWS: Row[] = [
     notes: { 4: { en: "Miller columns", es: "columnas Miller" } },
   },
   {
-    label: { en: "Several screens on one core (daemon)", es: "Varias pantallas sobre un núcleo (demonio)" },
+    label: { en: "Several screens on one core (daemon)", es: "Varias pantallas sobre un núcleo (daemon)" },
     cells: ["yes", "no", "no", "no", "no"],
     notes: { 4: { en: "DDS syncs state, not tasks", es: "DDS comparte estado, no tareas" } },
   },
@@ -75,6 +75,9 @@ export const ROWS: Row[] = [
     cells: ["yes", "yes", "plugin", "yes", "yes"],
   },
 ];
+
+/** The rows where norte says yes and the other four say no: the home page's summary. */
+export const COMPARE_ONLY = ROWS.filter((r) => r.cells[0] === "yes" && r.cells.slice(1).every((c) => c === "no"));
 
 export const PLATFORMS: Record<Lang, string[]> = {
   en: ["Linux · macOS & Windows from source", "Linux · macOS · BSD", "Windows (far2l fork: Linux, macOS)", "Windows · Android", "Linux · macOS · Windows"],

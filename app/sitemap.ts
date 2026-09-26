@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { COPY } from "@/lib/i18n";
 import { SITE } from "@/lib/product";
 import { TOPICS, topicPath } from "@/lib/topics";
 
@@ -22,5 +23,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
       alternates: { languages: { en: `${SITE}${topicPath(topic, "en")}`, es: `${SITE}${topicPath(topic, "es")}` } },
     })),
   );
-  return [home, homeEs, ...topics];
+  const pages = (["features", "compare"] as const).flatMap((page) =>
+    (["en", "es"] as const).map((lang) => ({
+      url: `${SITE}${COPY[lang].paths[page]}`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.9,
+      alternates: { languages: { en: `${SITE}${COPY.en.paths[page]}`, es: `${SITE}${COPY.es.paths[page]}` } },
+    })),
+  );
+  return [home, homeEs, ...pages, ...topics];
 }

@@ -62,11 +62,24 @@ function Command({ line, shown, t, os }: { line: string; shown?: string[]; t: Co
 /**
  * The hero's install box: the command for the visitor's system, ready to copy.
  * The server renders Linux, where the binaries are; the browser then switches
- * to what it detects, and the tabs let anyone pick another.
+ * to what it detects, and the tabs let anyone pick another. Behind the hero's
+ * "Install on Linux" it stays on Linux: that is what was asked for.
  */
-export function HeroInstall({ t, docs, docsLabel }: { t: Copy["hero"]["install"]; docs: string; docsLabel: string }) {
+export function HeroInstall({
+  t,
+  docs,
+  docsLabel,
+  detect: detectOs = true,
+}: {
+  t: Copy["hero"]["install"];
+  docs: string;
+  docsLabel: string;
+  detect?: boolean;
+}) {
   const [os, setOs] = useState<Os>("linux");
-  useEffect(() => setOs(detect()), []);
+  useEffect(() => {
+    if (detectOs) setOs(detect());
+  }, [detectOs]);
 
   return (
     <div>

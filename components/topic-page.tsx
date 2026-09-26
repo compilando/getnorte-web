@@ -93,7 +93,7 @@ export function TopicPage({ topic, lang }: { topic: Topic; lang: Lang }) {
             <div className="mt-6 overflow-hidden rounded-xl border border-white/[0.12] bg-black/45">
               <CopyRow label="Claude Code" command={t.agents.hookupCommand} t={t.cta} />
               <CopyRow
-                label={lang === "en" ? "policy.toml: agents ask (read at the daemon's start)" : "policy.toml: los agentes preguntan (se lee al arrancar el demonio)"}
+                label={lang === "en" ? "policy.toml: agents ask (read at the daemon's start)" : "policy.toml: los agentes preguntan (se lee al arrancar el daemon)"}
                 command={`printf '[[rule]]\\nactor = "agent"\\naction = "ask"\\n' >> ~/.config/norte/policy.toml`}
                 t={t.cta}
               />

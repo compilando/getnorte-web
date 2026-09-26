@@ -73,7 +73,7 @@ export const TOPIC_COPY: Record<Topic, Record<Lang, TopicCopy>> = {
       faq: [
         ["Is norte free?", "Yes. It is open source: the core and frontends are AGPL-3.0, and the protocol and providers are MIT or Apache-2.0. There is no account and no telemetry."],
         ["Which systems does it run on?", "The alpha ships Linux x86_64 binaries. On macOS and Windows it builds from source with Rust 1.94 or newer."],
-        ["Can I undo what an AI agent did?", "Yes. Agent operations are journaled under the agent's session, and norte undo <session> reverts the whole session, newest first."],
+        ["Can I undo what an AI agent did?", "Yes. Agent operations are journaled under the agent's session, and norte undo <session> reverts that session, newest first. It never overwrites, and skips what was replaced since or cannot be safely reversed."],
       ],
     },
     es: {
@@ -107,7 +107,7 @@ export const TOPIC_COPY: Record<Topic, Record<Lang, TopicCopy>> = {
       faq: [
         ["¿norte es gratis?", "Sí. Es software libre: el núcleo y los frontends son AGPL-3.0, y el protocolo y los proveedores, MIT o Apache-2.0. Sin cuenta y sin telemetría."],
         ["¿En qué sistemas funciona?", "La alfa trae binarios para Linux x86_64. En macOS y Windows se compila desde el código con Rust 1.94 o posterior."],
-        ["¿Puedo deshacer lo que hizo un agente de IA?", "Sí. Las operaciones de un agente quedan en el diario bajo su sesión, y norte undo <sesión> revierte la sesión entera, de lo más nuevo a lo más viejo."],
+        ["¿Puedo deshacer lo que hizo un agente de IA?", "Sí. Las operaciones de un agente quedan en el diario bajo su sesión, y norte undo <sesión> revierte esa sesión, de lo más nuevo a lo más viejo. Nunca sobrescribe, y se salta lo que se ha sustituido después o no puede revertir con seguridad."],
       ],
     },
   },
@@ -119,7 +119,7 @@ export const TOPIC_COPY: Record<Topic, Record<Lang, TopicCopy>> = {
         "Browse SFTP servers, S3 buckets and ZIP/TAR/RAR archives as plain folders, in two panes, from the terminal or a native window. Compare and sync them, with undo. Open source.",
       eyebrow: "SFTP · S3 · archives",
       h1: "SFTP, S3 and archives. Just another pane.",
-      lede: "A Raspberry Pi over SFTP, a bucket on S3, a zip in Downloads: norte opens them all through one virtual filesystem, with the same keys, the same copy dialog and the same undo.",
+      lede: "A Raspberry Pi over SFTP, a bucket on S3, a zip in Downloads: norte opens them all through one virtual filesystem, with the same keys, the same copy dialog and the same journal.",
       sections: [
         {
           h2: "SFTP that asks before it trusts",
@@ -147,7 +147,7 @@ export const TOPIC_COPY: Record<Topic, Record<Lang, TopicCopy>> = {
         },
         {
           h2: "Compare two trees, then sync them",
-          body: "Same, different, only here, only there — then a sync plan you approve in one go, which can be undone afterwards.",
+          body: "Same, different, only here, only there — then a sync plan you approve in one go, with every change it makes in the journal.",
           shot: "tui:compare",
           frame: "ada@norte — compare",
         },
@@ -155,7 +155,7 @@ export const TOPIC_COPY: Record<Topic, Record<Lang, TopicCopy>> = {
       faq: [
         ["Which remote protocols does norte support?", "SFTP, FTP (with TLS) and S3-compatible object storage, plus ZIP, TAR and RAR archives, all through the same virtual filesystem."],
         ["Where are passwords and keys stored?", "Not in the config file: connections.toml only holds references, and the secret comes from your keyring or environment."],
-        ["Can I sync a local folder to a server?", "Yes. Compare the two trees, review the plan, approve it; the sync is journaled, so it can be undone."],
+        ["Can I sync a local folder to a server?", "Yes. Compare the two trees, review the plan, approve it; the sync is journaled, and undo reverses what it safely can. On SFTP and S3, deleted files come back only if the connection keeps a trash."],
       ],
     },
     es: {
@@ -165,7 +165,7 @@ export const TOPIC_COPY: Record<Topic, Record<Lang, TopicCopy>> = {
         "Recorre servidores SFTP, buckets S3 y archivos ZIP/TAR/RAR como carpetas normales, en dos paneles, desde la terminal o una ventana nativa. Compáralos y sincronízalos, con deshacer. Libre.",
       eyebrow: "SFTP · S3 · comprimidos",
       h1: "SFTP, S3 y comprimidos. Un panel más.",
-      lede: "Una Raspberry Pi por SFTP, un bucket en S3, un zip en Descargas: norte los abre todos con un único sistema de ficheros virtual, con las mismas teclas, el mismo diálogo de copia y el mismo deshacer.",
+      lede: "Una Raspberry Pi por SFTP, un bucket en S3, un zip en Descargas: norte los abre todos con un único sistema de ficheros virtual, con las mismas teclas, el mismo diálogo de copia y el mismo diario.",
       sections: [
         {
           h2: "SFTP que pregunta antes de fiarse",
@@ -181,7 +181,7 @@ export const TOPIC_COPY: Record<Topic, Record<Lang, TopicCopy>> = {
         },
         {
           h2: "Buckets S3 como carpetas",
-          body: "Los prefijos son carpetas y los objetos, ficheros. AWS, MinIO o cualquier cosa que hable S3. Con el demonio, la conexión y las copias en marcha las comparten todos los clientes.",
+          body: "Los prefijos son carpetas y los objetos, ficheros. AWS, MinIO o cualquier cosa que hable S3. Con el daemon, la conexión y las copias en marcha las comparten todos los clientes.",
           shot: "tui:s3",
           frame: "ada@norte — S3",
         },
@@ -193,7 +193,7 @@ export const TOPIC_COPY: Record<Topic, Record<Lang, TopicCopy>> = {
         },
         {
           h2: "Compara dos árboles y luego sincronízalos",
-          body: "Igual, distinto, solo aquí, solo allí; después, un plan de sincronización que apruebas de una vez y que se puede deshacer.",
+          body: "Igual, distinto, solo aquí, solo allí; después, un plan de sincronización que apruebas de una vez, con cada cambio que hace en el diario.",
           shot: "tui:compare",
           frame: "ada@norte — comparar",
         },
@@ -201,7 +201,7 @@ export const TOPIC_COPY: Record<Topic, Record<Lang, TopicCopy>> = {
       faq: [
         ["¿Qué protocolos remotos admite norte?", "SFTP, FTP (con TLS) y almacenamiento de objetos compatible con S3, además de archivos ZIP, TAR y RAR, todo por el mismo sistema de ficheros virtual."],
         ["¿Dónde se guardan contraseñas y claves?", "No en el fichero de configuración: connections.toml solo guarda referencias, y el secreto sale de tu llavero o del entorno."],
-        ["¿Puedo sincronizar una carpeta local con un servidor?", "Sí. Compara los dos árboles, revisa el plan y apruébalo; la sincronización queda en el diario, así que se puede deshacer."],
+        ["¿Puedo sincronizar una carpeta local con un servidor?", "Sí. Compara los dos árboles, revisa el plan y apruébalo; la sincronización queda en el diario, y deshacer revierte lo que puede con seguridad. En SFTP y S3, lo borrado solo vuelve si la conexión tiene papelera."],
       ],
     },
   },
@@ -213,7 +213,7 @@ export const TOPIC_COPY: Record<Topic, Record<Lang, TopicCopy>> = {
         "Give Claude Code, Codex or any MCP client access to your files through norte: scoped grants, a policy that can ask before every change, a journal of what the agent did, and undo for its whole session.",
       eyebrow: "AI agents · MCP",
       h1: "Let AI agents touch your files. Under your rules.",
-      lede: "norte mcp serve gives an agent a file interface with a gatekeeper: nothing out of scope, every change held for your approval if your policy says so, everything journaled, and one command to take it all back.",
+      lede: "norte mcp serve gives an agent a file interface with a gatekeeper: nothing out of scope, every change held for your approval if your policy says so, everything journaled, and one command to take its session back.",
       sections: [
         {
           h2: "It has to ask for a scope",
@@ -223,7 +223,7 @@ export const TOPIC_COPY: Record<Topic, Record<Lang, TopicCopy>> = {
         },
         {
           h2: "Every change can wait for your yes",
-          body: "With action = \"ask\" in your policy, each operation stops in ntc until you press y. Rules match by operation, path, scheme and actor; the first match wins, and with no policy an agent is denied.",
+          body: "With action = \"ask\" in your policy, each operation stops in ntc on the daemon, or in the window, until you press y; unanswered, it is denied after a minute. Rules match by operation, path, scheme and actor; the first match wins, and with no policy an agent is denied.",
           shot: "tui:agent-ask",
           frame: "ada@norte — ntc",
         },
@@ -237,7 +237,7 @@ export const TOPIC_COPY: Record<Topic, Record<Lang, TopicCopy>> = {
       extras: ["agentSetup"],
       faq: [
         ["Which AI agents work with norte?", "Any MCP client: Claude Code, Codex and others. norte mcp serve speaks MCP over stdio and exposes tools to list, read, copy, move, delete, compare and plan syncs."],
-        ["Can an agent delete my files?", "Only inside a scope you granted, and only if your policy allows it; you can deny deletes for agents outright, or make every operation ask first. Deletes go to the trash by default."],
+        ["Can an agent delete my files?", "Only inside a scope you granted, and only if your policy allows it; you can deny deletes for agents outright, or make every operation ask first. Local deletes go to the trash by default."],
         ["Is this a real AI in the screenshots?", "No: photo-helper is an MCP client scripted for the captures. Everything else on screen — the daemon, the policy, the approval, the journal and the undo — is norte."],
       ],
     },
@@ -248,7 +248,7 @@ export const TOPIC_COPY: Record<Topic, Record<Lang, TopicCopy>> = {
         "Da a Claude Code, Codex o cualquier cliente MCP acceso a tus ficheros a través de norte: permisos acotados, una política que puede preguntar antes de cada cambio, un diario de lo que hizo el agente y deshacer para su sesión entera.",
       eyebrow: "Agentes de IA · MCP",
       h1: "Deja que los agentes de IA toquen tus ficheros. Con tus reglas.",
-      lede: "norte mcp serve da a un agente una interfaz de ficheros con portero: nada fuera de su ámbito, cada cambio retenido hasta tu aprobación si tu política lo dice, todo en el diario, y un comando para deshacerlo todo.",
+      lede: "norte mcp serve da a un agente una interfaz de ficheros con portero: nada fuera de su ámbito, cada cambio retenido hasta tu aprobación si tu política lo dice, todo en el diario, y un comando para deshacer su sesión.",
       sections: [
         {
           h2: "Tiene que pedir un ámbito",
@@ -258,7 +258,7 @@ export const TOPIC_COPY: Record<Topic, Record<Lang, TopicCopy>> = {
         },
         {
           h2: "Cada cambio puede esperar tu sí",
-          body: "Con action = \"ask\" en tu política, cada operación se detiene en ntc hasta que pulses y. Las reglas casan por operación, ruta, esquema y actor; gana la primera, y sin política un agente queda denegado.",
+          body: "Con action = \"ask\" en tu política, cada operación se detiene en ntc sobre el daemon, o en la ventana, hasta que pulses y; si nadie contesta, se deniega al minuto. Las reglas casan por operación, ruta, esquema y actor; gana la primera, y sin política un agente queda denegado.",
           shot: "tui:agent-ask",
           frame: "ada@norte — ntc",
         },
@@ -272,8 +272,8 @@ export const TOPIC_COPY: Record<Topic, Record<Lang, TopicCopy>> = {
       extras: ["agentSetup"],
       faq: [
         ["¿Qué agentes de IA funcionan con norte?", "Cualquier cliente MCP: Claude Code, Codex y otros. norte mcp serve habla MCP por stdio y ofrece herramientas para listar, leer, copiar, mover, borrar, comparar y planificar sincronizaciones."],
-        ["¿Puede un agente borrar mis ficheros?", "Solo dentro de un ámbito que hayas concedido, y solo si tu política lo permite; puedes denegar los borrados a los agentes o hacer que cada operación pregunte antes. Por defecto, los borrados van a la papelera."],
-        ["¿Es una IA de verdad la de las capturas?", "No: photo-helper es un cliente MCP con guion para las capturas. Todo lo demás en pantalla —el demonio, la política, la aprobación, el diario y el deshacer— es norte."],
+        ["¿Puede un agente borrar mis ficheros?", "Solo dentro de un ámbito que hayas concedido, y solo si tu política lo permite; puedes denegar los borrados a los agentes o hacer que cada operación pregunte antes. Por defecto, los borrados locales van a la papelera."],
+        ["¿Es una IA de verdad la de las capturas?", "No: photo-helper es un cliente MCP con guion para las capturas. Todo lo demás en pantalla —el daemon, la política, la aprobación, el diario y el deshacer— es norte."],
       ],
     },
   },
@@ -311,10 +311,10 @@ export const TOPIC_COPY: Record<Topic, Record<Lang, TopicCopy>> = {
       label: "Alternativa a Total Commander para Linux",
       title: "Una alternativa a Total Commander y Midnight Commander para Linux — norte",
       description:
-        "Un gestor de ficheros ortodoxo de dos paneles para Linux, en la terminal y en una ventana nativa, con teclados de Total Commander, Far, Norton y Krusader, SFTP y S3, deshacer, y agentes de IA bajo una política.",
+        "Un gestor de ficheros ortodoxo de dos paneles para Linux, en la terminal y en una ventana nativa, con esquemas de teclas de Total Commander, Far, Norton y Krusader, SFTP y S3, deshacer, y agentes de IA bajo una política.",
       eyebrow: "Gestor de ficheros ortodoxo",
       h1: "El Total Commander que echabas de menos en Linux. También en tu terminal.",
-      lede: "Dos paneles, teclas F, barra de menús, y presets que traen tus dedos contigo. norte añade lo que los clásicos nunca tuvieron: deshacer, un demonio que comparten todas las pantallas y agentes que preguntan antes de tocar nada.",
+      lede: "Dos paneles, teclas F, barra de menús, y presets que traen tus dedos contigo. norte añade lo que los clásicos nunca tuvieron: deshacer, un daemon que comparten todas las pantallas y agentes que preguntan antes de tocar nada.",
       sections: [
         {
           h2: "Tus teclas vienen contigo",
@@ -332,7 +332,7 @@ export const TOPIC_COPY: Record<Topic, Record<Lang, TopicCopy>> = {
       extras: ["compare"],
       faq: [
         ["¿norte funciona como Total Commander?", "Sigue el mismo modelo ortodoxo —dos paneles, F5 para copiar, F6 para mover— y tiene un preset de teclado total-commander, junto a far, norton, krusader, orthodox, vim y cua."],
-        ["¿Hay versión para Windows?", "Todavía no en binarios; allí se compila desde el código, y el demonio es solo Unix por ahora. Puedes seguir y votar el issue de Windows en GitHub."],
+        ["¿Hay versión para Windows?", "Todavía no en binarios; allí se compila desde el código, y el daemon es solo Unix por ahora. Puedes seguir y votar el issue de Windows en GitHub."],
         ["¿norte es estable?", "Es una alfa: interfaces y configuración aún pueden cambiar. Midnight Commander tiene décadas de uso; norte dice lo que es."],
       ],
     },
