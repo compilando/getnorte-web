@@ -1,7 +1,7 @@
 import type { Packed } from "@/lib/ansi";
 import { COMPARE_ONLY } from "@/lib/compare";
 import { COPY, fill, type Lang } from "@/lib/i18n";
-import { COMMANDS, LINKS, RELEASE, THEME_ACCENTS, THEMES } from "@/lib/product";
+import { COMMANDS, DECISIONS, LINKS, RELEASE, REPO, THEME_ACCENTS, THEMES } from "@/lib/product";
 import { COLS, guiShot, guiVideo, heroFilm, tuiReel, tuiScene, tuiTheme } from "@/lib/shots";
 import { AgentSteps } from "./agent-steps";
 import { AppFrame } from "./app-frame";
@@ -61,15 +61,15 @@ export function Landing({ lang }: { lang: Lang }) {
       <section id="top" className="noise relative overflow-hidden pt-[68px]">
         <div className="aurora-bg pointer-events-none absolute inset-x-0 top-0 h-[860px] opacity-95" />
         <div className="page-grid pointer-events-none absolute inset-x-0 top-0 h-[1080px] opacity-45 [mask-image:linear-gradient(to_bottom,black,transparent_78%)]" />
-        <div className="relative mx-auto max-w-[1440px] px-4 pb-20 pt-10 sm:px-8 sm:pt-20 lg:px-12 lg:pb-28 lg:pt-20">
+        <div className="relative mx-auto max-w-[1440px] px-4 pb-20 pt-10 sm:px-8 sm:pt-16 lg:px-12 lg:pb-28 lg:pt-12">
           <div className="grid grid-cols-1 items-end gap-8 lg:grid-cols-[1.3fr_.7fr] lg:gap-12">
             <div className="max-w-5xl">
-              <p className="mb-5 font-mono text-[12px] uppercase tracking-[0.16em] text-phosphor sm:mb-7">{t.hero.eyebrow}</p>
-              <h1 className="max-w-[1000px] text-balance text-[44px] font-medium leading-[0.94] tracking-[-0.07em] text-ink sm:text-[72px] lg:text-[92px] xl:text-[104px]">
+              <p className="mb-5 font-mono text-[12px] uppercase tracking-[0.16em] text-phosphor">{t.hero.eyebrow}</p>
+              <h1 className="max-w-[1000px] text-balance text-[44px] font-medium leading-[0.94] tracking-[-0.07em] text-ink sm:text-[64px] lg:text-[72px] xl:text-[80px]">
                 {t.hero.title[0]}
                 <span className="text-phosphor">{t.hero.title[1]}</span>
               </h1>
-              <p className="mt-6 max-w-3xl text-balance text-xl font-medium leading-snug tracking-[-0.02em] text-ink sm:mt-8 sm:text-3xl">
+              <p className="mt-6 max-w-3xl text-balance text-xl font-medium leading-snug tracking-[-0.02em] text-ink sm:text-2xl">
                 {t.hero.subtitle}
               </p>
               <p className="mt-4 max-w-2xl text-base leading-7 sm:text-lg sm:leading-8" style={{ color: "#d8ded9" }}>
@@ -81,7 +81,7 @@ export function Landing({ lang }: { lang: Lang }) {
             </div>
           </div>
 
-          <div id="stage" className="mx-auto mt-12 max-w-[1240px] scroll-mt-24 sm:mt-14">
+          <div id="stage" className="mx-auto mt-10 max-w-[1240px] scroll-mt-24">
             <HeroStage
               reel={reel}
               themes={themes}
@@ -120,6 +120,24 @@ export function Landing({ lang }: { lang: Lang }) {
               <p className="mt-3 text-[15px] leading-6 text-muted">{body}</p>
             </article>
           ))}
+        </div>
+      </Section>
+
+      {/* Free and open source */}
+      <Section id="open" className="border-t border-line/60">
+        <Heading eyebrow={t.open.eyebrow} title={t.open.title} body={t.open.body} />
+        <div className="mt-14 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {t.open.items.map(([title, body]) => (
+            <article key={title} className="rise rounded-2xl border border-white/[0.09] bg-surface p-6">
+              <p className="font-mono text-[14px] font-semibold text-phosphor">{title}</p>
+              <p className="mt-3 text-[15px] leading-6 text-ink/75">{fill(body, { decisions: DECISIONS })}</p>
+            </article>
+          ))}
+        </div>
+        <div className="mt-10 flex flex-wrap gap-x-10 gap-y-4">
+          <MoreLink href={REPO}>{t.open.source}</MoreLink>
+          <MoreLink href={LINKS.licensing}>{t.open.license}</MoreLink>
+          <MoreLink href={LINKS.contributing}>{t.open.contributing}</MoreLink>
         </div>
       </Section>
 

@@ -58,6 +58,9 @@ export function megabytes(bytes: number): string {
   return `${Math.round(bytes / 1_000_000)} MB`;
 }
 
+/** docs/adr/NNNN-*.md: the design decisions recorded so far. */
+export const DECISIONS = 157;
+
 /** crates/norte-frontend/src/keymap/catalogue.rs, the `live(…)` entries. */
 export const COMMANDS = 190;
 
@@ -107,5 +110,5 @@ export const LINKS = {
   issues: `${REPO}/issues`,
   plugins: `${REPO}/blob/main/docs/plugins.md`,
   theming: `${REPO}/blob/main/docs/theming.md`,
-  licensing: `${REPO}#licensing`,
+  licensing: `${REPO}#license`,
 } as const;

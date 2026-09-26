@@ -3,7 +3,7 @@
 import { track } from "@vercel/analytics";
 import { useState } from "react";
 import type { Copy } from "@/lib/i18n";
-import { LINKS, RELEASE } from "@/lib/product";
+import { LINKS, RELEASE, REPO } from "@/lib/product";
 import { DEMO_EVENT } from "./hero-stage";
 import { HeroInstall } from "./hero-install";
 
@@ -60,7 +60,15 @@ export function HeroCta({ t }: { t: Copy["hero"] }) {
         <HeroInstall t={t.install} docs={LINKS.readme} docsLabel={t.secondary} detect={false} />
       </div>
 
-      <p className="mt-5 font-mono text-[12px] uppercase tracking-[0.12em] text-muted">{t.cta.trust.join(" · ")}</p>
+      <p className="mt-5 font-mono text-[12px] uppercase tracking-[0.12em] text-ink/75">{t.cta.trust.join(" · ")}</p>
+      <a
+        href={REPO}
+        onClick={() => track("source_open", { from: "hero" })}
+        className="group mt-2 inline-flex items-center gap-1.5 text-[14px] text-ink underline decoration-white/30 underline-offset-4 hover:decoration-phosphor"
+      >
+        {t.cta.source}
+        <span className="text-phosphor transition-transform group-hover:translate-x-0.5">↗</span>
+      </a>
     </div>
   );
 }
