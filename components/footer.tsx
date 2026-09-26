@@ -32,6 +32,9 @@ export function Footer({
         <div>
           <a href={home} aria-label="norte"><Brand /></a>
           <p className="mt-5 max-w-sm text-sm leading-6 text-muted">{t.tagline}</p>
+          <p className="mt-4 max-w-sm text-sm leading-6 text-ink/70">
+            <span className="text-phosphor">♥</span> {t.thanks}
+          </p>
           <p className="mt-8 font-mono text-[11px] uppercase tracking-[0.12em] text-muted">{t.promise}</p>
           <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.12em] text-muted/60">
             v{RELEASE.version} · protocol {RELEASE.protocol}

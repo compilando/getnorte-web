@@ -128,6 +128,7 @@ export function NotFor({ t }: { t: Copy["compare"] }) {
           </div>
         ))}
       </div>
+      <p className="mt-6 max-w-3xl border-l-2 border-phosphor/60 pl-4 text-[15px] leading-7 text-ink/80">{t.family}</p>
     </div>
   );
 }

@@ -265,8 +265,8 @@ const en = {
   compare: {
     eyebrow: "Coming from somewhere?",
     title: "norte next to mc, Far, Total Commander and yazi.",
-    body: "They are good tools, and norte owes the orthodox model to them. This is what it adds, and what it does not have yet.",
-    summary: "They are good tools, and norte owes the orthodox model to them. Here is what it adds; the full table also says what it lacks.",
+    body: "They are great tools, kept alive by people we admire, and norte owes them the orthodox model. It is not here to replace any of them, only to be one more friendly option. This is what it adds, and what it does not have yet.",
+    summary: "They are great tools, kept alive by people we admire, and norte owes them the orthodox model. It is not here to replace any of them, only to be one more friendly option. Here is what it adds; the full table also says what it lacks.",
     onlyTitle: "Only norte, of the five",
     more: "See the full comparison",
     feature: "Feature",
@@ -282,6 +282,7 @@ const en = {
       ["You want decades of battle-testing.", "Midnight Commander has them. norte is an alpha, and says so."],
       ["You like Miller columns and a big Lua ecosystem.", "That is yazi, and it is excellent at it."],
     ] as [string, string][],
+    family: "Whichever you pick, you are in good company. If one of them serves you well, star it, report a bug, send a patch or just thank its maintainers: the orthodox family is still going because of them.",
   },
   news: {
     eyebrow: "New in {version}",
@@ -368,7 +369,7 @@ const en = {
   },
   principles: {
     eyebrow: "Why norte",
-    lead: "The file manager stopped evolving. Your work did not.",
+    lead: "mc, Far and Total Commander got the model right decades ago. norte keeps it, and builds on it.",
     title: "Not a prettier explorer. ",
     muted: "A programmable, governed system for everything you keep.",
     items: [
@@ -381,7 +382,7 @@ const en = {
   open: {
     eyebrow: "Free and open source",
     title: "All of it is yours to read, change and share.",
-    body: "norte is free software, built in the open. The code, the specification and every design decision are public, and the license keeps them that way.",
+    body: "norte is free software, built in the open, like the file managers it learned from. The code, the specification and every design decision are public, and the license keeps them that way. If an idea here is worth having elsewhere, take it.",
     items: [
       ["AGPL-3.0", "The core and the official frontends. Use them, study them, change them. Whoever ships a modified norte, or runs one for others over a network, must offer them its source."],
       ["MIT / Apache-2.0", "The protocol, the VFS providers, the test kit and the plugin SDK. Build your own client, backend or plugin on them, with no copyleft attached."],
@@ -415,6 +416,7 @@ const en = {
   footer: {
     tagline: "The open-source file commander for people, terminals, windows and agents.",
     promise: "Built in Rust. No telemetry. Ever.",
+    thanks: "Made with love for Midnight Commander, Far Manager, Total Commander, Double Commander, yazi and every orthodox file manager that came first.",
     groups: [
       ["Product", [["Why norte", "#why"], ["Agents", "#agents"], ["Plugins", "#plugins"], ["All features", "/features"], ["Themes", "/features#themes"], ["Comparison", "/compare"], ["Download", "#download"]]],
       ["Build", [["Documentation", "docs"], ["Architecture map", "architecture"], ["Specification", "spec"], ["Decision records", "adr"], ["Plugin authoring", "plugins"]]],
@@ -675,8 +677,8 @@ const es: Copy = {
   compare: {
     eyebrow: "¿Vienes de otro?",
     title: "norte junto a mc, Far, Total Commander y yazi.",
-    body: "Son buenas herramientas, y norte les debe el modelo ortodoxo. Esto es lo que añade, y lo que todavía no tiene.",
-    summary: "Son buenas herramientas, y norte les debe el modelo ortodoxo. Esto es lo que añade; la tabla completa dice también lo que le falta.",
+    body: "Son grandes herramientas, mantenidas por gente que admiramos, y norte les debe el modelo ortodoxo. No viene a sustituir a ninguna, solo a ser una alternativa amable más. Esto es lo que añade, y lo que todavía no tiene.",
+    summary: "Son grandes herramientas, mantenidas por gente que admiramos, y norte les debe el modelo ortodoxo. No viene a sustituir a ninguna, solo a ser una alternativa amable más. Esto es lo que añade; la tabla completa dice también lo que le falta.",
     onlyTitle: "Solo norte, de los cinco",
     more: "Ver la comparación completa",
     feature: "Función",
@@ -692,6 +694,7 @@ const es: Copy = {
       ["Quieres décadas de uso en batalla.", "Midnight Commander las tiene. norte es una alfa, y lo dice."],
       ["Te gustan las columnas Miller y un gran ecosistema en Lua.", "Eso es yazi, y lo hace de maravilla."],
     ],
+    family: "Elijas el que elijas, estás en buena compañía. Si alguno te sirve bien, dale una estrella, reporta un fallo, manda un parche o simplemente da las gracias a quien lo mantiene: la familia ortodoxa sigue viva gracias a esa gente.",
   },
   news: {
     eyebrow: "Nuevo en {version}",
@@ -778,7 +781,7 @@ const es: Copy = {
   },
   principles: {
     eyebrow: "Por qué norte",
-    lead: "El gestor de ficheros dejó de evolucionar. Tu trabajo, no.",
+    lead: "mc, Far y Total Commander acertaron con el modelo hace décadas. norte lo conserva, y construye sobre él.",
     title: "No es un explorador más bonito. ",
     muted: "Es un sistema programable y gobernado para todo lo que guardas.",
     items: [
@@ -791,7 +794,7 @@ const es: Copy = {
   open: {
     eyebrow: "Software libre y de código abierto",
     title: "Todo es tuyo: para leerlo, cambiarlo y compartirlo.",
-    body: "norte es software libre, hecho a la vista. El código, la especificación y cada decisión de diseño son públicos, y la licencia los mantiene así.",
+    body: "norte es software libre, hecho a la vista, como los gestores de ficheros de los que aprendió. El código, la especificación y cada decisión de diseño son públicos, y la licencia los mantiene así. Si alguna idea de aquí merece estar en otro sitio, llévatela.",
     items: [
       ["AGPL-3.0", "El núcleo y los frontends oficiales. Úsalos, estúdialos, cámbialos. Quien distribuya un norte modificado, o lo ofrezca a otros por la red, debe darles también su código."],
       ["MIT / Apache-2.0", "El protocolo, los proveedores del VFS, el kit de pruebas y el SDK de plugins. Construye sobre ellos tu propio cliente, backend o plugin, sin copyleft."],
@@ -825,6 +828,7 @@ const es: Copy = {
   footer: {
     tagline: "El gestor de ficheros libre para personas, terminales, ventanas y agentes.",
     promise: "Hecho en Rust. Sin telemetría. Nunca.",
+    thanks: "Hecho con cariño por Midnight Commander, Far Manager, Total Commander, Double Commander, yazi y cada gestor ortodoxo que vino antes.",
     groups: [
       ["Producto", [["Por qué norte", "#why"], ["Agentes", "#agents"], ["Plugins", "#plugins"], ["Todas las funciones", "/es/funciones"], ["Temas", "/es/funciones#themes"], ["Comparación", "/es/comparar"], ["Descargar", "#download"]]],
       ["Construir", [["Documentación", "docs"], ["Mapa de arquitectura", "architecture"], ["Especificación", "spec"], ["Decisiones (ADR)", "adr"], ["Escribir plugins", "plugins"]]],
