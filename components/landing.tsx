@@ -102,22 +102,23 @@ export function Landing({ lang }: { lang: Lang }) {
 
       {/* Why norte */}
       <Section id="why">
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-[.7fr_1.3fr] lg:gap-20">
-          <div>
-            <Eyebrow>{t.principles.eyebrow}</Eyebrow>
-            <p className="mt-5 max-w-xs text-sm leading-6 text-muted">{t.principles.lead}</p>
-          </div>
-          <h2 className="text-balance text-4xl font-medium leading-[1.02] tracking-[-0.055em] text-ink sm:text-6xl lg:text-7xl">
+        <div className="max-w-5xl">
+          <Eyebrow>{t.principles.eyebrow}</Eyebrow>
+          <p className="mt-6 font-mono text-base text-muted sm:text-lg">
+            <span className="text-phosphor">&gt;</span> {t.principles.lead}
+          </p>
+          <h2 className="mt-6 text-balance text-4xl font-medium leading-[1.02] tracking-[-0.055em] text-ink sm:text-6xl lg:text-7xl">
             {t.principles.title}
             <span className="text-muted">{t.principles.muted}</span>
           </h2>
         </div>
-        <div className="mt-16 grid grid-cols-1 border-y border-line sm:grid-cols-2 lg:grid-cols-4">
-          {t.principles.items.map(([n, title, body], i) => (
-            <article key={n} className={`py-8 sm:px-6 lg:py-10 ${i > 0 ? "border-t border-line sm:border-t-0 sm:border-l" : ""} ${i === 0 ? "sm:pl-0" : ""}`}>
-              <span className="font-mono text-[11px] text-phosphor">{n}</span>
-              <h3 className="mt-3 text-lg font-medium tracking-[-0.025em] text-ink">{title}</h3>
-              <p className="mt-3 text-[15px] leading-6 text-muted">{body}</p>
+        <div className="mt-16 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {t.principles.items.map(([n, title, body]) => (
+            <article key={n} className="rise group relative overflow-hidden rounded-2xl border border-white/[0.09] bg-surface p-6 transition-colors hover:border-phosphor/40 lg:p-7">
+              <span className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-phosphor/50 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+              <span className="font-mono text-4xl font-medium tracking-[-0.04em] text-phosphor/30 transition-colors group-hover:text-phosphor">{n}</span>
+              <h3 className="mt-6 text-xl font-medium tracking-[-0.025em] text-ink">{title}</h3>
+              <p className="mt-3 text-[15px] leading-6 text-ink/70">{body}</p>
             </article>
           ))}
         </div>

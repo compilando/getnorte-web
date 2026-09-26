@@ -207,7 +207,19 @@ body {
   100% { transform: translateX(280%); }
 }
 
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+
+.marquee {
+  animation: marquee 60s linear infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .marquee {
+    animation: none !important;
+  }
+
   html {
     scroll-behavior: auto;
   }
