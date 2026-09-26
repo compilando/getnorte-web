@@ -8,7 +8,7 @@ export const REPO = "https://github.com/compilando/norte";
 export const SITE = "https://getnorte.dev";
 
 /** Cargo.toml, `version`. */
-const VERSION = "0.3.0-alpha.4";
+const VERSION = "0.3.0-alpha.5";
 /**
  * Every link names the tag. GitHub's `releases/latest` skips pre-releases, and
  * every alpha is one: there `latest/download/…` is a 404.
@@ -28,12 +28,18 @@ export const RELEASE = {
   tuiInstaller: `${DOWNLOAD}/norte-tui-installer.sh`,
   cliInstaller: `${DOWNLOAD}/norte-cli-installer.sh`,
   /** The two tar.xz the installers fetch (norte-tui-…, norte-cli-…), in bytes. */
-  binariesBytes: 13_445_392 + 12_928_152,
+  binariesBytes: 14_349_652 + 13_273_580,
   /** The window's packages, as the release lists them; each carries ntc and norte too. */
   packages: [
-    { ext: ".deb", url: `${DOWNLOAD}/norte_${VERSION}_amd64.deb`, bytes: 46_595_612 },
-    { ext: ".rpm", url: `${DOWNLOAD}/norte-${VERSION}-1.x86_64.rpm`, bytes: 46_597_752 },
-    { ext: ".AppImage", url: `${DOWNLOAD}/norte_${VERSION}_amd64.AppImage`, bytes: 118_987_256 },
+    { ext: ".deb", url: `${DOWNLOAD}/norte_${VERSION}_amd64.deb`, bytes: 49_181_920 },
+    { ext: ".rpm", url: `${DOWNLOAD}/norte-${VERSION}-1.x86_64.rpm`, bytes: 49_181_868 },
+    { ext: ".AppImage", url: `${DOWNLOAD}/norte_${VERSION}_amd64.AppImage`, bytes: 121_911_800 },
+  ],
+  /** Windows x86_64, a first unsigned preview: the NSIS setup and the portable
+   *  ZIP, each with norte-gui, norte and ntc. */
+  windows: [
+    { ext: "setup.exe", url: `${DOWNLOAD}/norte_${VERSION}_x64-setup.exe`, bytes: 34_033_482 },
+    { ext: ".zip", url: `${DOWNLOAD}/norte-${VERSION}-x86_64-pc-windows-msvc.zip`, bytes: 48_821_038 },
   ],
 } as const;
 
@@ -59,7 +65,7 @@ export function megabytes(bytes: number): string {
 }
 
 /** docs/adr/NNNN-*.md: the design decisions recorded so far. */
-export const DECISIONS = 157;
+export const DECISIONS = 159;
 
 /** crates/norte-frontend/src/keymap/catalogue.rs, the `live(…)` entries. */
 export const COMMANDS = 190;

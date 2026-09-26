@@ -9,7 +9,7 @@ import { HeroInstall } from "./hero-install";
 
 /**
  * The hero's two actions and what is true about them: Linux has binaries,
- * macOS and Windows build from source. The commands and packages wait behind
+ * Windows a first preview, macOS builds from source. The commands and packages wait behind
  * the install button, so the first screen says what norte is before how.
  */
 export function HeroCta({ t }: { t: Copy["hero"] }) {

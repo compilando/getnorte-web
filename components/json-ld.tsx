@@ -18,7 +18,7 @@ export function softwareApp(description: string, lang: string) {
     inLanguage: lang,
     applicationCategory: "UtilitiesApplication",
     applicationSubCategory: "File manager",
-    operatingSystem: "Linux (x86_64 binaries); macOS and Windows from source",
+    operatingSystem: "Linux and Windows (x86_64 binaries; Windows as a preview); macOS from source",
     softwareVersion: RELEASE.version,
     downloadUrl: RELEASE.latest,
     codeRepository: REPO,

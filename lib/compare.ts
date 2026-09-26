@@ -80,8 +80,8 @@ export const ROWS: Row[] = [
 export const COMPARE_ONLY = ROWS.filter((r) => r.cells[0] === "yes" && r.cells.slice(1).every((c) => c === "no"));
 
 export const PLATFORMS: Record<Lang, string[]> = {
-  en: ["Linux · macOS & Windows from source", "Linux · macOS · BSD", "Windows (far2l fork: Linux, macOS)", "Windows · Android", "Linux · macOS · Windows"],
-  es: ["Linux · macOS y Windows desde el código", "Linux · macOS · BSD", "Windows (el fork far2l: Linux, macOS)", "Windows · Android", "Linux · macOS · Windows"],
+  en: ["Linux · Windows (preview) · macOS from source", "Linux · macOS · BSD", "Windows (far2l fork: Linux, macOS)", "Windows · Android", "Linux · macOS · Windows"],
+  es: ["Linux · Windows (preview) · macOS desde el código", "Linux · macOS · BSD", "Windows (el fork far2l: Linux, macOS)", "Windows · Android", "Linux · macOS · Windows"],
 };
 
 export const LICENSES = ["AGPL-3.0 (protocol MIT/Apache)", "GPL-3.0+", "BSD-3-Clause", "Shareware", "MIT"];
