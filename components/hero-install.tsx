@@ -127,6 +127,25 @@ export function HeroInstall({
               ))}
             </div>
           </>
+        ) : os === "windows" ? (
+          <>
+            <p className="text-[14px] font-medium text-ink">{t.windowsTitle}</p>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {RELEASE.windows.map((p) => (
+                <a
+                  key={p.ext}
+                  href={p.url}
+                  onClick={() => track("package_download", { ext: p.ext })}
+                  className="group inline-flex items-baseline gap-2 rounded-md border border-white/[0.12] bg-black/40 px-2.5 py-1.5 transition hover:border-phosphor/50"
+                >
+                  <span className="font-mono text-[12px] font-semibold text-ink">{p.ext}</span>
+                  <span className="font-mono text-[11px] text-muted">{megabytes(p.bytes)}</span>
+                  <span className="text-[12px] text-phosphor transition-transform group-hover:translate-y-0.5">↓</span>
+                </a>
+              ))}
+            </div>
+            <p className="mt-2 font-mono text-[11px] text-muted">{t.windowsNote}</p>
+          </>
         ) : (
           <>
             <p className="text-[14px] font-medium text-ink">{fill(t.otherTitle, { os: t.os[os] })}</p>

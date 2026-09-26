@@ -99,6 +99,27 @@ export function FinalCta({ t }: { t: Copy["cta"] }) {
                   </a>
                 ))}
               </div>
+              <p className="mt-6 font-mono text-[11px] uppercase tracking-[0.14em] text-muted">{t.windows}</p>
+              <div className="mt-4 space-y-2">
+                {t.windowsPackages.map(([ext, target, note]) => (
+                  <a
+                    key={ext}
+                    href={RELEASE.windows.find((p) => p.ext === ext)?.url ?? RELEASE.latest}
+                    onClick={() => track("package_download", { ext, from: "cta" })}
+                    className="group flex items-center gap-4 rounded-xl border border-white/[0.12] bg-black/40 px-4 py-4 backdrop-blur-xl transition hover:border-phosphor/50 hover:bg-black/55"
+                  >
+                    <span className="font-mono text-base font-semibold tracking-[-0.03em] text-ink">{ext}</span>
+                    <span className="min-w-0">
+                      <span className="block text-[14px] text-ink/85">{target}</span>
+                      <span className="block font-mono text-[11px] text-muted">{note}</span>
+                    </span>
+                    <span className="ml-auto font-mono text-[12px] text-muted">
+                      {megabytes(RELEASE.windows.find((p) => p.ext === ext)?.bytes ?? 0)}
+                    </span>
+                    <span className="text-phosphor transition-transform group-hover:translate-y-0.5">↓</span>
+                  </a>
+                ))}
+              </div>
               <p className="mt-5 text-[14px] leading-5 text-ink/55">{t.carries}</p>
               <p className="mt-4 border-t border-white/[0.09] pt-4 font-mono text-[11px] leading-5 text-muted">{t.platforms}</p>
             </div>

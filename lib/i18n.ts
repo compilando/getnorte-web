@@ -412,6 +412,11 @@ const en = {
       [".rpm", "Fedora · openSUSE", "dnf install"],
       [".AppImage", "Anything else", "chmod +x"],
     ] as [string, string, string][],
+    windows: "Windows · first preview, unsigned",
+    windowsPackages: [
+      ["setup.exe", "Windows 10 · 11 x64", "installs per user, no admin"],
+      [".zip", "Portable", "unzip, run norte-gui.exe"],
+    ] as [string, string, string][],
     carries: "Each package carries norte and ntc with it, so a clean install always has a daemon to talk to.",
     platforms: "Linux x86_64, and a first Windows x86_64 preview. macOS builds from source; it ships the day releases run in CI.",
   },
@@ -825,6 +830,11 @@ const es: Copy = {
       [".deb", "Debian · Ubuntu", "dpkg -i"],
       [".rpm", "Fedora · openSUSE", "dnf install"],
       [".AppImage", "Cualquier otra", "chmod +x"],
+    ],
+    windows: "Windows · primera preview, sin firmar",
+    windowsPackages: [
+      ["setup.exe", "Windows 10 · 11 x64", "por usuario, sin administrador"],
+      [".zip", "Portable", "descomprime y abre norte-gui.exe"],
     ],
     carries: "Cada paquete lleva norte y ntc dentro, así que una instalación limpia siempre tiene un daemon con el que hablar.",
     platforms: "Linux x86_64 y una primera preview para Windows x86_64. macOS compila desde el código; se publicará el día que las versiones se construyan en CI.",
