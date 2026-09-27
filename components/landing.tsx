@@ -22,7 +22,7 @@ import { Tour } from "./tour";
 /**
  * The home page tells the idea, in this order: what norte is, why, the one
  * core behind the terminal and the window, the agents, the work that goes on
- * and can be undone, then a short tour, plugins, the comparison in brief,
+ * and its journal, then a short tour, plugins, the comparison in brief,
  * what is new and the download. The rest lives on /features and /compare.
  */
 export function Landing({ lang }: { lang: Lang }) {
@@ -184,7 +184,7 @@ export function Landing({ lang }: { lang: Lang }) {
       <Section id="agents" className="border-t border-line/60">
         <Heading eyebrow={t.agents.eyebrow} title={t.agents.title} body={t.agents.body} />
 
-        <ol className="mt-12 grid grid-cols-1 gap-2 sm:grid-cols-5" aria-label={t.agents.flowLabel}>
+        <ol className="mt-12 grid grid-cols-1 gap-2 sm:grid-cols-4" aria-label={t.agents.flowLabel}>
           {t.agents.flow.map(([who, what], i) => (
             <li key={who} className="relative rounded-xl border border-white/[0.09] bg-surface px-4 py-3">
               <span className="font-mono text-[12px] uppercase tracking-[0.12em] text-phosphor">{who}</span>

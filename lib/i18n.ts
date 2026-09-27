@@ -38,27 +38,28 @@ export type Extra =
   | "jobs-paused"
   | "agent-scope"
   | "agent-ask"
-  | "agent-timeline"
-  | "agent-undo";
+  | "agent-timeline";
 
 const en = {
   meta: {
     title: "norte — the open-source file commander for the agent era",
     description:
-      "Two panes, a terminal and a desktop window over one asynchronous Rust core. Local, SFTP, FTP, S3 and archives, with a journal that undoes, a policy agents cannot skip, and no telemetry.",
+      "Two panes, a terminal and a desktop window over one asynchronous Rust core. Local, SFTP, FTP, S3 and archives, a journal of every change, a policy agents cannot skip, and no telemetry.",
   },
   nav: {
     links: [
       ["Why norte", "#why"],
       ["Remotes", "#remotes"],
       ["Agents", "#agents"],
-      ["Undo & jobs", "#core"],
+      ["Background work", "#core"],
       ["Tour", "#tour"],
       ["Plugins", "#plugins"],
       ["Features", "/features"],
       ["Compare", "/compare"],
     ],
     download: "Download",
+    menu: "Menu",
+    menuClose: "Close menu",
     other: "Español",
     otherHref: "/es",
   },
@@ -67,7 +68,7 @@ const en = {
     eyebrow: "The open-source file commander for the agent era",
     title: ["Your files have a new sense of ", "direction."],
     subtitle: "One file manager for your terminal, your desktop and your AI agents.",
-    lede: "Work across local files, SFTP, S3 and archives through one Rust core. Agents get scoped access, explicit approval, attribution and undo.",
+    lede: "Work across local files, SFTP, S3 and archives through one Rust core. Agents get scoped access, explicit approval and every change on the record.",
     cta: {
       install: "Install on Linux",
       demo: "Watch the 20-second demo",
@@ -106,7 +107,7 @@ const en = {
     "S3",
     "ZIP / TAR / RAR",
     "MCP",
-    "Journal & undo",
+    "Journal",
     "Pause & resume",
     "7 keymaps",
     "10 themes",
@@ -131,7 +132,7 @@ const en = {
   core: {
     eyebrow: "Background work · the journal",
     title: "Close the UI. The copy keeps going.",
-    body: "Open ntc with --daemon, or use the window, and the work runs in the norte daemon: it keeps the task alive when a screen closes, and every other client picks it up at the same percentage. Whatever it changes lands in one journal, with a way back.",
+    body: "Open ntc with --daemon, or use the window, and the work runs in the norte daemon: it keeps the task alive when a screen closes, and every other client picks it up at the same percentage. Whatever it changes lands in one journal, with its author.",
     daemon: "norte daemon",
     daemonNote: "connections · tasks · journal · policy",
     socket: "local socket",
@@ -152,7 +153,7 @@ const en = {
     ] as [string, string][],
     points: [
       ["Copies are tasks. You keep working.", "Copy, move, delete and sync run in the background with progress and a clean cancel. Copies, moves and deletes pause and resume; an optional queue takes them one at a time."],
-      ["Everything that changed, and a way back.", "What you did in the terminal, in the window, from a script or through an agent lands in one journal. Undo never overwrites, skips what was replaced since, and sends what it made to the trash."],
+      ["Everything that changed, on the record.", "What you did in the terminal, in the window, from a script or through an agent lands in one journal, each entry with its author, in one timeline for every client."],
       ["Hand off, don't start over", "Begin in ntc over SSH and carry on in the window at your desk: tabs, directories and marks come along (ntc --attach)."],
     ] as [string, string][],
     local: "A Unix socket in your runtime directory, checked against your user. No port is opened.",
@@ -166,8 +167,7 @@ const en = {
       ["sftp", "SFTP", "Then the Pi is a pane like any other: browse it, view it, copy from it."],
       ["s3", "S3", "Buckets and prefixes as folders. AWS, MinIO, anything that speaks S3."],
       ["archive", "Archives", "ZIP, TAR (gz, zst…) and RAR open as read-only directories. Browse, view and copy out without extracting first."],
-      ["compare", "Compare", "Two trees side by side: the same, different, only here, only there."],
-      ["sync", "Sync", "A plan first, one approval, and every change it makes in the journal."],
+      ["compare", "Compare & sync", "Two trees side by side — the same, different, only here, only there — then a sync plan you approve in one go, every change in the journal."],
     ] as [Extra, string, string][],
     home: ["sftp", "s3", "archive", "sync"] as Extra[],
   },
@@ -221,7 +221,7 @@ const en = {
         scene: "timeline",
         kicker: "The journal",
         title: "Who changed what, and when.",
-        body: "The timeline lists every entry in the journal with its author — you, the window, a script or an agent. Pick one and undo back to that point.",
+        body: "The timeline lists every entry in the journal with its author — you, the window, a script or an agent — in the order it happened.",
         keys: ["Ctrl+P timeline"],
       },
       {
@@ -308,25 +308,23 @@ const en = {
   agents: {
     eyebrow: "Agents, governed",
     title: "Your AI works with your files. Never around them.",
-    body: "Claude, Codex or any MCP client reaches your files through the same core the human frontends use: scoped access you grant, expiring grants, changes held until you approve them, attribution in the journal, and undo for an agent's session after it is gone.",
+    body: "Claude, Codex or any MCP client reaches your files through the same core the human frontends use: scoped access you grant, expiring grants, changes held until you approve them, and every change in the journal under the agent's name.",
     flowLabel: "How an agent's change goes through norte",
     flow: [
       ["Agent", "asks for a scope: folders, operations, how long"],
       ["You", "grant it — and an ask rule can hold each change until you approve it by pressing y"],
       ["Core", "enforces the policy; outside the scope, nothing"],
       ["Journal", "records every change under the agent's session"],
-      ["Undo", "reverses that session, newest first"],
     ] as [string, string][],
     points: [
       ["Closed by default", "No scope, not even a listing. No rule in your policy, no changes — even inside a scope. A request nobody answers is denied after a minute."],
       ["One gate", "The policy engine sits in the core. There is no side door for a plugin, an agent or a frontend."],
-      ["An undo that knows its limits", "It never overwrites, skips what was replaced since, and sends files the agent made to the trash rather than deleting them. A permanent delete is reported, not pretended away."],
+      ["Every change has a name on it", "The journal records what each agent session did, next to what you did, so you always know who changed what, and when."],
     ] as [string, string][],
     steps: [
       ["agent-scope", "It has to ask", "Outside a scope an agent gets nothing, not even a listing. It asks for a folder, the operations it wants and for how long, and waits.", "photo-helper — an MCP client"],
       ["agent-ask", "You say yes, one change at a time", "You grant the scope with norte policy grant. Even then, an ask rule holds every change until you press y — in ntc on the daemon or in the window. Here, each of four renames.", "ada@norte — ntc"],
       ["agent-timeline", "All of it on the record", "Every change lands in the journal under the agent's session, next to yours, in the same timeline.", "ada@norte — ntc · timeline"],
-      ["agent-undo", "Changed your mind? One command", "norte undo photo-helper reverts what that session did, newest first, even after the agent has gone.", "ada@norte — bash"],
     ] as [Extra, string, string, string][],
     stepsCaption: "photo-helper is an MCP client scripted for these captures, not an AI. Everything else on screen is norte.",
     hookup: "Hook up Claude Code — or any MCP client",
@@ -377,7 +375,7 @@ const en = {
     items: [
       ["01", "One namespace", "Local disks, SFTP, FTP, S3 and archives behave like one filesystem."],
       ["02", "Work in motion", "Copies, comparisons, syncs and indexes are observable, cancellable tasks."],
-      ["03", "Control stays human", "Agents ask, you decide, the core enforces — and the journal keeps a way back."],
+      ["03", "Control stays human", "Agents ask, you decide, the core enforces — and the journal records who did what."],
       ["04", "Nothing phones home", "No account, no cloud, no telemetry — not even opt-in. Diagnostics stay on your machine."],
     ] as [string, string, string][],
   },
@@ -435,7 +433,7 @@ const en = {
   features: {
     title: "Every norte feature, in real captures — norte",
     description:
-      "The whole tour of norte: two panes, the viewer, the disk map, background jobs, the journal and undo, remotes and archives, ten themes, sandboxed plugins, and what is new in the latest alpha.",
+      "The whole tour of norte: two panes, the viewer, the disk map, background jobs, the journal, remotes and archives, ten themes, sandboxed plugins, and what is new in the latest alpha.",
     eyebrow: "Features",
     h1: "Everything norte does, one capture at a time.",
     lede: "The home page tells the idea. This is the detail: every step of the tour, every remote, every theme and the plugins at work — all captured from the current build.",
@@ -454,7 +452,7 @@ const en = {
   comparePage: {
     title: "norte vs Midnight Commander, Far, Total Commander and yazi — norte",
     description:
-      "A feature-by-feature comparison of norte with Midnight Commander, Far Manager, Total Commander and yazi: terminal and window, SFTP and S3, undo and journal, agents under a policy, sandboxed plugins, platforms and licenses.",
+      "A feature-by-feature comparison of norte with Midnight Commander, Far Manager, Total Commander and yazi: terminal and window, SFTP and S3, the journal, agents under a policy, sandboxed plugins, platforms and licenses.",
     h1: "norte next to the file managers you know.",
   },
 };
@@ -465,20 +463,22 @@ const es: Copy = {
   meta: {
     title: "norte — el gestor de ficheros libre para la era de los agentes",
     description:
-      "Dos paneles, una terminal y una ventana de escritorio sobre un único núcleo asíncrono en Rust. Local, SFTP, FTP, S3 y archivos comprimidos, con un diario que deshace, una política que los agentes no se saltan y sin telemetría.",
+      "Dos paneles, una terminal y una ventana de escritorio sobre un único núcleo asíncrono en Rust. Local, SFTP, FTP, S3 y archivos comprimidos, un diario de cada cambio, una política que los agentes no se saltan y sin telemetría.",
   },
   nav: {
     links: [
       ["Por qué norte", "#why"],
       ["Remotos", "#remotes"],
       ["Agentes", "#agents"],
-      ["Deshacer y tareas", "#core"],
+      ["Segundo plano", "#core"],
       ["Recorrido", "#tour"],
       ["Plugins", "#plugins"],
       ["Funciones", "/es/funciones"],
       ["Comparar", "/es/comparar"],
     ],
     download: "Descargar",
+    menu: "Menú",
+    menuClose: "Cerrar el menú",
     other: "English",
     otherHref: "/",
   },
@@ -487,7 +487,7 @@ const es: Copy = {
     eyebrow: "El gestor de ficheros libre para la era de los agentes",
     title: ["Tus ficheros tienen un nuevo ", "norte."],
     subtitle: "Un solo gestor de ficheros para tu terminal, tu escritorio y tus agentes de IA.",
-    lede: "Trabaja con ficheros locales, SFTP, S3 y comprimidos desde un único núcleo en Rust. Los agentes reciben acceso acotado, aprobación explícita, atribución y deshacer.",
+    lede: "Trabaja con ficheros locales, SFTP, S3 y comprimidos desde un único núcleo en Rust. Los agentes reciben acceso acotado, aprobación explícita y cada cambio queda anotado.",
     cta: {
       install: "Instalar en Linux",
       demo: "Ver la demo de 20 segundos",
@@ -526,7 +526,7 @@ const es: Copy = {
     "S3",
     "ZIP / TAR / RAR",
     "MCP",
-    "Diario y deshacer",
+    "Diario",
     "Pausar y reanudar",
     "7 esquemas de teclas",
     "10 temas",
@@ -551,7 +551,7 @@ const es: Copy = {
   core: {
     eyebrow: "Trabajo en segundo plano · el diario",
     title: "Cierra la interfaz. La copia sigue.",
-    body: "Abre ntc con --daemon, o usa la ventana, y el trabajo corre en el daemon de norte: mantiene viva la tarea cuando se cierra una pantalla, y cualquier otro cliente la retoma en el mismo porcentaje. Todo lo que cambia queda en un solo diario, con camino de vuelta.",
+    body: "Abre ntc con --daemon, o usa la ventana, y el trabajo corre en el daemon de norte: mantiene viva la tarea cuando se cierra una pantalla, y cualquier otro cliente la retoma en el mismo porcentaje. Todo lo que cambia queda en un solo diario, con su autor.",
     daemon: "norte daemon",
     daemonNote: "conexiones · tareas · diario · política",
     socket: "socket local",
@@ -572,7 +572,7 @@ const es: Copy = {
     ],
     points: [
       ["Copiar es una tarea. Tú sigues trabajando.", "Copiar, mover, borrar y sincronizar corren en segundo plano con progreso y cancelación limpia. Copias, movimientos y borrados se pausan y se reanudan; una cola opcional los hace de uno en uno."],
-      ["Todo lo que cambió, y el camino de vuelta.", "Lo que hiciste en la terminal, en la ventana, desde un script o a través de un agente cae en un solo diario. Deshacer nunca sobrescribe, se salta lo que se ha sustituido después y manda a la papelera lo que creó."],
+      ["Todo lo que cambió, anotado.", "Lo que hiciste en la terminal, en la ventana, desde un script o a través de un agente cae en un solo diario, cada entrada con su autor, en una sola línea de tiempo para todos los clientes."],
       ["Pasa el testigo, no empieces de cero", "Empieza en ntc por SSH y sigue en la ventana en tu mesa: pestañas, directorios y marcas viajan contigo (ntc --attach)."],
     ],
     local: "Un socket Unix en tu directorio de ejecución, comprobado contra tu usuario. No se abre ningún puerto.",
@@ -586,8 +586,7 @@ const es: Copy = {
       ["sftp", "SFTP", "Después la Pi es un panel como otro cualquiera: recórrela, mira, copia."],
       ["s3", "S3", "Buckets y prefijos como carpetas. AWS, MinIO, cualquier cosa que hable S3."],
       ["archive", "Comprimidos", "ZIP, TAR (gz, zst…) y RAR se abren como directorios de solo lectura. Recórrelos, míralos y copia desde ellos sin descomprimir antes."],
-      ["compare", "Comparar", "Dos árboles lado a lado: igual, distinto, solo aquí, solo allí."],
-      ["sync", "Sincronizar", "Primero un plan, una aprobación, y cada cambio que hace queda en el diario."],
+      ["compare", "Comparar y sincronizar", "Dos árboles lado a lado —igual, distinto, solo aquí, solo allí— y después un plan de sincronización que apruebas de una vez, con cada cambio en el diario."],
     ],
     home: ["sftp", "s3", "archive", "sync"],
   },
@@ -641,7 +640,7 @@ const es: Copy = {
         scene: "timeline",
         kicker: "El diario",
         title: "Quién cambió qué, y cuándo.",
-        body: "La línea de tiempo lista cada entrada del diario con su autor: tú, la ventana, un script o un agente. Elige una y deshaz hasta ese punto.",
+        body: "La línea de tiempo lista cada entrada del diario con su autor —tú, la ventana, un script o un agente— en el orden en que ocurrió.",
         keys: ["Ctrl+P timeline"],
       },
       {
@@ -727,25 +726,23 @@ const es: Copy = {
   agents: {
     eyebrow: "Agentes, con reglas",
     title: "Tu IA trabaja con tus ficheros. Siempre bajo tu control.",
-    body: "Claude, Codex o cualquier cliente MCP llegan a tus ficheros por el mismo núcleo que usan los frontends humanos: acceso acotado que tú concedes, permisos que caducan, cambios retenidos hasta que los apruebes, atribución en el diario y deshacer la sesión de un agente cuando ya se ha ido.",
+    body: "Claude, Codex o cualquier cliente MCP llegan a tus ficheros por el mismo núcleo que usan los frontends humanos: acceso acotado que tú concedes, permisos que caducan, cambios retenidos hasta que los apruebes, y cada cambio en el diario con el nombre del agente.",
     flowLabel: "Cómo pasa por norte el cambio de un agente",
     flow: [
       ["Agente", "pide un ámbito: carpetas, operaciones, cuánto tiempo"],
       ["Tú", "lo concedes, y una regla ask puede retener cada cambio hasta que lo apruebes con y"],
       ["Núcleo", "aplica la política; fuera del ámbito, nada"],
       ["Diario", "anota cada cambio bajo la sesión del agente"],
-      ["Deshacer", "revierte esa sesión, de lo más nuevo a lo más viejo"],
     ],
     points: [
       ["Cerrado por defecto", "Sin ámbito, ni siquiera un listado. Sin una regla en tu política, ningún cambio, ni dentro del ámbito. Una petición que nadie contesta se deniega al minuto."],
       ["Un único punto de control", "El motor de políticas vive en el núcleo. Ni un plugin, ni un agente, ni un frontend tienen otra vía para tocar tus ficheros."],
-      ["Un deshacer que conoce sus límites", "Nunca sobrescribe, se salta lo que se ha sustituido después y manda a la papelera los ficheros que creó el agente en vez de borrarlos. Un borrado permanente se informa, no se disimula."],
+      ["Cada cambio lleva un nombre", "El diario anota lo que hizo cada sesión de agente junto a lo que hiciste tú, para que siempre sepas quién cambió qué, y cuándo."],
     ],
     steps: [
       ["agent-scope", "Tiene que pedirlo", "Fuera de un ámbito concedido un agente no obtiene nada, ni siquiera un listado. Pide una carpeta, las operaciones que quiere y por cuánto tiempo, y espera.", "photo-helper — un cliente MCP"],
       ["agent-ask", "Tú dices que sí, cambio a cambio", "Concedes el ámbito con norte policy grant. Aun así, una regla ask retiene cada cambio hasta que pulses y, en ntc sobre el daemon o en la ventana. Aquí, cada uno de cuatro renombrados.", "ada@norte — ntc"],
       ["agent-timeline", "Todo queda anotado", "Cada cambio cae en el diario bajo la sesión del agente, junto a los tuyos, en la misma línea de tiempo.", "ada@norte — ntc · línea de tiempo"],
-      ["agent-undo", "¿Te lo has pensado mejor? Un comando", "norte undo photo-helper revierte lo que hizo esa sesión, de lo más nuevo a lo más viejo, aunque el agente ya se haya ido.", "ada@norte — bash"],
     ],
     stepsCaption: "photo-helper es un cliente MCP con guion para estas capturas, no una IA. Todo lo demás en pantalla es norte.",
     hookup: "Conecta Claude Code, o cualquier cliente MCP",
@@ -796,7 +793,7 @@ const es: Copy = {
     items: [
       ["01", "Un solo espacio de nombres", "Discos locales, SFTP, FTP, S3 y archivos comprimidos se comportan como un único sistema de ficheros."],
       ["02", "Trabajo en marcha", "Copias, comparaciones, sincronizaciones e índices son tareas que se observan y se cancelan."],
-      ["03", "El control es humano", "Los agentes piden, tú decides, el núcleo lo aplica, y el diario guarda el camino de vuelta."],
+      ["03", "El control es humano", "Los agentes piden, tú decides, el núcleo lo aplica, y el diario anota quién hizo qué."],
       ["04", "Nada llama a casa", "Sin cuenta, sin nube, sin telemetría, ni siquiera opcional. Los diagnósticos se quedan en tu máquina."],
     ],
   },
@@ -854,7 +851,7 @@ const es: Copy = {
   features: {
     title: "Todas las funciones de norte, con capturas reales — norte",
     description:
-      "El recorrido completo de norte: dos paneles, el visor, el mapa de disco, las tareas en segundo plano, el diario y deshacer, remotos y comprimidos, diez temas, plugins aislados y las novedades de la última alfa.",
+      "El recorrido completo de norte: dos paneles, el visor, el mapa de disco, las tareas en segundo plano, el diario, remotos y comprimidos, diez temas, plugins aislados y las novedades de la última alfa.",
     eyebrow: "Funciones",
     h1: "Todo lo que hace norte, captura a captura.",
     lede: "La portada cuenta la idea. Esto es el detalle: cada paso del recorrido, cada remoto, cada tema y los plugins en acción, todo capturado de la versión actual.",
@@ -873,7 +870,7 @@ const es: Copy = {
   comparePage: {
     title: "norte frente a Midnight Commander, Far, Total Commander y yazi — norte",
     description:
-      "Una comparación función a función de norte con Midnight Commander, Far Manager, Total Commander y yazi: terminal y ventana, SFTP y S3, deshacer y diario, agentes bajo una política, plugins aislados, plataformas y licencias.",
+      "Una comparación función a función de norte con Midnight Commander, Far Manager, Total Commander y yazi: terminal y ventana, SFTP y S3, el diario, agentes bajo una política, plugins aislados, plataformas y licencias.",
     h1: "norte junto a los gestores de ficheros que ya conoces.",
   },
 };

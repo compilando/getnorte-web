@@ -97,7 +97,7 @@ export function TopicPage({ topic, lang }: { topic: Topic; lang: Lang }) {
                 command={`printf '[[rule]]\\nactor = "agent"\\naction = "ask"\\n' >> ~/.config/norte/policy.toml`}
                 t={t.cta}
               />
-              <CopyRow label="norte" command="norte policy grant <request_id>   ·   norte undo <session>" t={t.cta} />
+              <CopyRow label="norte" command="norte policy grant <request_id>" t={t.cta} />
             </div>
           </div>
         </section>

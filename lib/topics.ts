@@ -7,11 +7,11 @@ import type { Lang } from "./i18n";
  * landing already makes or one the captures show.
  */
 
-export const TOPICS = ["tui-undo", "sftp-s3", "ai-agents", "commander"] as const;
+export const TOPICS = ["tui", "sftp-s3", "ai-agents", "commander"] as const;
 export type Topic = (typeof TOPICS)[number];
 
 export const SLUGS: Record<Topic, Record<Lang, string>> = {
-  "tui-undo": { en: "terminal-file-manager-with-undo", es: "gestor-de-ficheros-de-terminal-con-deshacer" },
+  tui: { en: "terminal-file-manager", es: "gestor-de-ficheros-de-terminal" },
   "sftp-s3": { en: "sftp-s3-file-manager", es: "gestor-de-ficheros-sftp-s3" },
   "ai-agents": { en: "file-manager-for-ai-agents-mcp", es: "gestor-de-ficheros-para-agentes-ia-mcp" },
   commander: { en: "total-commander-alternative-for-linux", es: "alternativa-a-total-commander-para-linux" },
@@ -41,15 +41,15 @@ export type TopicCopy = {
 };
 
 export const TOPIC_COPY: Record<Topic, Record<Lang, TopicCopy>> = {
-  "tui-undo": {
+  tui: {
     en: {
-      label: "Terminal file manager with undo",
-      title: "A terminal file manager with undo — norte",
+      label: "Terminal file manager",
+      title: "A two-pane terminal file manager, open source — norte",
       description:
-        "norte is a two-pane terminal file manager where every copy, move, rename and delete is journaled and can be undone. Open source, in Rust, with a native window too.",
+        "norte is a two-pane terminal file manager with the keymaps you know, background copies you can pause, and a journal of every change. Open source, in Rust, with a native window too.",
       eyebrow: "Terminal file manager",
-      h1: "A terminal file manager that can undo.",
-      lede: "Two panes, the keys you already know, and a journal of everything that changed: yours, a script's or an agent's. Every entry is a way back.",
+      h1: "A two-pane file manager for your terminal.",
+      lede: "Two panes, the keys you already know, copies that run while you keep working, and a journal of everything that changed: yours, a script's or an agent's.",
       sections: [
         {
           h2: "Two panes, and your keys come with you",
@@ -58,8 +58,8 @@ export const TOPIC_COPY: Record<Topic, Record<Lang, TopicCopy>> = {
           frame: "ada@norte — ntc",
         },
         {
-          h2: "Everything that changed, and a way back",
-          body: "Each operation lands in a journal you can browse in the timeline and undo from there. A whole session — say, everything an agent did — goes back with one command: norte undo.",
+          h2: "Everything that changed, on the record",
+          body: "Each operation lands in a journal you can browse in the timeline, with its author: you, the window, a script or an agent.",
           shot: "tui:timeline",
           frame: "ada@norte — ntc · timeline",
         },
@@ -73,17 +73,17 @@ export const TOPIC_COPY: Record<Topic, Record<Lang, TopicCopy>> = {
       faq: [
         ["Is norte free?", "Yes. It is open source: the core and frontends are AGPL-3.0, and the protocol and providers are MIT or Apache-2.0. There is no account and no telemetry."],
         ["Which systems does it run on?", "The alpha ships Linux x86_64 binaries and a first Windows x86_64 preview (installer or ZIP, unsigned). On macOS it builds from source with Rust 1.94 or newer."],
-        ["Can I undo what an AI agent did?", "Yes. Agent operations are journaled under the agent's session, and norte undo <session> reverts that session, newest first. It never overwrites, and skips what was replaced since or cannot be safely reversed."],
+        ["Can I see what an AI agent did?", "Yes. Agent operations are journaled under the agent's session, next to yours, and the timeline shows them in order."],
       ],
     },
     es: {
-      label: "Gestor de ficheros de terminal con deshacer",
-      title: "Un gestor de ficheros de terminal con deshacer — norte",
+      label: "Gestor de ficheros de terminal",
+      title: "Un gestor de ficheros de terminal de dos paneles, libre — norte",
       description:
-        "norte es un gestor de ficheros de terminal de dos paneles en el que cada copia, movimiento, renombrado y borrado queda en un diario y se puede deshacer. Libre, en Rust, y también con ventana nativa.",
+        "norte es un gestor de ficheros de terminal de dos paneles con los teclados que ya conoces, copias en segundo plano que se pausan y un diario de cada cambio. Libre, en Rust, y también con ventana nativa.",
       eyebrow: "Gestor de ficheros de terminal",
-      h1: "Un gestor de ficheros de terminal que sabe deshacer.",
-      lede: "Dos paneles, las teclas que ya conoces y un diario de todo lo que cambió: lo tuyo, lo de un script o lo de un agente. Cada entrada es un camino de vuelta.",
+      h1: "Un gestor de ficheros de dos paneles para tu terminal.",
+      lede: "Dos paneles, las teclas que ya conoces, copias que corren mientras sigues trabajando y un diario de todo lo que cambió: lo tuyo, lo de un script o lo de un agente.",
       sections: [
         {
           h2: "Dos paneles, y tus teclas vienen contigo",
@@ -92,8 +92,8 @@ export const TOPIC_COPY: Record<Topic, Record<Lang, TopicCopy>> = {
           frame: "ada@norte — ntc",
         },
         {
-          h2: "Todo lo que cambió, y un camino de vuelta",
-          body: "Cada operación cae en un diario que recorres en la línea de tiempo y deshaces desde ahí. Una sesión entera —por ejemplo, todo lo que hizo un agente— vuelve atrás con un comando: norte undo.",
+          h2: "Todo lo que cambió, anotado",
+          body: "Cada operación cae en un diario que recorres en la línea de tiempo, con su autor: tú, la ventana, un script o un agente.",
           shot: "tui:timeline",
           frame: "ada@norte — ntc · línea de tiempo",
         },
@@ -107,7 +107,7 @@ export const TOPIC_COPY: Record<Topic, Record<Lang, TopicCopy>> = {
       faq: [
         ["¿norte es gratis?", "Sí. Es software libre: el núcleo y los frontends son AGPL-3.0, y el protocolo y los proveedores, MIT o Apache-2.0. Sin cuenta y sin telemetría."],
         ["¿En qué sistemas funciona?", "La alfa trae binarios para Linux x86_64 y una primera preview para Windows x86_64 (instalador o ZIP, sin firmar). En macOS se compila desde el código con Rust 1.94 o posterior."],
-        ["¿Puedo deshacer lo que hizo un agente de IA?", "Sí. Las operaciones de un agente quedan en el diario bajo su sesión, y norte undo <sesión> revierte esa sesión, de lo más nuevo a lo más viejo. Nunca sobrescribe, y se salta lo que se ha sustituido después o no puede revertir con seguridad."],
+        ["¿Puedo ver lo que hizo un agente de IA?", "Sí. Las operaciones de un agente quedan en el diario bajo su sesión, junto a las tuyas, y la línea de tiempo las muestra en orden."],
       ],
     },
   },
@@ -116,7 +116,7 @@ export const TOPIC_COPY: Record<Topic, Record<Lang, TopicCopy>> = {
       label: "SFTP & S3 file manager",
       title: "An SFTP and S3 file manager for the terminal — norte",
       description:
-        "Browse SFTP servers, S3 buckets and ZIP/TAR/RAR archives as plain folders, in two panes, from the terminal or a native window. Compare and sync them, with undo. Open source.",
+        "Browse SFTP servers, S3 buckets and ZIP/TAR/RAR archives as plain folders, in two panes, from the terminal or a native window. Compare and sync them. Open source.",
       eyebrow: "SFTP · S3 · archives",
       h1: "SFTP, S3 and archives. Just another pane.",
       lede: "A Raspberry Pi over SFTP, a bucket on S3, a zip in Downloads: norte opens them all through one virtual filesystem, with the same keys, the same copy dialog and the same journal.",
@@ -155,14 +155,14 @@ export const TOPIC_COPY: Record<Topic, Record<Lang, TopicCopy>> = {
       faq: [
         ["Which remote protocols does norte support?", "SFTP, FTP (with TLS) and S3-compatible object storage, plus ZIP, TAR and RAR archives, all through the same virtual filesystem."],
         ["Where are passwords and keys stored?", "Not in the config file: connections.toml only holds references, and the secret comes from your keyring or environment."],
-        ["Can I sync a local folder to a server?", "Yes. Compare the two trees, review the plan, approve it; the sync is journaled, and undo reverses what it safely can. On SFTP and S3, deleted files come back only if the connection keeps a trash."],
+        ["Can I sync a local folder to a server?", "Yes. Compare the two trees, review the plan, approve it; the sync runs as a task and every change it makes is journaled."],
       ],
     },
     es: {
       label: "Gestor de ficheros SFTP y S3",
       title: "Un gestor de ficheros SFTP y S3 para la terminal — norte",
       description:
-        "Recorre servidores SFTP, buckets S3 y archivos ZIP/TAR/RAR como carpetas normales, en dos paneles, desde la terminal o una ventana nativa. Compáralos y sincronízalos, con deshacer. Libre.",
+        "Recorre servidores SFTP, buckets S3 y archivos ZIP/TAR/RAR como carpetas normales, en dos paneles, desde la terminal o una ventana nativa. Compáralos y sincronízalos. Libre.",
       eyebrow: "SFTP · S3 · comprimidos",
       h1: "SFTP, S3 y comprimidos. Un panel más.",
       lede: "Una Raspberry Pi por SFTP, un bucket en S3, un zip en Descargas: norte los abre todos con un único sistema de ficheros virtual, con las mismas teclas, el mismo diálogo de copia y el mismo diario.",
@@ -201,7 +201,7 @@ export const TOPIC_COPY: Record<Topic, Record<Lang, TopicCopy>> = {
       faq: [
         ["¿Qué protocolos remotos admite norte?", "SFTP, FTP (con TLS) y almacenamiento de objetos compatible con S3, además de archivos ZIP, TAR y RAR, todo por el mismo sistema de ficheros virtual."],
         ["¿Dónde se guardan contraseñas y claves?", "No en el fichero de configuración: connections.toml solo guarda referencias, y el secreto sale de tu llavero o del entorno."],
-        ["¿Puedo sincronizar una carpeta local con un servidor?", "Sí. Compara los dos árboles, revisa el plan y apruébalo; la sincronización queda en el diario, y deshacer revierte lo que puede con seguridad. En SFTP y S3, lo borrado solo vuelve si la conexión tiene papelera."],
+        ["¿Puedo sincronizar una carpeta local con un servidor?", "Sí. Compara los dos árboles, revisa el plan y apruébalo; la sincronización corre como una tarea y cada cambio que hace queda en el diario."],
       ],
     },
   },
@@ -210,10 +210,10 @@ export const TOPIC_COPY: Record<Topic, Record<Lang, TopicCopy>> = {
       label: "File manager for AI agents (MCP)",
       title: "A file manager for AI agents, over MCP, under your rules — norte",
       description:
-        "Give Claude Code, Codex or any MCP client access to your files through norte: scoped grants, a policy that can ask before every change, a journal of what the agent did, and undo for its whole session.",
+        "Give Claude Code, Codex or any MCP client access to your files through norte: scoped grants, a policy that can ask before every change, and a journal of everything the agent did.",
       eyebrow: "AI agents · MCP",
       h1: "Let AI agents touch your files. Under your rules.",
-      lede: "norte mcp serve gives an agent a file interface with a gatekeeper: nothing out of scope, every change held for your approval if your policy says so, everything journaled, and one command to take its session back.",
+      lede: "norte mcp serve gives an agent a file interface with a gatekeeper: nothing out of scope, every change held for your approval if your policy says so, and everything journaled under the agent's name.",
       sections: [
         {
           h2: "It has to ask for a scope",
@@ -228,27 +228,27 @@ export const TOPIC_COPY: Record<Topic, Record<Lang, TopicCopy>> = {
           frame: "ada@norte — ntc",
         },
         {
-          h2: "Undo the agent's whole session",
-          body: "Everything the agent did is in the journal under its session. norte undo <session> reverts it, newest first, even after the agent has gone.",
-          shot: "tui:agent-undo",
-          frame: "ada@norte — bash",
+          h2: "All of it on the record",
+          body: "Everything the agent did is in the journal under its session, next to what you did, in the same timeline.",
+          shot: "tui:agent-timeline",
+          frame: "ada@norte — ntc · timeline",
         },
       ],
       extras: ["agentSetup"],
       faq: [
         ["Which AI agents work with norte?", "Any MCP client: Claude Code, Codex and others. norte mcp serve speaks MCP over stdio and exposes tools to list, read, copy, move, delete, compare and plan syncs."],
         ["Can an agent delete my files?", "Only inside a scope you granted, and only if your policy allows it; you can deny deletes for agents outright, or make every operation ask first. Local deletes go to the trash by default."],
-        ["Is this a real AI in the screenshots?", "No: photo-helper is an MCP client scripted for the captures. Everything else on screen — the daemon, the policy, the approval, the journal and the undo — is norte."],
+        ["Is this a real AI in the screenshots?", "No: photo-helper is an MCP client scripted for the captures. Everything else on screen — the daemon, the policy, the approval and the journal — is norte."],
       ],
     },
     es: {
       label: "Gestor de ficheros para agentes de IA (MCP)",
       title: "Un gestor de ficheros para agentes de IA, por MCP y con tus reglas — norte",
       description:
-        "Da a Claude Code, Codex o cualquier cliente MCP acceso a tus ficheros a través de norte: permisos acotados, una política que puede preguntar antes de cada cambio, un diario de lo que hizo el agente y deshacer para su sesión entera.",
+        "Da a Claude Code, Codex o cualquier cliente MCP acceso a tus ficheros a través de norte: permisos acotados, una política que puede preguntar antes de cada cambio y un diario de todo lo que hizo el agente.",
       eyebrow: "Agentes de IA · MCP",
       h1: "Deja que los agentes de IA toquen tus ficheros. Con tus reglas.",
-      lede: "norte mcp serve da a un agente una interfaz de ficheros con portero: nada fuera de su ámbito, cada cambio retenido hasta tu aprobación si tu política lo dice, todo en el diario, y un comando para deshacer su sesión.",
+      lede: "norte mcp serve da a un agente una interfaz de ficheros con portero: nada fuera de su ámbito, cada cambio retenido hasta tu aprobación si tu política lo dice, y todo en el diario con el nombre del agente.",
       sections: [
         {
           h2: "Tiene que pedir un ámbito",
@@ -263,17 +263,17 @@ export const TOPIC_COPY: Record<Topic, Record<Lang, TopicCopy>> = {
           frame: "ada@norte — ntc",
         },
         {
-          h2: "Deshaz la sesión entera del agente",
-          body: "Todo lo que hizo el agente está en el diario bajo su sesión. norte undo <sesión> lo revierte, de lo más nuevo a lo más viejo, aunque el agente ya se haya ido.",
-          shot: "tui:agent-undo",
-          frame: "ada@norte — bash",
+          h2: "Todo queda anotado",
+          body: "Todo lo que hizo el agente está en el diario bajo su sesión, junto a lo que hiciste tú, en la misma línea de tiempo.",
+          shot: "tui:agent-timeline",
+          frame: "ada@norte — ntc · línea de tiempo",
         },
       ],
       extras: ["agentSetup"],
       faq: [
         ["¿Qué agentes de IA funcionan con norte?", "Cualquier cliente MCP: Claude Code, Codex y otros. norte mcp serve habla MCP por stdio y ofrece herramientas para listar, leer, copiar, mover, borrar, comparar y planificar sincronizaciones."],
         ["¿Puede un agente borrar mis ficheros?", "Solo dentro de un ámbito que hayas concedido, y solo si tu política lo permite; puedes denegar los borrados a los agentes o hacer que cada operación pregunte antes. Por defecto, los borrados locales van a la papelera."],
-        ["¿Es una IA de verdad la de las capturas?", "No: photo-helper es un cliente MCP con guion para las capturas. Todo lo demás en pantalla —el daemon, la política, la aprobación, el diario y el deshacer— es norte."],
+        ["¿Es una IA de verdad la de las capturas?", "No: photo-helper es un cliente MCP con guion para las capturas. Todo lo demás en pantalla —el daemon, la política, la aprobación y el diario— es norte."],
       ],
     },
   },
@@ -282,10 +282,10 @@ export const TOPIC_COPY: Record<Topic, Record<Lang, TopicCopy>> = {
       label: "Total Commander alternative for Linux",
       title: "A Total Commander and Midnight Commander alternative for Linux — norte",
       description:
-        "An orthodox two-pane file manager for Linux, in the terminal and in a native window, with Total Commander, Far, Norton and Krusader keymaps, SFTP and S3, undo, and AI agents under a policy.",
+        "An orthodox two-pane file manager for Linux, in the terminal and in a native window, with Total Commander, Far, Norton and Krusader keymaps, SFTP and S3, a journal of every change, and AI agents under a policy.",
       eyebrow: "Orthodox file manager",
       h1: "The Total Commander you missed on Linux. In your terminal, too.",
-      lede: "Two panes, F-keys, a menu bar — and presets that bring your fingers with you. norte adds what the classics never had: undo, a daemon that every screen shares, and agents that ask before they touch anything.",
+      lede: "Two panes, F-keys, a menu bar — and presets that bring your fingers with you. norte adds what the classics never had: a journal of every change, a daemon that every screen shares, and agents that ask before they touch anything.",
       sections: [
         {
           h2: "Your keys come with you",
@@ -311,10 +311,10 @@ export const TOPIC_COPY: Record<Topic, Record<Lang, TopicCopy>> = {
       label: "Alternativa a Total Commander para Linux",
       title: "Una alternativa a Total Commander y Midnight Commander para Linux — norte",
       description:
-        "Un gestor de ficheros ortodoxo de dos paneles para Linux, en la terminal y en una ventana nativa, con esquemas de teclas de Total Commander, Far, Norton y Krusader, SFTP y S3, deshacer, y agentes de IA bajo una política.",
+        "Un gestor de ficheros ortodoxo de dos paneles para Linux, en la terminal y en una ventana nativa, con esquemas de teclas de Total Commander, Far, Norton y Krusader, SFTP y S3, un diario de cada cambio, y agentes de IA bajo una política.",
       eyebrow: "Gestor de ficheros ortodoxo",
       h1: "El Total Commander que echabas de menos en Linux. También en tu terminal.",
-      lede: "Dos paneles, teclas F, barra de menús, y presets que traen tus dedos contigo. norte añade lo que los clásicos nunca tuvieron: deshacer, un daemon que comparten todas las pantallas y agentes que preguntan antes de tocar nada.",
+      lede: "Dos paneles, teclas F, barra de menús, y presets que traen tus dedos contigo. norte añade lo que los clásicos nunca tuvieron: un diario de cada cambio, un daemon que comparten todas las pantallas y agentes que preguntan antes de tocar nada.",
       sections: [
         {
           h2: "Tus teclas vienen contigo",

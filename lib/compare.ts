@@ -47,10 +47,6 @@ export const ROWS: Row[] = [
     notes: { 4: { en: "archivemount.yazi", es: "archivemount.yazi" } },
   },
   {
-    label: { en: "Undo of copies, moves, renames, deletes", es: "Deshacer copias, movimientos, renombrados y borrados" },
-    cells: ["yes", "no", "no", "no", "no"],
-  },
-  {
     label: { en: "Journal of every operation", es: "Diario de cada operación" },
     cells: ["yes", "no", "no", "partial", "no"],
     notes: { 0: { en: "hash-chained", es: "encadenado por hash" }, 3: { en: "optional log file", es: "log opcional" } },

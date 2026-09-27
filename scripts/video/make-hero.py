@@ -36,14 +36,14 @@ CAPTIONS = {
         "Or a native window. Same core.",
         "One daemon. Every screen sees the same work.",
         "Agents ask. You approve.",
-        "Changed your mind? Undo the whole session.",
+        "Plugins, sandboxed. You approve every capability.",
     ],
     "es": [
         "Dos paneles. En cualquier terminal.",
         "O una ventana nativa. El mismo núcleo.",
         "Un demonio. Todas las pantallas ven el mismo trabajo.",
         "Los agentes piden. Tú apruebas.",
-        "¿Te lo has pensado mejor? Deshaz la sesión entera.",
+        "Plugins aislados. Cada permiso lo apruebas tú.",
     ],
 }
 TAGLINE = {
@@ -62,8 +62,7 @@ PLAN = [
     ("ansi", "agent-scope", 1.8, 3),
     ("ansi", "agent-ask", 2.4, 3),
     ("ansi", "agent-timeline", 1.6, 3),
-    ("ansi", "agent-undo", 1.8, 4),
-    ("ansi", "agent-undone", 1.6, 4),
+    ("ansi", "grant", 2.8, 4),
     ("end", None, 2.8, None),
 ]
 

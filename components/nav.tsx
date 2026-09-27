@@ -1,6 +1,7 @@
 import type { Copy } from "@/lib/i18n";
 import { REPO } from "@/lib/product";
 import { Brand } from "./brand";
+import { MobileMenu } from "./mobile-menu";
 
 /** `base` prefixes the in-page anchors, for pages other than the home page. */
 export function Nav({ t, home, base = "", otherHref }: { t: Copy["nav"]; home: string; base?: string; otherHref?: string }) {
@@ -9,7 +10,7 @@ export function Nav({ t, home, base = "", otherHref }: { t: Copy["nav"]; home: s
     <header className="fixed inset-x-0 top-0 z-50 border-b border-white/[0.06] bg-base/70 backdrop-blur-2xl">
       <nav className="mx-auto flex h-[68px] max-w-[1440px] items-center justify-between px-4 sm:px-8 lg:px-12" aria-label="Main">
         <a href={home} aria-label="norte"><Brand /></a>
-        {/* Eight links fit on one line from 1280px; narrower screens go without them. */}
+        {/* Eight links fit on one line from 1280px; narrower screens get them in MobileMenu. */}
         <div className="hidden items-center gap-6 xl:flex">
           {t.links.map(([label, href]) => (
             <a key={href} href={at(href)} className="text-[14px] text-muted transition-colors hover:text-ink">{label}</a>
@@ -19,7 +20,7 @@ export function Nav({ t, home, base = "", otherHref }: { t: Copy["nav"]; home: s
           <a
             href={otherHref ?? t.otherHref}
             hrefLang={t.otherHref === "/" ? "en" : "es"}
-            className="inline-flex h-9 items-center rounded-full px-3 font-mono text-[12px] uppercase tracking-[0.08em] text-muted transition hover:text-ink"
+            className="hidden h-9 items-center rounded-full px-3 font-mono text-[12px] uppercase tracking-[0.08em] text-muted transition hover:text-ink sm:inline-flex"
           >
             {t.other}
           </a>
@@ -31,11 +32,18 @@ export function Nav({ t, home, base = "", otherHref }: { t: Copy["nav"]; home: s
           </a>
           <a
             href={REPO}
-            className="group inline-flex h-9 items-center gap-2 rounded-full border border-line bg-white/[0.03] px-4 font-mono text-[12px] uppercase tracking-[0.08em] text-ink transition hover:border-muted/70 hover:bg-white/[0.06]"
+            className="group hidden h-9 items-center gap-2 rounded-full border border-line bg-white/[0.03] px-4 font-mono text-[12px] uppercase tracking-[0.08em] text-ink transition hover:border-muted/70 hover:bg-white/[0.06] sm:inline-flex"
           >
             GitHub
             <span className="text-phosphor transition-transform group-hover:translate-x-0.5">↗</span>
           </a>
+          <MobileMenu
+            links={t.links.map(([label, href]) => [label, at(href)])}
+            download={[t.download, at("#download")]}
+            other={[t.other, otherHref ?? t.otherHref, t.otherHref === "/" ? "en" : "es"]}
+            github={REPO}
+            labels={{ open: t.menu, close: t.menuClose }}
+          />
         </div>
       </nav>
     </header>
