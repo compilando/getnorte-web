@@ -13,6 +13,7 @@ import { Footer } from "./footer";
 import { HeroCta } from "./hero-cta";
 import { JsonLd, softwareApp } from "./json-ld";
 import { HeroStage } from "./hero-stage";
+import { Join } from "./join";
 import { Nav } from "./nav";
 import { SignalStrip } from "./signal-strip";
 import { TerminalScreen } from "./terminal-screen";
@@ -23,7 +24,7 @@ import { Tour } from "./tour";
  * The home page tells the idea, in this order: what norte is, why, the one
  * core behind the terminal and the window, the agents, the work that goes on
  * and its journal, then a short tour, plugins, the comparison in brief,
- * what is new and the download. The rest lives on /features and /compare.
+ * what is new, the call for collaborators and sponsors, and the download. The rest lives on /features and /compare.
  */
 export function Landing({ lang }: { lang: Lang }) {
   const t = COPY[lang];
@@ -327,6 +328,8 @@ export function Landing({ lang }: { lang: Lang }) {
           <MoreLink href={`${t.paths.features}#new`}>{t.news.more}</MoreLink>
         </div>
       </Section>
+
+      <Join t={t.join} contributing={t.open.contributing} />
 
       <FinalCta t={t.cta} />
       <Footer t={t.footer} home={home} guides={guidesFor(lang)} />

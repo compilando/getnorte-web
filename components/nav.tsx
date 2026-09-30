@@ -1,6 +1,7 @@
 import type { Copy } from "@/lib/i18n";
-import { REPO } from "@/lib/product";
+import { EMAIL, REPO } from "@/lib/product";
 import { Brand } from "./brand";
+import { GitHubIcon, MailIcon } from "./icons";
 import { MobileMenu } from "./mobile-menu";
 
 /** `base` prefixes the in-page anchors, for pages other than the home page. */
@@ -31,9 +32,18 @@ export function Nav({ t, home, base = "", otherHref }: { t: Copy["nav"]; home: s
             {t.download}
           </a>
           <a
+            href={`mailto:${EMAIL}`}
+            title={EMAIL}
+            aria-label={`${t.contact}: ${EMAIL}`}
+            className="hidden h-9 w-9 items-center justify-center rounded-full border border-line bg-white/[0.03] text-muted transition hover:border-muted/70 hover:text-ink sm:inline-flex"
+          >
+            <MailIcon className="h-4 w-4" />
+          </a>
+          <a
             href={REPO}
             className="group hidden h-9 items-center gap-2 rounded-full border border-line bg-white/[0.03] px-4 font-mono text-[12px] uppercase tracking-[0.08em] text-ink transition hover:border-muted/70 hover:bg-white/[0.06] sm:inline-flex"
           >
+            <GitHubIcon className="h-4 w-4" />
             GitHub
             <span className="text-phosphor transition-transform group-hover:translate-x-0.5">↗</span>
           </a>
@@ -42,6 +52,7 @@ export function Nav({ t, home, base = "", otherHref }: { t: Copy["nav"]; home: s
             download={[t.download, at("#download")]}
             other={[t.other, otherHref ?? t.otherHref, t.otherHref === "/" ? "en" : "es"]}
             github={REPO}
+            email={EMAIL}
             labels={{ open: t.menu, close: t.menuClose }}
           />
         </div>

@@ -1,6 +1,7 @@
 import type { Copy } from "@/lib/i18n";
-import { LINKS, REPO, RELEASE } from "@/lib/product";
+import { EMAIL, LINKS, REPO, RELEASE } from "@/lib/product";
 import { Brand } from "./brand";
+import { GitHubIcon, MailIcon } from "./icons";
 
 /** The footer's link groups name their targets; this is where they point. */
 const TARGETS: Record<string, string> = {
@@ -35,6 +36,16 @@ export function Footer({
           <p className="mt-4 max-w-sm text-sm leading-6 text-ink/70">
             <span className="text-phosphor">♥</span> {t.thanks}
           </p>
+          <div className="mt-6 flex flex-col items-start gap-2 text-sm">
+            <a href={`mailto:${EMAIL}`} className="inline-flex items-center gap-2 text-muted transition-colors hover:text-ink">
+              <MailIcon className="h-4 w-4 text-phosphor" />
+              <span><span className="sr-only">{t.contact}: </span>{EMAIL}</span>
+            </a>
+            <a href={REPO} className="inline-flex items-center gap-2 text-muted transition-colors hover:text-ink">
+              <GitHubIcon className="h-4 w-4 text-phosphor" />
+              github.com/compilando/norte
+            </a>
+          </div>
           <p className="mt-8 font-mono text-[11px] uppercase tracking-[0.12em] text-muted">{t.promise}</p>
           <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.12em] text-muted/60">
             v{RELEASE.version} · protocol {RELEASE.protocol}

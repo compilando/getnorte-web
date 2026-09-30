@@ -1,12 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { GitHubIcon, MailIcon } from "./icons";
 
 type Props = {
   links: [string, string][];
   download: [string, string];
   other: [string, string, string];
   github: string;
+  email: string;
   labels: { open: string; close: string };
 };
 
@@ -15,7 +17,7 @@ type Props = {
  * opens them as a panel under the header. It closes on a choice, on Escape,
  * or on the button again.
  */
-export function MobileMenu({ links, download, other, github, labels }: Props) {
+export function MobileMenu({ links, download, other, github, email, labels }: Props) {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -74,9 +76,12 @@ export function MobileMenu({ links, download, other, github, labels }: Props) {
                 {other[0]}
               </a>
               <a href={github} className="inline-flex h-11 items-center gap-2 rounded-full border border-line px-5 font-mono text-[13px] uppercase tracking-[0.08em] text-ink">
-                GitHub <span className="text-phosphor">↗</span>
+                <GitHubIcon className="h-4 w-4" /> GitHub <span className="text-phosphor">↗</span>
               </a>
             </div>
+            <a href={`mailto:${email}`} className="mt-6 inline-flex items-center gap-2 font-mono text-[13px] text-muted transition hover:text-ink">
+              <MailIcon className="h-4 w-4 text-phosphor" /> {email}
+            </a>
           </nav>
         </div>
       )}

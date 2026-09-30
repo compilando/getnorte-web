@@ -60,6 +60,7 @@ const en = {
     download: "Download",
     menu: "Menu",
     menuClose: "Close menu",
+    contact: "Write to us",
     other: "Español",
     otherHref: "/es",
   },
@@ -393,6 +394,19 @@ const en = {
     license: "How norte is licensed",
     contributing: "Contributing",
   },
+  join: {
+    eyebrow: "Collaborators and sponsors wanted",
+    title: "norte grows with more hands, and with backing.",
+    body: "norte is young and built in the open. Code, docs, packaging and testing all go faster with more people, and sponsorship pays for the time, the macOS and Windows CI and the code signing that the next releases need.",
+    repo: "compilando/norte",
+    repoBody: "Star it to follow along, watch it for releases, open an issue when something breaks.",
+    star: "Star on GitHub",
+    items: [
+      ["Collaborators", "Rust, the desktop window, docs, translations, packaging, testing on macOS and Windows. Pick an open issue, read the contributing guide, or write first and we will find a place to start.", "Open issues", "issues"],
+      ["Sponsors", "People and companies who want a free, agent-ready file commander to exist. Sponsorship keeps the work steady and the releases signed. Write and we will find the shape that fits.", "Write about sponsoring", "email"],
+    ] as [string, string, string, string][],
+    write: "Or just write:",
+  },
   cta: {
     eyebrow: "Your filesystem, headed somewhere",
     title: "Ready to point north?",
@@ -425,10 +439,11 @@ const en = {
     groups: [
       ["Product", [["Why norte", "#why"], ["Agents", "#agents"], ["Plugins", "#plugins"], ["All features", "/features"], ["Themes", "/features#themes"], ["Comparison", "/compare"], ["Download", "#download"]]],
       ["Build", [["Documentation", "docs"], ["Architecture map", "architecture"], ["Specification", "spec"], ["Decision records", "adr"], ["Plugin authoring", "plugins"]]],
-      ["Open source", [["Source code", "repo"], ["Releases", "releases"], ["Changelog", "changelog"], ["Contributing", "contributing"], ["Security", "security"]]],
+      ["Open source", [["Source code", "repo"], ["Releases", "releases"], ["Changelog", "changelog"], ["Contributing", "contributing"], ["Sponsor or collaborate", "#join"], ["Security", "security"]]],
     ] as [string, [string, string][]][],
     license: "AGPL-3.0 · Protocol & providers MIT / Apache-2.0",
     guides: "Guides",
+    contact: "Contact",
   },
   features: {
     title: "Every norte feature, in real captures — norte",
@@ -479,6 +494,7 @@ const es: Copy = {
     download: "Descargar",
     menu: "Menú",
     menuClose: "Cerrar el menú",
+    contact: "Escríbenos",
     other: "English",
     otherHref: "/",
   },
@@ -811,6 +827,19 @@ const es: Copy = {
     license: "Cómo se licencia norte",
     contributing: "Contribuir",
   },
+  join: {
+    eyebrow: "Se buscan colaboradores y sponsors",
+    title: "norte crece con más manos, y con apoyo.",
+    body: "norte es joven y se hace a la vista. El código, la documentación, los paquetes y las pruebas avanzan más rápido con más gente, y el patrocinio paga el tiempo, la CI para macOS y Windows y la firma de código que necesitan las próximas versiones.",
+    repo: "compilando/norte",
+    repoBody: "Dale una estrella para seguirlo, vigílalo para enterarte de cada versión, abre un issue cuando algo falle.",
+    star: "Estrella en GitHub",
+    items: [
+      ["Colaboradores", "Rust, la ventana de escritorio, documentación, traducciones, paquetes, pruebas en macOS y Windows. Elige un issue abierto, lee la guía de contribución o escribe primero y buscamos por dónde empezar.", "Issues abiertos", "issues"],
+      ["Sponsors", "Personas y empresas que quieren que exista un gestor de ficheros libre y preparado para agentes. El patrocinio mantiene el trabajo constante y las versiones firmadas. Escribe y buscamos la forma que encaje.", "Escribir para patrocinar", "email"],
+    ],
+    write: "O simplemente escribe:",
+  },
   cta: {
     eyebrow: "Tu sistema de ficheros, con rumbo",
     title: "¿Listo para apuntar al norte?",
@@ -843,10 +872,11 @@ const es: Copy = {
     groups: [
       ["Producto", [["Por qué norte", "#why"], ["Agentes", "#agents"], ["Plugins", "#plugins"], ["Todas las funciones", "/es/funciones"], ["Temas", "/es/funciones#themes"], ["Comparación", "/es/comparar"], ["Descargar", "#download"]]],
       ["Construir", [["Documentación", "docs"], ["Mapa de arquitectura", "architecture"], ["Especificación", "spec"], ["Decisiones (ADR)", "adr"], ["Escribir plugins", "plugins"]]],
-      ["Código abierto", [["Código fuente", "repo"], ["Versiones", "releases"], ["Cambios", "changelog"], ["Contribuir", "contributing"], ["Seguridad", "security"]]],
+      ["Código abierto", [["Código fuente", "repo"], ["Versiones", "releases"], ["Cambios", "changelog"], ["Contribuir", "contributing"], ["Patrocinar o colaborar", "#join"], ["Seguridad", "security"]]],
     ],
     license: "AGPL-3.0 · Protocolo y proveedores MIT / Apache-2.0",
     guides: "Guías",
+    contact: "Contacto",
   },
   features: {
     title: "Todas las funciones de norte, con capturas reales — norte",

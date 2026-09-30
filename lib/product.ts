@@ -6,6 +6,8 @@
 
 export const REPO = "https://github.com/compilando/norte";
 export const SITE = "https://getnorte.dev";
+/** Where to write: questions, collaboration, sponsorship. */
+export const EMAIL = "parhelion@tutamail.com";
 
 /** Cargo.toml, `version`. */
 const VERSION = "0.3.0-alpha.5";
