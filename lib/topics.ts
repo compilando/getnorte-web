@@ -58,7 +58,7 @@ export const TOPIC_COPY: Record<Topic, Record<Lang, TopicCopy>> = {
           frame: "ada@norte — ntc",
         },
         {
-          h2: "Everything that changed, on the record",
+          h2: "Every change in one journal",
           body: "Each operation lands in a journal you can browse in the timeline, with its author: you, the window, a script or an agent.",
           shot: "tui:timeline",
           frame: "ada@norte — ntc · timeline",
@@ -92,7 +92,7 @@ export const TOPIC_COPY: Record<Topic, Record<Lang, TopicCopy>> = {
           frame: "ada@norte — ntc",
         },
         {
-          h2: "Todo lo que cambió, anotado",
+          h2: "Todos los cambios, en un diario",
           body: "Cada operación cae en un diario que recorres en la línea de tiempo, con su autor: tú, la ventana, un script o un agente.",
           shot: "tui:timeline",
           frame: "ada@norte — ntc · línea de tiempo",
@@ -118,7 +118,7 @@ export const TOPIC_COPY: Record<Topic, Record<Lang, TopicCopy>> = {
       description:
         "Browse SFTP servers, S3 buckets and ZIP/TAR/RAR archives as plain folders, in two panes, from the terminal or a native window. Compare and sync them. Open source.",
       eyebrow: "SFTP · S3 · archives",
-      h1: "SFTP, S3 and archives. Just another pane.",
+      h1: "SFTP, S3 and archives, each one just another pane.",
       lede: "A Raspberry Pi over SFTP, a bucket on S3, a zip in Downloads: norte opens them all through one virtual filesystem, with the same keys, the same copy dialog and the same journal.",
       sections: [
         {
@@ -164,7 +164,7 @@ export const TOPIC_COPY: Record<Topic, Record<Lang, TopicCopy>> = {
       description:
         "Recorre servidores SFTP, buckets S3 y archivos ZIP/TAR/RAR como carpetas normales, en dos paneles, desde la terminal o una ventana nativa. Compáralos y sincronízalos. Libre.",
       eyebrow: "SFTP · S3 · comprimidos",
-      h1: "SFTP, S3 y comprimidos. Un panel más.",
+      h1: "SFTP, S3 y comprimidos, cada uno un panel más.",
       lede: "Una Raspberry Pi por SFTP, un bucket en S3, un zip en Descargas: norte los abre todos con un único sistema de ficheros virtual, con las mismas teclas, el mismo diálogo de copia y el mismo diario.",
       sections: [
         {
@@ -212,7 +212,7 @@ export const TOPIC_COPY: Record<Topic, Record<Lang, TopicCopy>> = {
       description:
         "Give Claude Code, Codex or any MCP client access to your files through norte: scoped grants, a policy that can ask before every change, and a journal of everything the agent did.",
       eyebrow: "AI agents · MCP",
-      h1: "Let AI agents touch your files. Under your rules.",
+      h1: "Let AI agents touch your files, under your rules.",
       lede: "norte mcp serve gives an agent a file interface with a gatekeeper: nothing out of scope, every change held for your approval if your policy says so, and everything journaled under the agent's name.",
       sections: [
         {
@@ -228,7 +228,7 @@ export const TOPIC_COPY: Record<Topic, Record<Lang, TopicCopy>> = {
           frame: "ada@norte — ntc",
         },
         {
-          h2: "All of it on the record",
+          h2: "Everything in the journal",
           body: "Everything the agent did is in the journal under its session, next to what you did, in the same timeline.",
           shot: "tui:agent-timeline",
           frame: "ada@norte — ntc · timeline",
@@ -247,7 +247,7 @@ export const TOPIC_COPY: Record<Topic, Record<Lang, TopicCopy>> = {
       description:
         "Da a Claude Code, Codex o cualquier cliente MCP acceso a tus ficheros a través de norte: permisos acotados, una política que puede preguntar antes de cada cambio y un diario de todo lo que hizo el agente.",
       eyebrow: "Agentes de IA · MCP",
-      h1: "Deja que los agentes de IA toquen tus ficheros. Con tus reglas.",
+      h1: "Deja que los agentes de IA toquen tus ficheros, con tus reglas.",
       lede: "norte mcp serve da a un agente una interfaz de ficheros con portero: nada fuera de su ámbito, cada cambio retenido hasta tu aprobación si tu política lo dice, y todo en el diario con el nombre del agente.",
       sections: [
         {
@@ -284,8 +284,8 @@ export const TOPIC_COPY: Record<Topic, Record<Lang, TopicCopy>> = {
       description:
         "An orthodox two-pane file manager for Linux, in the terminal and in a native window, with Total Commander, Far, Norton and Krusader keymaps, SFTP and S3, a journal of every change, and AI agents under a policy.",
       eyebrow: "Orthodox file manager",
-      h1: "The Total Commander you missed on Linux. In your terminal, too.",
-      lede: "Two panes, F-keys, a menu bar — and presets that bring your fingers with you. norte adds what the classics never had: a journal of every change, a daemon that every screen shares, and agents that ask before they touch anything.",
+      h1: "The Total Commander you missed on Linux, in your terminal too.",
+      lede: "Two panes, F-keys, a menu bar, and keymap presets so your fingers already know it. norte adds what the classics don't have: a journal of every change, a daemon that every screen shares, and agents that ask before they touch anything.",
       sections: [
         {
           h2: "Your keys come with you",
@@ -295,7 +295,7 @@ export const TOPIC_COPY: Record<Topic, Record<Lang, TopicCopy>> = {
         },
         {
           h2: "The same program, in a window",
-          body: "norte-gui is a native window over the same core, with the same keys and themes. It ships as .deb, .rpm and AppImage for Linux.",
+          body: "norte-gui is a native window over the same core, with the same keys and themes. It ships as .deb, .rpm and AppImage for Linux, and as a first preview for Windows.",
           shot: "gui:panes-vscode-dark",
           frame: "norte-gui",
         },
@@ -303,8 +303,8 @@ export const TOPIC_COPY: Record<Topic, Record<Lang, TopicCopy>> = {
       extras: ["compare"],
       faq: [
         ["Does norte work like Total Commander?", "It follows the same orthodox model — two panes, F5 to copy, F6 to move — and has a total-commander keymap preset, along with far, norton, krusader, orthodox, vim and cua."],
-        ["Is there a Windows version?", "Not as binaries yet; it builds from source there, and the daemon is Unix-only for now. You can follow and upvote the Windows issue on GitHub."],
-        ["Is norte stable?", "It is an alpha: interfaces and configuration may still change. Midnight Commander has decades of use; norte says what it is."],
+        ["Is there a Windows version?", "Yes, a first preview for Windows 10 and 11 x64: an installer that needs no admin, or a portable ZIP. It is unsigned for now, so SmartScreen will ask."],
+        ["Is norte stable?", "It is an alpha: interfaces and configuration may still change. Midnight Commander has decades of use behind it, and norte doesn't pretend otherwise."],
       ],
     },
     es: {
@@ -313,8 +313,8 @@ export const TOPIC_COPY: Record<Topic, Record<Lang, TopicCopy>> = {
       description:
         "Un gestor de ficheros ortodoxo de dos paneles para Linux, en la terminal y en una ventana nativa, con esquemas de teclas de Total Commander, Far, Norton y Krusader, SFTP y S3, un diario de cada cambio, y agentes de IA bajo una política.",
       eyebrow: "Gestor de ficheros ortodoxo",
-      h1: "El Total Commander que echabas de menos en Linux. También en tu terminal.",
-      lede: "Dos paneles, teclas F, barra de menús, y presets que traen tus dedos contigo. norte añade lo que los clásicos nunca tuvieron: un diario de cada cambio, un daemon que comparten todas las pantallas y agentes que preguntan antes de tocar nada.",
+      h1: "El Total Commander que echabas de menos en Linux, también en tu terminal.",
+      lede: "Dos paneles, teclas F, barra de menús y presets de teclado para que tus dedos ya lo conozcan. norte añade lo que los clásicos no tienen: un diario de cada cambio, un daemon que comparten todas las pantallas y agentes que preguntan antes de tocar nada.",
       sections: [
         {
           h2: "Tus teclas vienen contigo",
@@ -324,7 +324,7 @@ export const TOPIC_COPY: Record<Topic, Record<Lang, TopicCopy>> = {
         },
         {
           h2: "El mismo programa, en una ventana",
-          body: "norte-gui es una ventana nativa sobre el mismo núcleo, con las mismas teclas y temas. Se distribuye como .deb, .rpm y AppImage para Linux.",
+          body: "norte-gui es una ventana nativa sobre el mismo núcleo, con las mismas teclas y temas. Se distribuye como .deb, .rpm y AppImage para Linux, y como primera preview para Windows.",
           shot: "gui:panes-vscode-dark",
           frame: "norte-gui",
         },
@@ -332,8 +332,8 @@ export const TOPIC_COPY: Record<Topic, Record<Lang, TopicCopy>> = {
       extras: ["compare"],
       faq: [
         ["¿norte funciona como Total Commander?", "Sigue el mismo modelo ortodoxo —dos paneles, F5 para copiar, F6 para mover— y tiene un preset de teclado total-commander, junto a far, norton, krusader, orthodox, vim y cua."],
-        ["¿Hay versión para Windows?", "Todavía no en binarios; allí se compila desde el código, y el daemon es solo Unix por ahora. Puedes seguir y votar el issue de Windows en GitHub."],
-        ["¿norte es estable?", "Es una alfa: interfaces y configuración aún pueden cambiar. Midnight Commander tiene décadas de uso; norte dice lo que es."],
+        ["¿Hay versión para Windows?", "Sí, una primera preview para Windows 10 y 11 x64: un instalador que no pide administrador, o un ZIP portable. De momento va sin firmar, así que SmartScreen preguntará."],
+        ["¿norte es estable?", "Es una alfa: interfaces y configuración aún pueden cambiar. Midnight Commander tiene décadas de uso detrás, y norte no lo oculta."],
       ],
     },
   },

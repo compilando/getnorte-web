@@ -60,16 +60,16 @@ const en = {
     download: "Download",
     menu: "Menu",
     menuClose: "Close menu",
-    contact: "Write to us",
+    contact: "Write to me",
     other: "Español",
     otherHref: "/es",
   },
   paths: { home: "/", features: "/features", compare: "/compare" },
   hero: {
     eyebrow: "The open-source file commander for the agent era",
-    title: ["Your files have a new sense of ", "direction."],
+    title: ["A file manager that knows where it's ", "going."],
     subtitle: "One file manager for your terminal, your desktop and your AI agents.",
-    lede: "Work across local files, SFTP, S3 and archives through one Rust core. Agents get scoped access, explicit approval and every change on the record.",
+    lede: "Work across local files, SFTP, S3 and archives through one Rust core. Agents get scoped access, explicit approval, and every change goes in the journal.",
     cta: {
       install: "Install on Linux",
       demo: "Watch the 20-second demo",
@@ -95,7 +95,7 @@ const en = {
     tabs: { film: "▶ 20 s", terminal: "Terminal · ntc", window: "Window · norte-gui" },
     theme: "Theme",
     live: "Live capture",
-    caption: "Not a mockup. Every screen on this page is norte itself, captured by a script from the current build.",
+    caption: "Every screen on this page is norte itself, captured by a script from the current build — no mockups.",
     play: "Play",
     pause: "Pause",
   },
@@ -132,7 +132,7 @@ const en = {
   },
   core: {
     eyebrow: "Background work · the journal",
-    title: "Close the UI. The copy keeps going.",
+    title: "Close the window; the copy keeps going.",
     body: "Open ntc with --daemon, or use the window, and the work runs in the norte daemon: it keeps the task alive when a screen closes, and every other client picks it up at the same percentage. Whatever it changes lands in one journal, with its author.",
     daemon: "norte daemon",
     daemonNote: "connections · tasks · journal · policy",
@@ -154,14 +154,14 @@ const en = {
     ] as [string, string][],
     points: [
       ["Copies are tasks. You keep working.", "Copy, move, delete and sync run in the background with progress and a clean cancel. Copies, moves and deletes pause and resume; an optional queue takes them one at a time."],
-      ["Everything that changed, on the record.", "What you did in the terminal, in the window, from a script or through an agent lands in one journal, each entry with its author, in one timeline for every client."],
+      ["One journal for every change.","What you did in the terminal, in the window, from a script or through an agent lands in one journal, each entry with its author, in one timeline for every client."],
       ["Hand off, don't start over", "Begin in ntc over SSH and carry on in the window at your desk: tabs, directories and marks come along (ntc --attach)."],
     ] as [string, string][],
     local: "A Unix socket in your runtime directory, checked against your user. No port is opened.",
   },
   remotes: {
     eyebrow: "Everywhere your files are",
-    title: "A Raspberry Pi, a bucket, a zip. Just another pane.",
+    title: "A Raspberry Pi, a bucket or a zip is just another pane.",
     body: "Local disks, SFTP, FTP, S3 and archives go through one virtual filesystem: the same keys, the same copy dialog, the same journal. The daemon keeps the connections open for every client.",
     tiles: [
       ["sftp-trust", "SFTP", "First contact asks: the host key's fingerprint, before a single byte moves."],
@@ -174,7 +174,7 @@ const en = {
   },
   tour: {
     eyebrow: "A tour, in real captures",
-    title: "Everything a file manager should have done years ago.",
+    title: "A quick tour, straight from the build.",
     steps: [
       {
         scene: "panes",
@@ -289,7 +289,7 @@ const en = {
   },
   news: {
     eyebrow: "New in {version}",
-    title: "What landed since the last alpha.",
+    title: "New since the last alpha.",
     items: [
       ["Terminal in a panel", "A shell below the listings, in both frontends, sharing one emulator.", "Ctrl+Alt+S", "tui:terminal"],
       ["Pause and resume", "A copy stops at the end of its chunk and carries on where it left off.", "Ctrl+Alt+K", "tui:jobs-paused"],
@@ -308,7 +308,7 @@ const en = {
   },
   agents: {
     eyebrow: "Agents, governed",
-    title: "Your AI works with your files. Never around them.",
+    title: "Let your AI touch your files, on your terms.",
     body: "Claude, Codex or any MCP client reaches your files through the same core the human frontends use: scoped access you grant, expiring grants, changes held until you approve them, and every change in the journal under the agent's name.",
     flowLabel: "How an agent's change goes through norte",
     flow: [
@@ -319,13 +319,13 @@ const en = {
     ] as [string, string][],
     points: [
       ["Closed by default", "No scope, not even a listing. No rule in your policy, no changes — even inside a scope. A request nobody answers is denied after a minute."],
-      ["One gate", "The policy engine sits in the core. There is no side door for a plugin, an agent or a frontend."],
+      ["One place to check", "The policy engine sits in the core. There is no side door for a plugin, an agent or a frontend."],
       ["Every change has a name on it", "The journal records what each agent session did, next to what you did, so you always know who changed what, and when."],
     ] as [string, string][],
     steps: [
       ["agent-scope", "It has to ask", "Outside a scope an agent gets nothing, not even a listing. It asks for a folder, the operations it wants and for how long, and waits.", "photo-helper — an MCP client"],
       ["agent-ask", "You say yes, one change at a time", "You grant the scope with norte policy grant. Even then, an ask rule holds every change until you press y — in ntc on the daemon or in the window. Here, each of four renames.", "ada@norte — ntc"],
-      ["agent-timeline", "All of it on the record", "Every change lands in the journal under the agent's session, next to yours, in the same timeline.", "ada@norte — ntc · timeline"],
+      ["agent-timeline", "Everything in the journal","Every change lands in the journal under the agent's session, next to yours, in the same timeline.", "ada@norte — ntc · timeline"],
     ] as [Extra, string, string, string][],
     stepsCaption: "photo-helper is an MCP client scripted for these captures, not an AI. Everything else on screen is norte.",
     hookup: "Hook up Claude Code — or any MCP client",
@@ -333,13 +333,13 @@ const en = {
   },
   plugins: {
     eyebrow: "Plugins, sandboxed",
-    title: "Extend it. It never goes further than you let it.",
+    title: "Plugins can do what you allow, and nothing else.",
     body: "A plugin is a WebAssembly component. It runs in a sandbox with no filesystem, no network and no way to start a program: it gets exactly the capabilities its manifest declares, and a person approves them before anything runs.",
     grant: "The extension manager (F12): a plugin arrives unapproved and says what it wants.",
     points: [
-      ["Installing is not consenting", "A new plugin is discovered, not trusted. You see each capability it asks for, approve it, and switch it on — two separate facts."],
+      ["Installing is not consenting", "A new plugin is discovered, not trusted. You see each capability it asks for, approve it, and switching it on is a separate step."],
       ["A new binary asks again", "The approval is tied to the manifest and to the .wasm. Rebuild it, replace it or force-install it, and the consent is withdrawn."],
-      ["The host holds the keys", "norte reads the file and hands over the bytes, opens sockets only to the addresses listed, and lets a hook write only the files it named — through the policy and the journal."],
+      ["norte does the I/O","norte reads the file and hands over the bytes, opens sockets only to the addresses listed, and lets a hook write only the files it named — through the policy and the journal."],
     ] as [string, string][],
     kindsTitle: "Eight ways to plug in",
     kinds: [
@@ -370,9 +370,9 @@ const en = {
   },
   principles: {
     eyebrow: "Why norte",
-    lead: "mc, Far and Total Commander got the model right decades ago. norte keeps it, and builds on it.",
-    title: "Not a prettier explorer. ",
-    muted: "A programmable, governed system for everything you keep.",
+    lead: "mc, Far and Total Commander got the model right decades ago. norte keeps it and adds to it.",
+    title: "More than two panes. ",
+    muted: "A file manager you can script, and that agents have to ask.",
     items: [
       ["01", "One namespace", "Local disks, SFTP, FTP, S3 and archives behave like one filesystem."],
       ["02", "Work in motion", "Copies, comparisons, syncs and indexes are observable, cancellable tasks."],
@@ -382,13 +382,13 @@ const en = {
   },
   open: {
     eyebrow: "Free and open source",
-    title: "All of it is yours to read, change and share.",
+    title: "Read it, change it, share it.",
     body: "norte is free software, built in the open, like the file managers it learned from. The code, the specification and every design decision are public, and the license keeps them that way. If an idea here is worth having elsewhere, take it.",
     items: [
       ["AGPL-3.0", "The core and the official frontends. Use them, study them, change them. Whoever ships a modified norte, or runs one for others over a network, must offer them its source."],
       ["MIT / Apache-2.0", "The protocol, the VFS providers, the test kit and the plugin SDK. Build your own client, backend or plugin on them, with no copyleft attached."],
       ["Built in the open", "The specification, the architecture map and {decisions} decision records sit in the repository, next to the code they explain."],
-      ["Yours to join", "Issues and pull requests are open on GitHub, and the contributing guide says where to start."],
+      ["Come and help","Issues and pull requests are open on GitHub, and the contributing guide says where to start."],
     ] as [string, string][],
     source: "Source on GitHub",
     license: "How norte is licensed",
@@ -396,21 +396,21 @@ const en = {
   },
   join: {
     eyebrow: "Collaborators and sponsors wanted",
-    title: "norte grows with more hands, and with backing.",
-    body: "norte is young and built in the open. Code, docs, packaging and testing all go faster with more people, and sponsorship pays for the time, the macOS and Windows CI and the code signing that the next releases need.",
+    title: "Looking for people to build it with, and people to fund it.",
+    body: "norte is still an alpha. More people would mean faster code, docs, packages and testing, and sponsorship would pay for time, CI on macOS and Windows, and code signing.",
     repo: "compilando/norte",
     repoBody: "Star it to follow along, watch it for releases, open an issue when something breaks.",
     star: "Star on GitHub",
     items: [
-      ["Collaborators", "Rust, the desktop window, docs, translations, packaging, testing on macOS and Windows. Pick an open issue, read the contributing guide, or write first and we will find a place to start.", "Open issues", "issues"],
-      ["Sponsors", "People and companies who want a free, agent-ready file commander to exist. Sponsorship keeps the work steady and the releases signed. Write and we will find the shape that fits.", "Write about sponsoring", "email"],
+      ["Collaborators", "Rust, the desktop window, docs, translations, packaging, testing on macOS and Windows. Pick an open issue, read the contributing guide, or write to me first and we'll pick something.", "Open issues", "issues"],
+      ["Sponsors", "If you or your company would like norte to keep going, sponsorship pays for the hours and for signed releases. Write to me and we'll work something out.", "Write about sponsoring", "email"],
     ] as [string, string, string, string][],
     write: "Or just write:",
   },
   cta: {
-    eyebrow: "Your filesystem, headed somewhere",
+    eyebrow: "Download",
     title: "Ready to point north?",
-    body: "Install the Linux alpha today, or build norte anywhere Rust runs. No account. No telemetry. Just your files, under control.",
+    body: "Install the Linux alpha today, or build norte anywhere Rust runs. No account and no telemetry.",
     terminal: "Terminal · Linux x86_64",
     tui: "ntc — the file manager",
     cli: "norte — daemon, CLI, MCP",
@@ -434,7 +434,7 @@ const en = {
   },
   footer: {
     tagline: "The open-source file commander for people, terminals, windows and agents.",
-    promise: "Built in Rust. No telemetry. Ever.",
+    promise: "Written in Rust, with no telemetry.",
     thanks: "Made with love for Midnight Commander, Far Manager, Total Commander, Double Commander, Krusader, yazi and every orthodox file manager that came first.",
     groups: [
       ["Product", [["Why norte", "#why"], ["Agents", "#agents"], ["Plugins", "#plugins"], ["All features", "/features"], ["Themes", "/features#themes"], ["Comparison", "/compare"], ["Download", "#download"]]],
@@ -494,7 +494,7 @@ const es: Copy = {
     download: "Descargar",
     menu: "Menú",
     menuClose: "Cerrar el menú",
-    contact: "Escríbenos",
+    contact: "Escríbeme",
     other: "English",
     otherHref: "/",
   },
@@ -529,7 +529,7 @@ const es: Copy = {
     tabs: { film: "▶ 20 s", terminal: "Terminal · ntc", window: "Ventana · norte-gui" },
     theme: "Tema",
     live: "Captura real",
-    caption: "Nada de maquetas. Cada pantalla de esta página es norte, capturado por un script a partir de la versión actual.",
+    caption: "Todas las pantallas de esta página son norte de verdad, capturadas por un script de la versión actual. Sin maquetas.",
     play: "Reproducir",
     pause: "Pausa",
   },
@@ -566,7 +566,7 @@ const es: Copy = {
   },
   core: {
     eyebrow: "Trabajo en segundo plano · el diario",
-    title: "Cierra la interfaz. La copia sigue.",
+    title: "Cierra la ventana y la copia sigue.",
     body: "Abre ntc con --daemon, o usa la ventana, y el trabajo corre en el daemon de norte: mantiene viva la tarea cuando se cierra una pantalla, y cualquier otro cliente la retoma en el mismo porcentaje. Todo lo que cambia queda en un solo diario, con su autor.",
     daemon: "norte daemon",
     daemonNote: "conexiones · tareas · diario · política",
@@ -588,14 +588,14 @@ const es: Copy = {
     ],
     points: [
       ["Copiar es una tarea. Tú sigues trabajando.", "Copiar, mover, borrar y sincronizar corren en segundo plano con progreso y cancelación limpia. Copias, movimientos y borrados se pausan y se reanudan; una cola opcional los hace de uno en uno."],
-      ["Todo lo que cambió, anotado.", "Lo que hiciste en la terminal, en la ventana, desde un script o a través de un agente cae en un solo diario, cada entrada con su autor, en una sola línea de tiempo para todos los clientes."],
+      ["Un solo diario para todos los cambios.","Lo que hiciste en la terminal, en la ventana, desde un script o a través de un agente cae en un solo diario, cada entrada con su autor, en una sola línea de tiempo para todos los clientes."],
       ["Pasa el testigo, no empieces de cero", "Empieza en ntc por SSH y sigue en la ventana en tu mesa: pestañas, directorios y marcas viajan contigo (ntc --attach)."],
     ],
     local: "Un socket Unix en tu directorio de ejecución, comprobado contra tu usuario. No se abre ningún puerto.",
   },
   remotes: {
     eyebrow: "Donde estén tus ficheros",
-    title: "Una Raspberry Pi, un bucket, un zip. Un panel más.",
+    title: "Una Raspberry Pi, un bucket o un zip: un panel más.",
     body: "Discos locales, SFTP, FTP, S3 y archivos comprimidos pasan por un único sistema de ficheros virtual: las mismas teclas, el mismo diálogo de copia, el mismo diario. El daemon mantiene las conexiones abiertas para todos los clientes.",
     tiles: [
       ["sftp-trust", "SFTP", "El primer contacto pregunta: la huella de la clave del servidor, antes de mover un solo byte."],
@@ -608,7 +608,7 @@ const es: Copy = {
   },
   tour: {
     eyebrow: "Un recorrido, con capturas reales",
-    title: "Todo lo que un gestor de ficheros debió hacer hace años.",
+    title: "Un recorrido rápido, sacado de la versión actual.",
     steps: [
       {
         scene: "panes",
@@ -722,7 +722,7 @@ const es: Copy = {
   },
   news: {
     eyebrow: "Nuevo en {version}",
-    title: "Lo que ha llegado desde la última alfa.",
+    title: "Novedades desde la última alfa.",
     items: [
       ["Terminal en un panel", "Un shell bajo los listados, en los dos frontends, con un único emulador.", "Ctrl+Alt+S", "tui:terminal"],
       ["Pausar y reanudar", "Una copia para al final de su bloque y sigue donde lo dejó.", "Ctrl+Alt+K", "tui:jobs-paused"],
@@ -741,7 +741,7 @@ const es: Copy = {
   },
   agents: {
     eyebrow: "Agentes, con reglas",
-    title: "Tu IA trabaja con tus ficheros. Siempre bajo tu control.",
+    title: "Deja que tu IA toque tus ficheros, con tus reglas.",
     body: "Claude, Codex o cualquier cliente MCP llegan a tus ficheros por el mismo núcleo que usan los frontends humanos: acceso acotado que tú concedes, permisos que caducan, cambios retenidos hasta que los apruebes, y cada cambio en el diario con el nombre del agente.",
     flowLabel: "Cómo pasa por norte el cambio de un agente",
     flow: [
@@ -752,7 +752,7 @@ const es: Copy = {
     ],
     points: [
       ["Cerrado por defecto", "Sin ámbito, ni siquiera un listado. Sin una regla en tu política, ningún cambio, ni dentro del ámbito. Una petición que nadie contesta se deniega al minuto."],
-      ["Un único punto de control", "El motor de políticas vive en el núcleo. Ni un plugin, ni un agente, ni un frontend tienen otra vía para tocar tus ficheros."],
+      ["Un solo sitio donde se comprueba","El motor de políticas vive en el núcleo. Ni un plugin, ni un agente, ni un frontend tienen otra vía para tocar tus ficheros."],
       ["Cada cambio lleva un nombre", "El diario anota lo que hizo cada sesión de agente junto a lo que hiciste tú, para que siempre sepas quién cambió qué, y cuándo."],
     ],
     steps: [
@@ -766,13 +766,13 @@ const es: Copy = {
   },
   plugins: {
     eyebrow: "Plugins, aislados",
-    title: "Amplíalo. Nunca llega más lejos de lo que le dejas.",
+    title: "Los plugins hacen lo que les permites, y nada más.",
     body: "Un plugin es un componente WebAssembly. Corre en un entorno aislado sin sistema de ficheros, sin red y sin poder lanzar programas: obtiene exactamente los permisos que declara su manifiesto, y una persona los aprueba antes de que nada se ejecute.",
     grant: "El gestor de extensiones (F12): un plugin llega sin aprobar y dice lo que quiere.",
     points: [
-      ["Instalar no es consentir", "Un plugin nuevo queda descubierto, no confiado. Ves cada permiso que pide, lo apruebas y lo activas: dos hechos separados."],
+      ["Instalar no es consentir", "Un plugin nuevo queda descubierto, no confiado. Ves cada permiso que pide, lo apruebas, y activarlo es otro paso aparte."],
       ["Un binario nuevo vuelve a preguntar", "La aprobación va atada al manifiesto y al .wasm. Recompílalo, sustitúyelo o fuerza su instalación, y el consentimiento se retira."],
-      ["Las llaves las tiene norte", "norte lee el fichero y le pasa los bytes, abre conexiones solo a las direcciones listadas, y deja que un hook escriba solo los ficheros que nombró, a través de la política y del diario."],
+      ["El acceso lo hace norte","norte lee el fichero y le pasa los bytes, abre conexiones solo a las direcciones listadas, y deja que un hook escriba solo los ficheros que nombró, a través de la política y del diario."],
     ],
     kindsTitle: "Ocho maneras de enchufarse",
     kinds: [
@@ -803,9 +803,9 @@ const es: Copy = {
   },
   principles: {
     eyebrow: "Por qué norte",
-    lead: "mc, Far y Total Commander acertaron con el modelo hace décadas. norte lo conserva, y construye sobre él.",
-    title: "No es un explorador más bonito. ",
-    muted: "Es un sistema programable y gobernado para todo lo que guardas.",
+    lead: "mc, Far y Total Commander acertaron con el modelo hace décadas. norte lo mantiene y le suma cosas.",
+    title: "Más que dos paneles. ",
+    muted: "Un gestor que puedes programar, y al que los agentes tienen que pedir permiso.",
     items: [
       ["01", "Un solo espacio de nombres", "Discos locales, SFTP, FTP, S3 y archivos comprimidos se comportan como un único sistema de ficheros."],
       ["02", "Trabajo en marcha", "Copias, comparaciones, sincronizaciones e índices son tareas que se observan y se cancelan."],
@@ -815,13 +815,13 @@ const es: Copy = {
   },
   open: {
     eyebrow: "Software libre y de código abierto",
-    title: "Todo es tuyo: para leerlo, cambiarlo y compartirlo.",
+    title: "Léelo, cámbialo, compártelo.",
     body: "norte es software libre, hecho a la vista, como los gestores de ficheros de los que aprendió. El código, la especificación y cada decisión de diseño son públicos, y la licencia los mantiene así. Si alguna idea de aquí merece estar en otro sitio, llévatela.",
     items: [
       ["AGPL-3.0", "El núcleo y los frontends oficiales. Úsalos, estúdialos, cámbialos. Quien distribuya un norte modificado, o lo ofrezca a otros por la red, debe darles también su código."],
       ["MIT / Apache-2.0", "El protocolo, los proveedores del VFS, el kit de pruebas y el SDK de plugins. Construye sobre ellos tu propio cliente, backend o plugin, sin copyleft."],
       ["Hecho a la vista", "La especificación, el mapa de arquitectura y {decisions} registros de decisiones están en el repositorio, junto al código que explican."],
-      ["Abierto a ti", "Los issues y los pull requests están abiertos en GitHub, y la guía de contribución dice por dónde empezar."],
+      ["Ven a echar una mano","Los issues y los pull requests están abiertos en GitHub, y la guía de contribución dice por dónde empezar."],
     ],
     source: "Código en GitHub",
     license: "Cómo se licencia norte",
@@ -829,21 +829,21 @@ const es: Copy = {
   },
   join: {
     eyebrow: "Se buscan colaboradores y sponsors",
-    title: "norte crece con más manos, y con apoyo.",
-    body: "norte es joven y se hace a la vista. El código, la documentación, los paquetes y las pruebas avanzan más rápido con más gente, y el patrocinio paga el tiempo, la CI para macOS y Windows y la firma de código que necesitan las próximas versiones.",
+    title: "Busco gente con quien hacerlo, y gente que lo financie.",
+    body: "norte todavía es una alfa. Con más gente irían más rápido el código, la documentación, los paquetes y las pruebas, y el patrocinio pagaría horas, CI para macOS y Windows y la firma de código.",
     repo: "compilando/norte",
     repoBody: "Dale una estrella para seguirlo, vigílalo para enterarte de cada versión, abre un issue cuando algo falle.",
     star: "Estrella en GitHub",
     items: [
-      ["Colaboradores", "Rust, la ventana de escritorio, documentación, traducciones, paquetes, pruebas en macOS y Windows. Elige un issue abierto, lee la guía de contribución o escribe primero y buscamos por dónde empezar.", "Issues abiertos", "issues"],
-      ["Sponsors", "Personas y empresas que quieren que exista un gestor de ficheros libre y preparado para agentes. El patrocinio mantiene el trabajo constante y las versiones firmadas. Escribe y buscamos la forma que encaje.", "Escribir para patrocinar", "email"],
+      ["Colaboradores", "Rust, la ventana de escritorio, documentación, traducciones, paquetes, pruebas en macOS y Windows. Elige un issue abierto, lee la guía de contribución o escríbeme antes y vemos por dónde empiezas.", "Issues abiertos", "issues"],
+      ["Sponsors", "Si a ti o a tu empresa os interesa que norte siga adelante, el patrocinio paga horas y versiones firmadas. Escríbeme y lo hablamos.", "Escribir para patrocinar", "email"],
     ],
     write: "O simplemente escribe:",
   },
   cta: {
-    eyebrow: "Tu sistema de ficheros, con rumbo",
+    eyebrow: "Descarga",
     title: "¿Listo para apuntar al norte?",
-    body: "Instala hoy la alfa para Linux, o compila norte donde corra Rust. Sin cuenta. Sin telemetría. Solo tus ficheros, bajo control.",
+    body: "Instala hoy la alfa para Linux, o compila norte donde corra Rust. Sin cuenta y sin telemetría.",
     terminal: "Terminal · Linux x86_64",
     tui: "ntc — el gestor de ficheros",
     cli: "norte — daemon, CLI, MCP",
@@ -867,7 +867,7 @@ const es: Copy = {
   },
   footer: {
     tagline: "El gestor de ficheros libre para personas, terminales, ventanas y agentes.",
-    promise: "Hecho en Rust. Sin telemetría. Nunca.",
+    promise: "Escrito en Rust, sin telemetría.",
     thanks: "Hecho con cariño por Midnight Commander, Far Manager, Total Commander, Double Commander, Krusader, yazi y cada gestor ortodoxo que vino antes.",
     groups: [
       ["Producto", [["Por qué norte", "#why"], ["Agentes", "#agents"], ["Plugins", "#plugins"], ["Todas las funciones", "/es/funciones"], ["Temas", "/es/funciones#themes"], ["Comparación", "/es/comparar"], ["Descargar", "#download"]]],
