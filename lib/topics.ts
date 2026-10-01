@@ -72,7 +72,7 @@ export const TOPIC_COPY: Record<Topic, Record<Lang, TopicCopy>> = {
       ],
       faq: [
         ["Is norte free?", "Yes. It is open source: the core and frontends are AGPL-3.0, and the protocol and providers are MIT or Apache-2.0. There is no account and no telemetry."],
-        ["Which systems does it run on?", "The alpha ships Linux x86_64 binaries and a first Windows x86_64 preview (installer or ZIP, unsigned). On macOS it builds from source with Rust 1.94 or newer."],
+        ["Which systems does it run on?", "The alpha ships Linux x86_64 binaries and a first Windows x86_64 preview (installer or ZIP, unsigned). On macOS it builds from source with Rust 1.95 or newer."],
         ["Can I see what an AI agent did?", "Yes. Agent operations are journaled under the agent's session, next to yours, and the timeline shows them in order."],
       ],
     },
@@ -106,7 +106,7 @@ export const TOPIC_COPY: Record<Topic, Record<Lang, TopicCopy>> = {
       ],
       faq: [
         ["¿norte es gratis?", "Sí. Es software libre: el núcleo y los frontends son AGPL-3.0, y el protocolo y los proveedores, MIT o Apache-2.0. Sin cuenta y sin telemetría."],
-        ["¿En qué sistemas funciona?", "La alfa trae binarios para Linux x86_64 y una primera preview para Windows x86_64 (instalador o ZIP, sin firmar). En macOS se compila desde el código con Rust 1.94 o posterior."],
+        ["¿En qué sistemas funciona?", "La alfa trae binarios para Linux x86_64 y una primera preview para Windows x86_64 (instalador o ZIP, sin firmar). En macOS se compila desde el código con Rust 1.95 o posterior."],
         ["¿Puedo ver lo que hizo un agente de IA?", "Sí. Las operaciones de un agente quedan en el diario bajo su sesión, junto a las tuyas, y la línea de tiempo las muestra en orden."],
       ],
     },

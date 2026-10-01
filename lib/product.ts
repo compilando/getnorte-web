@@ -10,7 +10,7 @@ export const SITE = "https://getnorte.dev";
 export const EMAIL = "parhelion@tutamail.com";
 
 /** Cargo.toml, `version`. */
-const VERSION = "0.3.0-alpha.5";
+const VERSION = "0.3.0-alpha.6";
 /**
  * Every link names the tag. GitHub's `releases/latest` skips pre-releases, and
  * every alpha is one: there `latest/download/…` is a 404.
@@ -22,7 +22,7 @@ export const RELEASE = {
   version: VERSION,
   label: "v0.3 alpha",
   /** crates/norte-proto/src/methods.rs, `PROTOCOL_VERSION`. */
-  protocol: "0.84.0",
+  protocol: "0.85.0",
   /** The window packages have the version in their names; the tiles point at
    *  the release page rather than guess them. */
   latest: TAG,
