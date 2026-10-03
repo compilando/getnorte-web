@@ -68,7 +68,8 @@ export function Footer({
       </div>
       <div className="mx-auto mt-16 flex max-w-[1340px] flex-col gap-4 border-t border-line pt-7 font-mono text-[11px] uppercase tracking-[0.11em] text-muted sm:flex-row sm:items-center sm:justify-between">
         <p>© {new Date().getFullYear()} norte contributors</p>
-        <p>
+        <p className="flex flex-wrap gap-x-6 gap-y-2">
+          <a href={t.privacy[1]} className="transition-colors hover:text-ink">{t.privacy[0]}</a>
           <a href={LINKS.licensing} className="transition-colors hover:text-ink">{t.license}</a>
         </p>
       </div>

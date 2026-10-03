@@ -64,7 +64,7 @@ const en = {
     other: "Español",
     otherHref: "/es",
   },
-  paths: { home: "/", features: "/features", compare: "/compare" },
+  paths: { home: "/", features: "/features", compare: "/compare", privacy: "/privacy" },
   hero: {
     eyebrow: "The open-source file commander for the agent era",
     title: ["A file manager that knows where it's ", "going."],
@@ -444,6 +444,7 @@ const en = {
     license: "AGPL-3.0 · Protocol & providers MIT / Apache-2.0",
     guides: "Guides",
     contact: "Contact",
+    privacy: ["Privacy", "/privacy"] as [string, string],
   },
   features: {
     title: "Every norte feature, in real captures — norte",
@@ -469,6 +470,44 @@ const en = {
     description:
       "A feature-by-feature comparison of norte with Midnight Commander, Far Manager, Total Commander and yazi: terminal and window, SFTP and S3, the journal, agents under a policy, sandboxed plugins, platforms and licenses.",
     h1: "norte next to the file managers you know.",
+  },
+  privacyPage: {
+    title: "Privacy policy — norte",
+    description:
+      "What norte and getnorte.dev collect: the program, nothing; the website, anonymous page counts. Who sees what, and how to write about it.",
+    eyebrow: "Privacy",
+    h1: "norte collects nothing about you.",
+    lede: "This page covers the norte program — the terminal file manager, the window, the norte CLI and the ntc daemon — and this website, getnorte.dev.",
+    updated: "Last updated: {date}",
+    sections: [
+      ["The program", [
+        "This program will not transfer any information to other networked systems unless specifically requested by the user or the person installing or operating it.",
+        "norte has no account, no telemetry and no crash reporting, not even opt-in. It connects only to the places you point it at — an SFTP or FTP server, an S3 bucket, a remote norte daemon — and talks to them directly from your machine.",
+        "Your settings, the journal of changes, the policy and the credentials you save stay on your computer, in norte's configuration and data folders. Diagnostics and logs are written there too and never leave it.",
+      ]],
+      ["Updates", [
+        "Today norte does not check for updates; you install new versions yourself. If a future version learns to update itself, it will ask you before it ever checks, it will send only what the check needs (the installed version and the platform) to the release server, and this page will say so first.",
+      ]],
+      ["AI agents and plugins", [
+        "Today norte does not run an AI model or call one. An agent such as Claude or Codex is a separate program you connect through MCP; what it reads goes wherever that program sends it, under its own privacy policy. norte's policy decides what it may touch, and the journal records what it did.",
+        "If a future version can call an AI model itself, it will do so only with a provider and a key you configure, only when you ask, and sending only what that request needs, straight to that provider under its privacy policy. This page will say so first.",
+        "Plugins run sandboxed and get only the permissions you grant them.",
+      ]],
+      ["Signed releases", [
+        "The Windows packages are signed through SignPath Foundation. Signing proves the files came from this project; it adds no data collection. Your operating system may check the certificate with its issuer, as it does for any signed program.",
+        "Downloads are served by GitHub Releases, under GitHub's privacy statement.",
+      ]],
+      ["This website", [
+        "getnorte.dev is hosted on Vercel and uses Vercel Web Analytics: anonymous, aggregated counts of page views and of a few clicks (opening the install panel, copying an install command, downloading a package). It sets no cookies and builds no profile of you.",
+        "Like any web host, Vercel processes your IP address to serve the page. Fonts are served from this site itself; no other third party is loaded.",
+      ]],
+      ["Writing to us", [
+        "If you write to {email}, the message is kept only to answer it and is never shared or sold. Issues and pull requests on GitHub are public, by GitHub's design.",
+      ]],
+      ["Your rights", [
+        "You can ask what we hold about you, have it corrected or deleted, or object to it, by writing to {email}. If this policy changes, this page will say so, with a new date.",
+      ]],
+    ] as [string, string[]][],
   },
 };
 
@@ -498,7 +537,7 @@ const es: Copy = {
     other: "English",
     otherHref: "/",
   },
-  paths: { home: "/es", features: "/es/funciones", compare: "/es/comparar" },
+  paths: { home: "/es", features: "/es/funciones", compare: "/es/comparar", privacy: "/es/privacidad" },
   hero: {
     eyebrow: "El gestor de ficheros libre para la era de los agentes",
     title: ["Tus ficheros tienen un nuevo ", "norte."],
@@ -877,6 +916,7 @@ const es: Copy = {
     license: "AGPL-3.0 · Protocolo y proveedores MIT / Apache-2.0",
     guides: "Guías",
     contact: "Contacto",
+    privacy: ["Privacidad", "/es/privacidad"],
   },
   features: {
     title: "Todas las funciones de norte, con capturas reales — norte",
@@ -902,6 +942,44 @@ const es: Copy = {
     description:
       "Una comparación función a función de norte con Midnight Commander, Far Manager, Total Commander y yazi: terminal y ventana, SFTP y S3, el diario, agentes bajo una política, plugins aislados, plataformas y licencias.",
     h1: "norte junto a los gestores de ficheros que ya conoces.",
+  },
+  privacyPage: {
+    title: "Política de privacidad — norte",
+    description:
+      "Qué recogen norte y getnorte.dev: el programa, nada; la web, recuentos anónimos de visitas. Quién ve qué, y cómo escribirnos.",
+    eyebrow: "Privacidad",
+    h1: "norte no recoge nada sobre ti.",
+    lede: "Esta página cubre el programa norte —el gestor de ficheros de terminal, la ventana, el CLI norte y el daemon ntc— y esta web, getnorte.dev.",
+    updated: "Última actualización: {date}",
+    sections: [
+      ["El programa", [
+        "Este programa no transfiere ninguna información a otros sistemas en red salvo que lo pida expresamente el usuario o la persona que lo instala o lo opera.",
+        "norte no tiene cuenta, ni telemetría, ni informes de fallos, ni siquiera opcionales. Solo se conecta a donde tú le indicas —un servidor SFTP o FTP, un bucket S3, un daemon norte remoto— y habla con ellos directamente desde tu máquina.",
+        "Tu configuración, el diario de cambios, la política y las credenciales que guardas se quedan en tu ordenador, en las carpetas de configuración y datos de norte. Los diagnósticos y registros también se escriben ahí y nunca salen de ahí.",
+      ]],
+      ["Actualizaciones", [
+        "Hoy norte no busca actualizaciones; las nuevas versiones las instalas tú. Si una versión futura aprende a actualizarse sola, te preguntará antes de comprobar nada, enviará solo lo que la comprobación necesita (la versión instalada y la plataforma) al servidor de versiones, y esta página lo dirá antes.",
+      ]],
+      ["Agentes de IA y plugins", [
+        "Hoy norte no ejecuta ni llama a ningún modelo de IA. Un agente como Claude o Codex es un programa aparte que conectas por MCP; lo que lee va a donde ese programa lo envíe, bajo su propia política de privacidad. La política de norte decide qué puede tocar, y el diario anota lo que hizo.",
+        "Si una versión futura puede llamar a un modelo de IA por sí misma, lo hará solo con un proveedor y una clave que tú configures, solo cuando lo pidas, y enviando solo lo que esa petición necesita, directamente a ese proveedor y bajo su política de privacidad. Esta página lo dirá antes.",
+        "Los plugins se ejecutan aislados y solo reciben los permisos que tú les concedes.",
+      ]],
+      ["Versiones firmadas", [
+        "Los paquetes de Windows se firman a través de SignPath Foundation. La firma demuestra que los ficheros salen de este proyecto; no añade ninguna recogida de datos. Tu sistema operativo puede comprobar el certificado con su emisor, como con cualquier programa firmado.",
+        "Las descargas las sirve GitHub Releases, bajo la declaración de privacidad de GitHub.",
+      ]],
+      ["Esta web", [
+        "getnorte.dev está alojada en Vercel y usa Vercel Web Analytics: recuentos anónimos y agregados de visitas y de unos pocos clics (abrir el panel de instalación, copiar un comando de instalación, descargar un paquete). No pone cookies ni construye un perfil tuyo.",
+        "Como cualquier alojamiento web, Vercel procesa tu dirección IP para servir la página. Las fuentes se sirven desde esta misma web; no se carga ningún otro tercero.",
+      ]],
+      ["Si nos escribes", [
+        "Si escribes a {email}, el mensaje se guarda solo para responderte y nunca se comparte ni se vende. Los issues y pull requests en GitHub son públicos, por diseño de GitHub.",
+      ]],
+      ["Tus derechos", [
+        "Puedes pedir qué guardamos sobre ti, corregirlo, borrarlo u oponerte a su uso escribiendo a {email}. Si esta política cambia, esta página lo dirá, con una fecha nueva.",
+      ]],
+    ],
   },
 };
 

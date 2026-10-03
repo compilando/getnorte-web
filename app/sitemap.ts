@@ -32,5 +32,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       alternates: { languages: { en: `${SITE}${COPY.en.paths[page]}`, es: `${SITE}${COPY.es.paths[page]}` } },
     })),
   );
-  return [home, homeEs, ...pages, ...topics];
+  const privacy = (["en", "es"] as const).map((lang) => ({
+    url: `${SITE}${COPY[lang].paths.privacy}`,
+    lastModified: now,
+    changeFrequency: "yearly" as const,
+    priority: 0.3,
+    alternates: { languages: { en: `${SITE}${COPY.en.paths.privacy}`, es: `${SITE}${COPY.es.paths.privacy}` } },
+  }));
+  return [home, homeEs, ...pages, ...topics, ...privacy];
 }
