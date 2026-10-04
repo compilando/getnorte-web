@@ -2,14 +2,14 @@
 
 > norte is an open-source, two-pane (orthodox) file manager built around one headless Rust core. The terminal UI (`ntc`), a native window (`norte-gui`), a CLI (`norte`) and AI agents over MCP are all clients of the same core, which can run as a daemon they share. Every file operation is journaled with its author; agents work only inside scopes a person grants, under a policy that can require approval for each change.
 
-Status: alpha (v0.3.0-alpha.7). Linux x86_64 binaries and a first, unsigned Windows x86_64 preview (NSIS installer or portable ZIP); macOS builds from source. License: AGPL-3.0 for the core and frontends; MIT or Apache-2.0 for the protocol, VFS providers, test kit and plugin SDK. No telemetry.
+Status: alpha (v0.3.0-alpha.8). Linux x86_64 binaries and a first, unsigned Windows x86_64 preview (NSIS installer or portable ZIP); macOS builds from source. License: AGPL-3.0 for the core and frontends; MIT or Apache-2.0 for the protocol, VFS providers, test kit and plugin SDK. No telemetry.
 
 ## Install
 
-- Linux one-liner (installs `ntc` and `norte` into ~/.cargo/bin): `curl --proto '=https' --tlsv1.2 -LsSf https://github.com/compilando/norte/releases/download/v0.3.0-alpha.7/norte-tui-installer.sh | sh && curl --proto '=https' --tlsv1.2 -LsSf https://github.com/compilando/norte/releases/download/v0.3.0-alpha.7/norte-cli-installer.sh | sh`
-- Window packages (.deb, .rpm, AppImage): https://github.com/compilando/norte/releases/tag/v0.3.0-alpha.7
-- Windows preview, unsigned (NSIS installer or portable ZIP, each with the window, `norte` and `ntc`): https://github.com/compilando/norte/releases/download/v0.3.0-alpha.7/norte_0.3.0-alpha.7_x64-setup.exe · https://github.com/compilando/norte/releases/download/v0.3.0-alpha.7/norte-0.3.0-alpha.7-x86_64-pc-windows-msvc.zip
-- From source (any OS, Rust 1.95+): `cargo install --git https://github.com/compilando/norte --tag v0.3.0-alpha.7 --locked norte-tui norte-cli`
+- Linux one-liner (installs `ntc` and `norte` into ~/.cargo/bin): `curl --proto '=https' --tlsv1.2 -LsSf https://github.com/compilando/norte/releases/download/v0.3.0-alpha.8/norte-tui-installer.sh | sh && curl --proto '=https' --tlsv1.2 -LsSf https://github.com/compilando/norte/releases/download/v0.3.0-alpha.8/norte-cli-installer.sh | sh`
+- Window packages (.deb, .rpm, AppImage): https://github.com/compilando/norte/releases/tag/v0.3.0-alpha.8
+- Windows preview, unsigned (NSIS installer or portable ZIP, each with the window, `norte` and `ntc`): https://github.com/compilando/norte/releases/download/v0.3.0-alpha.8/norte_0.3.0-alpha.8_x64-setup.exe · https://github.com/compilando/norte/releases/download/v0.3.0-alpha.8/norte-0.3.0-alpha.8-x86_64-pc-windows-msvc.zip
+- From source (any OS, Rust 1.95+): `cargo install --git https://github.com/compilando/norte --tag v0.3.0-alpha.8 --locked norte-tui norte-cli`
 
 ## What it does
 

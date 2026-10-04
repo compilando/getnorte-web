@@ -10,7 +10,7 @@ export const SITE = "https://getnorte.dev";
 export const EMAIL = "parhelion@tutamail.com";
 
 /** Cargo.toml, `version`. */
-const VERSION = "0.3.0-alpha.7";
+const VERSION = "0.3.0-alpha.8";
 /**
  * Every link names the tag. GitHub's `releases/latest` skips pre-releases, and
  * every alpha is one: there `latest/download/…` is a 404.
