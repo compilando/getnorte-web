@@ -41,7 +41,7 @@ CAPTIONS = {
     "es": [
         "Dos paneles. En cualquier terminal.",
         "O una ventana nativa. El mismo núcleo.",
-        "Un demonio. Todas las pantallas ven el mismo trabajo.",
+        "Un daemon. Todas las pantallas ven el mismo trabajo.",
         "Los agentes piden. Tú apruebas.",
         "Plugins aislados. Cada permiso lo apruebas tú.",
     ],
@@ -57,7 +57,7 @@ PLAN = [
     ("ansi", "reel:1", 1.0, 0),
     ("ansi", "reel:5", 1.0, 0),
     ("ansi", "reel:6", 1.4, 0),
-    ("gui", (15.0, 4.2), 4.2, 1),
+    ("gui", (28.0, 4.2), 4.2, 1),
     ("pair", ("daemon-a", "daemon-b"), 3.8, 2),
     ("ansi", "agent-scope", 1.8, 3),
     ("ansi", "agent-ask", 2.4, 3),

@@ -6,6 +6,21 @@ keys F3
 wait 2
 shot markdown
 keys Escape
+# The disk map of ada's home, as the window paints it: a treemap.
+keys Home
+open
+keys Home
+open
+keys M-z
+wait 4
+shot disk-map
+keys M-z
+keys Escape
+# Back to the project, as the terminal's tour does.
+keys Home Down Down Down Down Down
+open
+keys Home Down
+open
 keys Tab
 keys Home
 open
