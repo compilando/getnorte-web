@@ -312,7 +312,7 @@ export function Landing({ lang }: { lang: Lang }) {
       <Section id="new" className="border-t border-line/60">
         <Eyebrow>{fill(t.news.eyebrow, { version: RELEASE.label })}</Eyebrow>
         <h2 className="mt-5 max-w-4xl text-balance text-4xl font-medium leading-[1.02] tracking-[-0.055em] text-ink sm:text-6xl">{t.news.title}</h2>
-        <div className="mt-14 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-14 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {t.news.items.map(([title, body, tag]) => (
             <article
               key={title}
