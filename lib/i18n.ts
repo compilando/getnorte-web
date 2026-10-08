@@ -126,7 +126,6 @@ const en = {
     gallery: [
       ["viewer", "The viewer, pixel for pixel"],
       ["disk-map", "The disk map, as a treemap"],
-      ["goto", "Go anywhere"],
       ["terminal", "A shell in a panel"],
       ["settings", "Settings with real controls"],
     ] as [Scene, string][],
@@ -603,7 +602,6 @@ const es: Copy = {
     gallery: [
       ["viewer", "El visor, píxel a píxel"],
       ["disk-map", "El mapa de disco, como treemap"],
-      ["goto", "Ir a cualquier sitio"],
       ["terminal", "Un shell en un panel"],
       ["settings", "Ajustes con controles de verdad"],
     ],
