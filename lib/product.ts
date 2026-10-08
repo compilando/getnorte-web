@@ -10,7 +10,7 @@ export const SITE = "https://getnorte.dev";
 export const EMAIL = "parhelion@tutamail.com";
 
 /** Cargo.toml, `version`. */
-const VERSION = "0.3.0-alpha.8";
+const VERSION = "0.3.0-alpha.10";
 /**
  * Every link names the tag. GitHub's `releases/latest` skips pre-releases, and
  * every alpha is one: there `latest/download/…` is a 404.
@@ -30,18 +30,18 @@ export const RELEASE = {
   tuiInstaller: `${DOWNLOAD}/norte-tui-installer.sh`,
   cliInstaller: `${DOWNLOAD}/norte-cli-installer.sh`,
   /** The two tar.xz the installers fetch (norte-tui-…, norte-cli-…), in bytes. */
-  binariesBytes: 14_349_652 + 13_273_580,
+  binariesBytes: 14_999_232 + 13_586_504,
   /** The window's packages, as the release lists them; each carries ntc and norte too. */
   packages: [
-    { ext: ".deb", url: `${DOWNLOAD}/norte_${VERSION}_amd64.deb`, bytes: 49_181_920 },
-    { ext: ".rpm", url: `${DOWNLOAD}/norte-${VERSION}-1.x86_64.rpm`, bytes: 49_181_868 },
-    { ext: ".AppImage", url: `${DOWNLOAD}/norte_${VERSION}_amd64.AppImage`, bytes: 121_911_800 },
+    { ext: ".deb", url: `${DOWNLOAD}/norte_${VERSION}_amd64.deb`, bytes: 50_669_982 },
+    { ext: ".rpm", url: `${DOWNLOAD}/norte-${VERSION}-1.x86_64.rpm`, bytes: 50_671_178 },
+    { ext: ".AppImage", url: `${DOWNLOAD}/norte_${VERSION}_amd64.AppImage`, bytes: 123_214_328 },
   ],
   /** Windows x86_64, a first unsigned preview: the NSIS setup and the portable
    *  ZIP, each with norte-gui, norte and ntc. */
   windows: [
-    { ext: "setup.exe", url: `${DOWNLOAD}/norte_${VERSION}_x64-setup.exe`, bytes: 34_033_482 },
-    { ext: ".zip", url: `${DOWNLOAD}/norte-${VERSION}-x86_64-pc-windows-msvc.zip`, bytes: 48_821_038 },
+    { ext: "setup.exe", url: `${DOWNLOAD}/norte_${VERSION}_x64-setup.exe`, bytes: 35_613_865 },
+    { ext: ".zip", url: `${DOWNLOAD}/norte-${VERSION}-x86_64-pc-windows-msvc.zip`, bytes: 52_943_773 },
   ],
 } as const;
 
@@ -67,7 +67,7 @@ export function megabytes(bytes: number): string {
 }
 
 /** docs/adr/NNNN-*.md: the design decisions recorded so far. */
-export const DECISIONS = 159;
+export const DECISIONS = 172;
 
 /** crates/norte-frontend/src/keymap/catalogue.rs, the `live(…)` entries. */
 export const COMMANDS = 190;
