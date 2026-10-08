@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useAfterPaint } from "@/lib/after-paint";
 import type { Packed } from "@/lib/ansi";
 import { TerminalScreen } from "./terminal-screen";
 
@@ -21,7 +22,9 @@ export function GalleryTabs({
 }) {
   const hasWindow = items.some((i) => i.src);
   const [mode, setMode] = useState<"terminal" | "window">("terminal");
-  const shown = items.filter((i) => (mode === "terminal" ? i.screen : i.src));
+  // The tab repaints at once; the four screens follow after that paint.
+  const shownMode = useAfterPaint(mode);
+  const shown = items.filter((i) => (shownMode === "terminal" ? i.screen : i.src));
 
   return (
     <div className="mt-6">
@@ -44,9 +47,9 @@ export function GalleryTabs({
       </div>
       <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {shown.map((item) => (
-          <figure key={`${mode}-${item.caption}`} className="animate-[fadein_.35s_ease]">
+          <figure key={`${shownMode}-${item.caption}`} className="animate-[fadein_.35s_ease]">
             <div className="overflow-hidden rounded-lg border border-white/[0.1] transition hover:border-phosphor/40">
-              {mode === "terminal" && item.screen ? (
+              {shownMode === "terminal" && item.screen ? (
                 <TerminalScreen screen={item.screen} cols={cols} label={item.caption} />
               ) : (
                 // eslint-disable-next-line @next/next/no-img-element -- a capture, served as-is

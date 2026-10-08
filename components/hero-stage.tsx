@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useAfterPaint } from "@/lib/after-paint";
 import type { Packed } from "@/lib/ansi";
 import { AppFrame } from "./app-frame";
 import { TerminalScreen } from "./terminal-screen";
@@ -40,6 +41,7 @@ export function HeroStage({
   const [frame, setFrame] = useState(0);
   const [playing, setPlaying] = useState(true);
   const [still, setStill] = useState(false);
+  const [demo, setDemo] = useState(0);
   const filmRef = useRef<HTMLVideoElement>(null);
   const hasFilm = Boolean(film);
 
@@ -58,13 +60,9 @@ export function HeroStage({
       setTheme(null);
       setMode(hasFilm ? "film" : "terminal");
       setPlaying(true);
-      // Asked for, the film plays from the start, reduced motion or not.
-      window.setTimeout(() => {
-        const v = filmRef.current;
-        if (!v) return;
-        v.currentTime = 0;
-        void v.play().catch(() => {});
-      }, 50);
+      // Asked for, the film plays from the start, reduced motion or not:
+      // once it is on screen, which may be a render later.
+      setDemo((n) => n + 1);
     };
     window.addEventListener(THEME_EVENT, onTheme);
     window.addEventListener(DEMO_EVENT, onDemo);
@@ -80,9 +78,20 @@ export function HeroStage({
     return () => window.clearInterval(id);
   }, [playing, theme, mode, reel.length]);
 
-  const windowFor = windows.find((w) => w.id === theme) ?? windows[0];
-  const shownTheme = theme === null ? undefined : themes.find((t) => t.id === theme);
-  const title = mode === "terminal" ? "ada@norte: ~ — ntc" : mode === "film" ? "norte — 20 s" : "norte";
+  // A click repaints the tab or the chip at once; the screen it asks for
+  // follows after that paint (lib/after-paint.ts).
+  const shownMode = useAfterPaint(mode);
+  const shownThemeId = useAfterPaint(theme);
+  useEffect(() => {
+    const v = filmRef.current;
+    if (demo === 0 || shownMode !== "film" || !v) return;
+    v.currentTime = 0;
+    void v.play().catch(() => {});
+  }, [demo, shownMode]);
+
+  const windowFor = windows.find((w) => w.id === shownThemeId) ?? windows[0];
+  const shownTheme = shownThemeId === null ? undefined : themes.find((t) => t.id === shownThemeId);
+  const title = shownMode === "terminal" ? "ada@norte: ~ — ntc" : shownMode === "film" ? "norte — 20 s" : "norte";
   const modes = film ? (["film", "terminal", "window"] as const) : (["terminal", "window"] as const);
 
   return (
@@ -133,7 +142,7 @@ export function HeroStage({
         <AppFrame
           title={title}
           right={
-            mode === "terminal" && theme === null ? (
+            shownMode === "terminal" && shownThemeId === null ? (
               <button
                 type="button"
                 onClick={() => setPlaying((p) => !p)}
@@ -143,16 +152,16 @@ export function HeroStage({
                 {playing ? labels.live : labels.play}
               </button>
             ) : (
-              <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-muted">{mode === "film" ? "" : (theme ?? "")}</span>
+              <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-muted">{shownMode === "film" ? "" : (shownThemeId ?? "")}</span>
             )
           }
         >
           {/* Only the screen on show is in the DOM: each one is thousands of spans. */}
           <div
-            key={mode === "film" ? "film" : mode === "window" ? `w${windowFor?.id}` : (theme ?? `r${frame}`)}
+            key={shownMode === "film" ? "film" : shownMode === "window" ? `w${windowFor?.id}` : (shownThemeId ?? `r${frame}`)}
             className="animate-[fadein_.35s_ease]"
           >
-            {mode === "film" && film && (
+            {shownMode === "film" && film && (
               // Muted, looping, inline: the only way a browser plays a video on its own.
               // With reduced motion it waits, with controls, on its poster.
               <video
@@ -170,12 +179,12 @@ export function HeroStage({
                 <source src={film.mp4} type="video/mp4" />
               </video>
             )}
-            {mode === "terminal" && theme === null && reel[frame] && <TerminalScreen screen={reel[frame]} cols={cols} />}
-            {mode === "terminal" && shownTheme && <TerminalScreen screen={shownTheme.screen} cols={cols} label={shownTheme.id} />}
-            {mode === "window" && theme === null && video && (
+            {shownMode === "terminal" && shownThemeId === null && reel[frame] && <TerminalScreen screen={reel[frame]} cols={cols} />}
+            {shownMode === "terminal" && shownTheme && <TerminalScreen screen={shownTheme.screen} cols={cols} label={shownTheme.id} />}
+            {shownMode === "window" && shownThemeId === null && video && (
               <video src={video} poster={windows[0]?.src} autoPlay muted loop playsInline className="block w-full" />
             )}
-            {mode === "window" && (theme !== null || !video) && windowFor && (
+            {shownMode === "window" && (shownThemeId !== null || !video) && windowFor && (
               // eslint-disable-next-line @next/next/no-img-element -- a capture, served as-is
               <img src={windowFor.src} alt="" className="block w-full" />
             )}

@@ -59,7 +59,10 @@ body {
   pointer-events: none;
   content: "";
   opacity: 0.055;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
+  /* The SVG feTurbulence it was made from, rendered once into a tile: as a
+     live filter it was rasterized again over the whole hero on every repaint
+     there, a click on a tab included (~100 ms of paint and raster). */
+  background-image: url("/noise.webp");
 }
 
 .mask-fade-x {
