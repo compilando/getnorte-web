@@ -87,6 +87,48 @@ if [ "${ONLY:-}" = extra ]; then
 	exit 0
 fi
 
+# The terminal as a person sees it: in kitty, whose graphics tmux never
+# shows (the panel column's icons, photos in the viewer). Per language the
+# tour's stills, and the panes once per theme.
+shoot_kitty() {
+	local lang theme png kitty_out=$landing/public/shots/kitty
+	if ! command -v kitty >/dev/null || ! command -v Xvfb >/dev/null; then
+		echo "== no kitty or no Xvfb: the kitty shots are left as they were"
+		return 0
+	fi
+	local scene scale
+	rm -rf "$kitty_out"
+	for lang in "${langs[@]}"; do
+		mkdir -p "$kitty_out/$lang"
+		# Every scene the terminal's screens come from, servers and all.
+		for scene in tour grant daemon sftp archive compare jump agent; do
+			echo "== kitty $scene ($lang)"
+			"$here/demo-tree.sh" "$home"
+			rm -rf "$work/kitty"
+			# The tour's waits doubled, for the photos; the others are timed
+			# against a copy or a server, and keep theirs.
+			scale=1
+			[ "$scene" = tour ] && scale=2
+			WAIT_SCALE=$scale "$here/kitty.sh" "$home" "$bin" "$here/scenes/$scene.scene" "$work/kitty" "$hero_theme" "$lang"
+			for png in "$work"/kitty/*.png; do
+				[ "$(basename "$png")" = connect.png ] && continue
+				magick "$png" -quality 84 "$kitty_out/$lang/$(basename "$png" .png).webp"
+			done
+		done
+		for theme in "${themes[@]}"; do
+			echo "== kitty $theme ($lang)"
+			"$here/demo-tree.sh" "$home"
+			rm -rf "$work/kitty"
+			"$here/kitty.sh" "$home" "$bin" "$here/scenes/panes.scene" "$work/kitty" "$theme" "$lang"
+			magick "$work/kitty/panes.png" -quality 84 "$kitty_out/$lang/panes-$theme.webp"
+		done
+	done
+}
+if [ "${ONLY:-}" = kitty ]; then
+	shoot_kitty
+	exit 0
+fi
+
 # ONLY=tui or ONLY=gui retakes one half and leaves the other as it was.
 [ "${ONLY:-}" = gui ] || rm -rf "$out/tui"
 for lang in "${langs[@]}"; do
@@ -105,6 +147,7 @@ for lang in "${langs[@]}"; do
 	done
 	extra "$lang"
 done
+[ "${ONLY:-}" = gui ] || shoot_kitty
 if [ "${ONLY:-}" = tui ]; then
 	exit 0
 fi
