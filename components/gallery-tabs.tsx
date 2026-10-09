@@ -2,14 +2,14 @@
 
 import { useState } from "react";
 import { useAfterPaint } from "@/lib/after-paint";
-import type { Packed } from "@/lib/ansi";
-import { TerminalScreen } from "./terminal-screen";
+import type { Shot } from "@/lib/shots";
+import { TerminalShot } from "./terminal-screen";
 
-type Item = { caption: string; screen: Packed | null; src: string | null };
+type Item = { caption: string; screen: Shot | null; src: string | null };
 
 /**
- * The same six features, in the terminal or in the window. The terminal side
- * is the default: it is what a first visit has not seen yet by this point.
+ * The same six features, in the window or in the terminal. The window comes
+ * first, as everywhere on the site.
  */
 export function GalleryTabs({
   items,
@@ -21,7 +21,7 @@ export function GalleryTabs({
   cols: number;
 }) {
   const hasWindow = items.some((i) => i.src);
-  const [mode, setMode] = useState<"terminal" | "window">("terminal");
+  const [mode, setMode] = useState<"terminal" | "window">(hasWindow ? "window" : "terminal");
   // The tab repaints at once; the screens follow after that paint.
   const shownMode = useAfterPaint(mode);
   const shown = items.filter((i) => (shownMode === "terminal" ? i.screen : i.src));
@@ -29,7 +29,7 @@ export function GalleryTabs({
   return (
     <div className="mt-6">
       <div className="inline-flex rounded-full border border-white/[0.12] bg-black/40 p-1" role="tablist">
-        {(["terminal", "window"] as const).map((m) => (
+        {(["window", "terminal"] as const).map((m) => (
           <button
             key={m}
             type="button"
@@ -50,7 +50,7 @@ export function GalleryTabs({
           <figure key={`${shownMode}-${item.caption}`} className="animate-[fadein_.35s_ease]">
             <div className="overflow-hidden rounded-lg border border-white/[0.1] transition hover:border-phosphor/40">
               {shownMode === "terminal" && item.screen ? (
-                <TerminalScreen screen={item.screen} cols={cols} label={item.caption} />
+                <TerminalShot shot={item.screen} cols={cols} label={item.caption} />
               ) : (
                 // eslint-disable-next-line @next/next/no-img-element -- a capture, served as-is
                 <img src={item.src ?? ""} alt={item.caption} loading="lazy" className="block w-full" />

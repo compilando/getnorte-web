@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import type { Extra, Lang, Scene } from "@/lib/i18n";
-import { COLS, guiShot, tuiScene } from "@/lib/shots";
-import { TerminalScreen } from "./terminal-screen";
+import { COLS, guiShot, tuiShot } from "@/lib/shots";
+import { TerminalShot } from "./terminal-screen";
 
 /** The building blocks the home page, the features page and the comparison share. */
 
@@ -74,8 +74,8 @@ export function MoreLink({ href, children }: { href: string; children: ReactNode
  */
 export function capturesFor(lang: Lang) {
   const screen = (scene: Scene | Extra, label: string) => {
-    const s = tuiScene(lang, scene);
-    return s ? <TerminalScreen screen={s} cols={COLS} label={label} /> : null;
+    const s = tuiShot(lang, scene);
+    return s ? <TerminalShot shot={s} cols={COLS} label={label} /> : null;
   };
   const shot = (ref: string, label: string) => {
     const [kind, name] = ref.split(":");

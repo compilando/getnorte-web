@@ -1,8 +1,7 @@
-import type { Packed } from "@/lib/ansi";
 import { COMPARE_ONLY } from "@/lib/compare";
-import { COPY, fill, type Lang } from "@/lib/i18n";
-import { COMMANDS, DECISIONS, LINKS, RELEASE, REPO, THEME_ACCENTS, THEMES } from "@/lib/product";
-import { COLS, guiShot, guiVideo, heroFilm, tuiReel, tuiScene, tuiTheme } from "@/lib/shots";
+import { COPY, fill, type Lang, type Scene } from "@/lib/i18n";
+import { COMMANDS, DECISIONS, LINKS, RELEASE, REPO, THEME_ACCENTS, THEMES, type Theme } from "@/lib/product";
+import { COLS, guiShot, heroFilm, type Shot, tuiShot, tuiTheme, tuiThemeShot } from "@/lib/shots";
 import { AgentSteps } from "./agent-steps";
 import { AppFrame } from "./app-frame";
 import { capturesFor, Eyebrow, Heading, MoreLink, Points, Section } from "./blocks";
@@ -16,9 +15,13 @@ import { HeroStage } from "./hero-stage";
 import { Join } from "./join";
 import { Nav } from "./nav";
 import { SignalStrip } from "./signal-strip";
-import { TerminalScreen } from "./terminal-screen";
+import { TerminalShot } from "./terminal-screen";
 import { guidesFor } from "./topic-page";
 import { Tour } from "./tour";
+
+/** The hero's views, in order; shoot.sh's hero theme paints the panes. */
+const HERO_VIEWS = ["panes", "viewer", "markdown", "disk-map", "goto", "palette", "terminal", "settings"];
+const HERO_THEME: Theme = "catppuccin-mocha";
 
 /**
  * The home page tells the idea, in this order: what norte is, why, the one
@@ -31,26 +34,38 @@ export function Landing({ lang }: { lang: Lang }) {
   const home = lang === "en" ? "/" : "/es";
   const { screen } = capturesFor(lang);
 
-  // The hero: the clip, then one still per theme.
-  const reel = tuiReel(lang);
+  // The hero: the window's views first, then the terminal's (kitty, or the
+  // text of tmux when there are no kitty shots), and per theme the panes in both.
+  const heroView = (id: string, shot: Shot | null) => (shot ? [{ id, caption: t.hero.views[id] ?? id, ...shot }] : []);
+  const heroWindows = HERO_VIEWS.flatMap((id) => {
+    const src = guiShot(lang, id === "panes" ? `panes-${HERO_THEME}` : id);
+    return heroView(id, src ? { src } : null);
+  });
+  // The disk map is left out until kitty paints it right (lib/shots.ts).
+  const heroTerminals = HERO_VIEWS.filter((id) => id !== "disk-map").flatMap((id) =>
+    heroView(id, id === "panes" ? tuiThemeShot(lang, HERO_THEME) : tuiShot(lang, id as Scene)),
+  );
   const themes = THEMES.flatMap((id) => {
     const s = tuiTheme(lang, id);
     if (!s) return [];
-    return [{ id, screen: s, swatch: [s.bg ?? "#000", THEME_ACCENTS[id]] as [string, string] }];
-  });
-  const windows = THEMES.flatMap((id) => {
-    const src = guiShot(lang, `panes-${id}`);
-    return src ? [{ id, src }] : [];
+    return [
+      {
+        id,
+        swatch: [s.bg ?? "#000", THEME_ACCENTS[id]] as [string, string],
+        window: { src: guiShot(lang, `panes-${id}`) },
+        terminal: tuiThemeShot(lang, id) ?? undefined,
+      },
+    ];
   });
 
   // The short tour: the six steps named in the copy, in the tour's order.
   const tourSteps = t.tour.steps.filter((s) => t.tour.home.includes(s.scene));
-  const screens: Record<string, Packed | null> = {};
-  for (const step of tourSteps) screens[step.scene] = tuiScene(lang, step.scene);
+  const screens: Record<string, Shot | null> = {};
+  for (const step of tourSteps) screens[step.scene] = tuiShot(lang, step.scene);
   const steps = tourSteps.map((s) => ({ ...s, body: fill(s.body, { commands: COMMANDS }) }));
 
-  const guiPanes = guiShot(lang, "panes-catppuccin-mocha") ?? windows[0]?.src ?? null;
-  const tuiPanes = tuiScene(lang, "panes");
+  const guiPanes = guiShot(lang, `panes-${HERO_THEME}`);
+  const tuiPanes = tuiThemeShot(lang, HERO_THEME);
   const tiles = t.remotes.tiles.filter(([scene]) => t.remotes.home.includes(scene));
 
   return (
@@ -84,13 +99,12 @@ export function Landing({ lang }: { lang: Lang }) {
 
           <div id="stage" className="mx-auto mt-10 max-w-[1240px] scroll-mt-24">
             <HeroStage
-              reel={reel}
+              windows={heroWindows}
+              terminals={heroTerminals}
               themes={themes}
               cols={COLS}
-              windows={windows}
-              video={guiVideo(lang)}
               film={heroFilm(lang)}
-              labels={{ ...t.hero.tabs, theme: t.hero.theme, live: t.hero.live, play: t.hero.play, pause: t.hero.pause }}
+              labels={{ ...t.hero.tabs, theme: t.hero.theme }}
             />
             <p className="mt-6 text-center font-mono text-[12px] uppercase tracking-[0.1em] text-muted">
               <span className="text-phosphor">●</span> {t.hero.caption}
@@ -148,7 +162,7 @@ export function Landing({ lang }: { lang: Lang }) {
         <Heading eyebrow={t.duo.eyebrow} title={t.duo.title} body={t.duo.body} />
         <div className="mt-14 grid grid-cols-1 gap-6 lg:grid-cols-2">
           <figure className="rise">
-            <AppFrame title="ntc">{tuiPanes && <TerminalScreen screen={tuiPanes} cols={COLS} label={t.duo.terminal} />}</AppFrame>
+            <AppFrame title="ntc">{tuiPanes && <TerminalShot shot={tuiPanes} cols={COLS} label={t.duo.terminal} />}</AppFrame>
             <figcaption className="mt-3 font-mono text-[12px] text-muted">{t.duo.terminal}</figcaption>
           </figure>
           <figure className="rise">

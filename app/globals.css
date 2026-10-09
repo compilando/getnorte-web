@@ -159,16 +159,6 @@ body {
   to { opacity: 1; transform: none; }
 }
 
-.tilt {
-  transform: perspective(2200px) rotateX(9deg) scale(0.97);
-  transition: transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-
-.tilt:hover,
-.tilt:focus-within {
-  transform: none;
-}
-
 .terminal-scan::after {
   position: absolute;
   inset: 0;

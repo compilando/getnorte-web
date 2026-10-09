@@ -1,6 +1,6 @@
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
-import { pack, parseReel, parseScreen, type Packed } from "./ansi";
+import { pack, parseScreen, type Packed } from "./ansi";
 import type { Extra, Lang, Scene } from "./i18n";
 import type { Theme } from "./product";
 
@@ -28,14 +28,43 @@ export function tuiTheme(lang: Lang, theme: Theme): Packed | null {
   return raw === null ? null : pack(parseScreen(raw, COLS));
 }
 
-export function tuiReel(lang: Lang): Packed[] {
-  const raw = read(path.join(TUI, lang, "reel.ansi"));
-  return raw === null ? [] : parseReel(raw, COLS).map(pack);
+/** A terminal screen: kitty's picture when there is one, tmux's text when not. */
+export type Shot = { src?: string | null; screen?: Packed | null };
+
+/**
+ * Scenes whose kitty picture is not shown yet: the terminal's disk map paints
+ * its rectangles in the text colour and some not at all (norte#423). The text
+ * capture shows the same, but smaller.
+ */
+const TEXT_ONLY = new Set<string>(["disk-map"]);
+
+export function tuiShot(lang: Lang, scene: Scene | Extra): Shot | null {
+  const src = TEXT_ONLY.has(scene) ? null : kittyShot(lang, scene);
+  if (src) return { src };
+  const screen = tuiScene(lang, scene);
+  return screen ? { screen } : null;
+}
+
+export function tuiThemeShot(lang: Lang, theme: Theme): Shot | null {
+  const src = kittyShot(lang, `panes-${theme}`);
+  if (src) return { src };
+  const screen = tuiTheme(lang, theme);
+  return screen ? { screen } : null;
 }
 
 /** Window captures: public/shots/gui/<lang>/<name>.webp, when shoot-gui.sh ran. */
 export function guiShot(lang: Lang, name: string): string | null {
   const rel = `/shots/gui/${lang}/${name}.webp`;
+  return existsSync(path.join(ROOT, "public", rel)) ? rel : null;
+}
+
+/**
+ * The terminal in kitty: public/shots/kitty/<lang>/<name>.webp. Pictures,
+ * not text, because kitty draws what tmux never sees: the panel column's
+ * icons and the photos in the viewer.
+ */
+export function kittyShot(lang: Lang, name: string): string | null {
+  const rel = `/shots/kitty/${lang}/${name}.webp`;
   return existsSync(path.join(ROOT, "public", rel)) ? rel : null;
 }
 
