@@ -36,3 +36,5 @@ Status: alpha (v0.3.0-alpha.10). Linux x86_64 binaries and a first, unsigned Win
 - Documentation: https://github.com/compilando/norte/tree/main/docs
 - Architecture: https://github.com/compilando/norte/blob/main/ARCHITECTURE.md
 - Changelog: https://github.com/compilando/norte/blob/main/CHANGELOG.md
+- Discussions: https://github.com/compilando/norte/discussions
+- How it is built: most of the code is written with AI coding agents, mostly Claude Code; the commits carry a Co-Authored-By line saying so.

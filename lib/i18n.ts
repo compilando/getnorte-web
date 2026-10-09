@@ -398,7 +398,7 @@ const en = {
     items: [
       ["AGPL-3.0", "The core and the official frontends. Use them, study them, change them. Whoever ships a modified norte, or runs one for others over a network, must offer them its source."],
       ["MIT / Apache-2.0", "The protocol, the VFS providers, the test kit and the plugin SDK. Build your own client, backend or plugin on them, with no copyleft attached."],
-      ["Built in the open", "The specification, the architecture map and {decisions} decision records sit in the repository, next to the code they explain."],
+      ["Built in the open", "The specification, the architecture map and {decisions} decision records sit in the repository, next to the code they explain. Most of the code is written with AI coding agents, mostly Claude Code, and the commits say so."],
       ["Come and help","Issues and pull requests are open on GitHub, and the contributing guide says where to start."],
     ] as [string, string][],
     source: "Source on GitHub",
@@ -410,7 +410,7 @@ const en = {
     title: "Looking for people to build it with, and people to fund it.",
     body: "norte is still an alpha. More people would mean faster code, docs, packages and testing, and sponsorship would pay for time, CI on macOS and Windows, and code signing.",
     repo: "compilando/norte",
-    repoBody: "Star it to follow along, watch it for releases, open an issue when something breaks.",
+    repoBody: "Star it to follow along, watch it for releases, open an issue when something breaks, ask or propose in Discussions.",
     star: "Star on GitHub",
     items: [
       ["Collaborators", "Rust, the desktop window, docs, translations, packaging, testing on macOS and Windows. Pick an open issue, read the contributing guide, or write to me first and we'll pick something.", "Open issues", "issues"],
@@ -450,7 +450,7 @@ const en = {
     groups: [
       ["Product", [["Why norte", "#why"], ["Agents", "#agents"], ["Plugins", "#plugins"], ["All features", "/features"], ["Themes", "/features#themes"], ["Comparison", "/compare"], ["Download", "#download"]]],
       ["Build", [["Documentation", "docs"], ["Architecture map", "architecture"], ["Specification", "spec"], ["Decision records", "adr"], ["Plugin authoring", "plugins"]]],
-      ["Open source", [["Source code", "repo"], ["Releases", "releases"], ["Changelog", "changelog"], ["Contributing", "contributing"], ["Sponsor or collaborate", "#join"], ["Security", "security"]]],
+      ["Open source", [["Source code", "repo"], ["Releases", "releases"], ["Changelog", "changelog"], ["Contributing", "contributing"], ["Discussions", "discussions"], ["Sponsor or collaborate", "#join"], ["Security", "security"]]],
     ] as [string, [string, string][]][],
     license: "AGPL-3.0 · Protocol & providers MIT / Apache-2.0",
     guides: "Guides",
@@ -882,7 +882,7 @@ const es: Copy = {
     items: [
       ["AGPL-3.0", "El núcleo y los frontends oficiales. Úsalos, estúdialos, cámbialos. Quien distribuya un norte modificado, o lo ofrezca a otros por la red, debe darles también su código."],
       ["MIT / Apache-2.0", "El protocolo, los proveedores del VFS, el kit de pruebas y el SDK de plugins. Construye sobre ellos tu propio cliente, backend o plugin, sin copyleft."],
-      ["Hecho a la vista", "La especificación, el mapa de arquitectura y {decisions} registros de decisiones están en el repositorio, junto al código que explican."],
+      ["Hecho a la vista", "La especificación, el mapa de arquitectura y {decisions} registros de decisiones están en el repositorio, junto al código que explican. La mayor parte del código se escribe con agentes de IA, sobre todo Claude Code, y los commits lo dicen."],
       ["Ven a echar una mano","Los issues y los pull requests están abiertos en GitHub, y la guía de contribución dice por dónde empezar."],
     ],
     source: "Código en GitHub",
@@ -894,7 +894,7 @@ const es: Copy = {
     title: "Busco gente con quien construirlo, y gente que lo financie.",
     body: "norte todavía es una alfa. Con más gente irían más rápido el código, la documentación, los paquetes y las pruebas, y el patrocinio pagaría horas, CI para macOS y Windows y la firma de código.",
     repo: "compilando/norte",
-    repoBody: "Dale una estrella para seguirlo, vigílalo para enterarte de cada versión, abre un issue cuando algo falle.",
+    repoBody: "Dale una estrella para seguirlo, vigílalo para enterarte de cada versión, abre un issue cuando algo falle, pregunta o propón en Discussions.",
     star: "Estrella en GitHub",
     items: [
       ["Colaboradores", "Rust, la ventana de escritorio, documentación, traducciones, paquetes, pruebas en macOS y Windows. Elige un issue abierto, lee la guía de contribución o escríbeme antes y vemos por dónde empiezas.", "Issues abiertos", "issues"],
@@ -934,7 +934,7 @@ const es: Copy = {
     groups: [
       ["Producto", [["Por qué norte", "#why"], ["Agentes", "#agents"], ["Plugins", "#plugins"], ["Todas las funciones", "/es/funciones"], ["Temas", "/es/funciones#themes"], ["Comparación", "/es/comparar"], ["Descargar", "#download"]]],
       ["Construir", [["Documentación", "docs"], ["Mapa de arquitectura", "architecture"], ["Especificación", "spec"], ["Decisiones (ADR)", "adr"], ["Escribir plugins", "plugins"]]],
-      ["Código abierto", [["Código fuente", "repo"], ["Versiones", "releases"], ["Cambios", "changelog"], ["Contribuir", "contributing"], ["Patrocinar o colaborar", "#join"], ["Seguridad", "security"]]],
+      ["Código abierto", [["Código fuente", "repo"], ["Versiones", "releases"], ["Cambios", "changelog"], ["Contribuir", "contributing"], ["Discusiones", "discussions"], ["Patrocinar o colaborar", "#join"], ["Seguridad", "security"]]],
     ],
     license: "AGPL-3.0 · Protocolo y proveedores MIT / Apache-2.0",
     guides: "Guías",

@@ -116,6 +116,7 @@ export const LINKS = {
   contributing: `${REPO}/blob/main/CONTRIBUTING.md`,
   security: `${REPO}/blob/main/SECURITY.md`,
   issues: `${REPO}/issues`,
+  discussions: `${REPO}/discussions`,
   plugins: `${REPO}/blob/main/docs/plugins.md`,
   theming: `${REPO}/blob/main/docs/theming.md`,
   licensing: `${REPO}#license`,
