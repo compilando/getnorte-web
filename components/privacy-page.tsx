@@ -5,7 +5,7 @@ import { Nav } from "./nav";
 import { guidesFor } from "./topic-page";
 
 /** When the policy last changed: bump it with every edit to `privacyPage`. */
-const UPDATED = "2026-10-08";
+const UPDATED = "2026-10-09";
 
 /** What the program and the site collect, which is the address signers and stores ask for. */
 export function PrivacyPage({ lang }: { lang: Lang }) {

@@ -8,7 +8,7 @@ import { TerminalScreen } from "./terminal-screen";
 type Item = { caption: string; screen: Packed | null; src: string | null };
 
 /**
- * The same four features, in the terminal or in the window. The terminal side
+ * The same six features, in the terminal or in the window. The terminal side
  * is the default: it is what a first visit has not seen yet by this point.
  */
 export function GalleryTabs({
@@ -22,7 +22,7 @@ export function GalleryTabs({
 }) {
   const hasWindow = items.some((i) => i.src);
   const [mode, setMode] = useState<"terminal" | "window">("terminal");
-  // The tab repaints at once; the four screens follow after that paint.
+  // The tab repaints at once; the screens follow after that paint.
   const shownMode = useAfterPaint(mode);
   const shown = items.filter((i) => (shownMode === "terminal" ? i.screen : i.src));
 
@@ -45,7 +45,7 @@ export function GalleryTabs({
           </button>
         ))}
       </div>
-      <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {shown.map((item) => (
           <figure key={`${shownMode}-${item.caption}`} className="animate-[fadein_.35s_ease]">
             <div className="overflow-hidden rounded-lg border border-white/[0.1] transition hover:border-phosphor/40">

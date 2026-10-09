@@ -126,6 +126,8 @@ const en = {
     gallery: [
       ["viewer", "The viewer, pixel for pixel"],
       ["disk-map", "The disk map, as a treemap"],
+      ["goto", "Go anywhere"],
+      ["palette", "Every command, by name"],
       ["terminal", "A shell in a panel"],
       ["settings", "Settings with real controls"],
     ] as [Scene, string][],
@@ -497,7 +499,7 @@ const en = {
         "Plugins run sandboxed and get only the permissions you grant them.",
       ]],
       ["Signed releases", [
-        "The Windows packages are signed through SignPath Foundation. Signing proves the files came from this project; it adds no data collection. Your operating system may check the certificate with its issuer, as it does for any signed program.",
+        "The Windows packages will be signed through SignPath Foundation; today's previews are still unsigned. Signing proves the files came from this project; it adds no data collection. Your operating system may check the certificate with its issuer, as it does for any signed program.",
         "Downloads are served by GitHub Releases, under GitHub's privacy statement.",
       ]],
       ["This website", [
@@ -602,6 +604,8 @@ const es: Copy = {
     gallery: [
       ["viewer", "El visor, píxel a píxel"],
       ["disk-map", "El mapa de disco, como treemap"],
+      ["goto", "Ir a cualquier sitio"],
+      ["palette", "Cada orden, por su nombre"],
       ["terminal", "Un shell en un panel"],
       ["settings", "Ajustes con controles de verdad"],
     ],
@@ -972,7 +976,7 @@ const es: Copy = {
         "Los plugins se ejecutan aislados y solo reciben los permisos que tú les concedes.",
       ]],
       ["Versiones firmadas", [
-        "Los paquetes de Windows se firman a través de SignPath Foundation. La firma demuestra que los ficheros salen de este proyecto; no añade ninguna recogida de datos. Tu sistema operativo puede comprobar el certificado con su emisor, como con cualquier programa firmado.",
+        "Los paquetes de Windows se firmarán a través de SignPath Foundation; las previews de hoy aún van sin firmar. La firma demuestra que los ficheros salen de este proyecto; no añade ninguna recogida de datos. Tu sistema operativo puede comprobar el certificado con su emisor, como con cualquier programa firmado.",
         "Las descargas las sirve GitHub Releases, bajo la declaración de privacidad de GitHub.",
       ]],
       ["Esta web", [
