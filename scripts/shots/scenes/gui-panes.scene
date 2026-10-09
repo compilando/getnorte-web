@@ -1,13 +1,13 @@
-# The window's hero still, once per theme: the photos on the right with two
-# marked, the Places sidebar, and the docked viewer showing the photo under
-# the cursor.
-run projects/aurora
+# The window's hero still, once per theme: Documents on the left, full of
+# kinds of files, the photos on the right with two marked, and Places with
+# ada's favorites. No docked viewer: in the window it still paints a photo
+# with the terminal's half-blocks (image-ansi) instead of the photo itself.
+run Documents
 wait 2
 keys Tab
 keys Home
 open
-keys Home
-open
+# ada's home is .., Documents, Downloads, Music, Photos, projects.
 keys Home Down Down Down Down
 open
 keys Down
@@ -19,6 +19,10 @@ keys Insert
 keys Insert
 keys Up Up Up
 keys M-b
-keys M-q
-wait 3
+# A shell under the panes, in the photos' folder, asking where the space went.
+keys C-M-s
+wait 2
+type du -sh ~/*
+keys Enter
+wait 2
 shot panes

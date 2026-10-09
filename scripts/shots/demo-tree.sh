@@ -139,8 +139,29 @@ blob Documents/invoice-2026-08.pdf 84210
 blob Documents/invoice-2026-09.pdf 86112
 blob "Documents/Résumé — Ada.pdf" 142331
 blob Documents/budget.ods 23018
+blob "Documents/Taxes 2025/return-2025.pdf" 312400
+blob "Documents/Taxes 2025/receipts.zip" 2411000
+blob Documents/Work/roadmap.odp 1840221
+blob Documents/Work/contract-signed.pdf 402112
+blob Documents/Work/team-photo.jpg 2210034
+blob Documents/lease.docx 64230
+blob Documents/expenses.xlsx 41870
+blob "Documents/Norwegian, lesson 3.mp3" 6291456
+blob Documents/floor-plan.svg 18204
+text Documents/recipes.md '# Kanelboller
+
+Flour, butter, cardamom, cinnamon. Patience.'
+blob Documents/passport-scan.png 1048576
+# Downloads: a bit of everything, so the disk map has more than one colour.
 blob Downloads/debian-13.1.0-amd64-netinst.iso 67108864
 blob Downloads/norte-0.3.0-alpha.4.AppImage 25165824
+blob "Downloads/Northern lights, a timelapse.mp4" 41943040
+blob "Downloads/podcast — the sky at night.mp3" 18874368
+blob Downloads/rust-book.epub 3355443
+blob Downloads/kp-index-2025.csv 1258291
+blob Downloads/wallpaper-4k.png 8912896
+blob Downloads/invoice-2026-10.pdf 91204
+blob Downloads/helix_25.07_amd64.deb 9437184
 (cd Photos && zip -qr ../Downloads/wallpaper-pack.zip "2026-01 Tromsø")
 tar -C projects -cf - aurora | zstd -q -o Downloads/aurora-backup.tar.zst
 # bash's \u reads the passwd entry, not $USER: the prompt names ada by hand.

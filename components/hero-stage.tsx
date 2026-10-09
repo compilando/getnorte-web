@@ -2,66 +2,74 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useAfterPaint } from "@/lib/after-paint";
-import type { Packed } from "@/lib/ansi";
+import type { Shot } from "@/lib/shots";
 import { AppFrame } from "./app-frame";
-import { TerminalScreen } from "./terminal-screen";
+import { TerminalShot } from "./terminal-screen";
 
 export const THEME_EVENT = "norte:theme";
 /** The hero's "watch the demo": the film, from the start. */
 export const DEMO_EVENT = "norte:demo";
 
-type Labels = { film: string; terminal: string; window: string; theme: string; live: string; play: string; pause: string };
+type Labels = { film: string; terminal: string; window: string; theme: string };
 type Film = { webm: string; mp4: string; poster: string };
+export type View = Shot & { id: string; caption: string };
+type Mode = "window" | "terminal" | "film";
+
+/** How long each view stays before the next, while nobody has touched it. */
+const CYCLE_MS = 5000;
 
 /**
- * The hero: the terminal tour playing frame by frame, a switch to the window,
- * and one chip per theme that freezes the tour on that theme's capture. The
- * frames arrive rendered by the server; this only chooses which one is shown.
+ * The hero: the window first, view by view, then the same in the terminal
+ * (kitty, so its icons and photos show), then the film. A theme chip paints
+ * the two panes in that theme, in the window or the terminal.
  */
 export function HeroStage({
-  reel,
-  themes,
   windows,
-  labels,
-  cols,
-  video,
+  terminals,
+  themes,
   film,
+  cols,
+  labels,
 }: {
-  video?: string | null;
-  /** The hero film (scripts/video/make-hero.py): what a first visit sees. */
+  windows: View[];
+  terminals: View[];
+  themes: { id: string; swatch: [string, string]; window?: Shot; terminal?: Shot }[];
+  /** The hero film (scripts/video/make-hero.py). */
   film?: Film | null;
-  reel: Packed[];
-  themes: { id: string; swatch: [string, string]; screen: Packed }[];
   cols: number;
-  windows: { id: string; src: string }[];
   labels: Labels;
 }) {
-  const [mode, setMode] = useState<"film" | "terminal" | "window">(film ? "film" : "terminal");
+  const first: Mode = windows.length ? "window" : terminals.length ? "terminal" : "film";
+  const [mode, setMode] = useState<Mode>(first);
+  const [index, setIndex] = useState<Record<"window" | "terminal", number>>({ window: 0, terminal: 0 });
   const [theme, setTheme] = useState<string | null>(null);
-  const [frame, setFrame] = useState(0);
-  const [playing, setPlaying] = useState(true);
+  // The views turn by themselves until someone picks one, or with reduced motion never.
+  const [cycling, setCycling] = useState(true);
+  const [hover, setHover] = useState(false);
   const [still, setStill] = useState(false);
   const [demo, setDemo] = useState(0);
   const filmRef = useRef<HTMLVideoElement>(null);
   const hasFilm = Boolean(film);
 
+  const views = mode === "terminal" ? terminals : windows;
+  const panesAt = (m: "window" | "terminal") => Math.max(0, (m === "window" ? windows : terminals).findIndex((v) => v.id === "panes"));
+
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setPlaying(false);
+      setCycling(false);
       setStill(true);
-      // The server rendered autoplay, and the browser may have started already.
       filmRef.current?.pause();
     }
     const onTheme = (e: Event) => {
       setTheme((e as CustomEvent<string>).detail);
-      setMode("terminal");
+      setCycling(false);
+      setMode((m) => (m === "film" ? first : m));
+      setIndex({ window: panesAt("window"), terminal: panesAt("terminal") });
     };
     const onDemo = () => {
-      setTheme(null);
-      setMode(hasFilm ? "film" : "terminal");
-      setPlaying(true);
-      // Asked for, the film plays from the start, reduced motion or not:
-      // once it is on screen, which may be a render later.
+      setCycling(false);
+      setMode(hasFilm ? "film" : first);
+      // Asked for, the film plays from the start, reduced motion or not.
       setDemo((n) => n + 1);
     };
     window.addEventListener(THEME_EVENT, onTheme);
@@ -70,18 +78,18 @@ export function HeroStage({
       window.removeEventListener(THEME_EVENT, onTheme);
       window.removeEventListener(DEMO_EVENT, onDemo);
     };
-  }, [hasFilm]);
+    // panesAt reads props that do not change after the first render.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hasFilm, first]);
 
   useEffect(() => {
-    if (!playing || theme !== null || mode !== "terminal" || reel.length < 2) return;
-    const id = window.setInterval(() => setFrame((f) => (f + 1) % reel.length), 1500);
+    if (!cycling || hover || theme !== null || mode === "film" || views.length < 2) return;
+    const id = window.setInterval(() => setIndex((i) => ({ ...i, [mode]: (i[mode] + 1) % views.length })), CYCLE_MS);
     return () => window.clearInterval(id);
-  }, [playing, theme, mode, reel.length]);
+  }, [cycling, hover, theme, mode, views.length]);
 
-  // A click repaints the tab or the chip at once; the screen it asks for
-  // follows after that paint (lib/after-paint.ts).
+  // A click repaints the tab at once; the screen it asks for follows after that paint.
   const shownMode = useAfterPaint(mode);
-  const shownThemeId = useAfterPaint(theme);
   useEffect(() => {
     const v = filmRef.current;
     if (demo === 0 || shownMode !== "film" || !v) return;
@@ -89,14 +97,30 @@ export function HeroStage({
     void v.play().catch(() => {});
   }, [demo, shownMode]);
 
-  const windowFor = windows.find((w) => w.id === shownThemeId) ?? windows[0];
-  const shownTheme = shownThemeId === null ? undefined : themes.find((t) => t.id === shownThemeId);
-  const title = shownMode === "terminal" ? "ada@norte: ~ — ntc" : shownMode === "film" ? "norte — 20 s" : "norte";
-  const modes = film ? (["film", "terminal", "window"] as const) : (["terminal", "window"] as const);
+  const shownViews = shownMode === "terminal" ? terminals : windows;
+  const view = shownMode === "film" ? undefined : shownViews[index[shownMode]] ?? shownViews[0];
+  const themed = view?.id === "panes" && theme ? themes.find((t) => t.id === theme)?.[shownMode as "window" | "terminal"] : undefined;
+  const shot: Shot | undefined = themed ?? view;
+
+  const pick = (m: Mode, i?: number) => {
+    setCycling(false);
+    setMode(m);
+    if (i !== undefined && m !== "film") {
+      setIndex((x) => ({ ...x, [m]: i }));
+      // Another view than the panes shows itself, not a theme.
+      if ((m === "window" ? windows : terminals)[i]?.id !== "panes") setTheme(null);
+    }
+  };
+
+  const modes = (["window", "terminal", "film"] as const).filter((m) =>
+    m === "window" ? windows.length > 0 : m === "terminal" ? terminals.length > 0 : hasFilm,
+  );
+  const title =
+    shownMode === "film" ? "norte — 20 s" : shownMode === "terminal" ? `ada@norte — ntc · kitty` : `norte — ${view?.caption ?? ""}`;
 
   return (
-    <div>
-      <div className="mb-4 flex flex-wrap items-center gap-3">
+    <div onPointerEnter={() => setHover(true)} onPointerLeave={() => setHover(false)}>
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
         <div className="inline-flex rounded-full border border-white/[0.12] bg-black/40 p-1 backdrop-blur-md" role="tablist">
           {modes.map((m) => (
             <button
@@ -104,93 +128,104 @@ export function HeroStage({
               type="button"
               role="tab"
               aria-selected={mode === m}
-              disabled={m === "window" && windows.length === 0}
-              onClick={() => setMode(m)}
-              className={`whitespace-nowrap rounded-full px-3 py-1.5 font-mono text-[12px] uppercase tracking-[0.1em] transition disabled:cursor-not-allowed disabled:opacity-35 sm:px-4 ${
+              onClick={() => pick(m)}
+              className={`whitespace-nowrap rounded-full px-3 py-1.5 font-mono text-[12px] uppercase tracking-[0.1em] transition sm:px-4 ${
                 mode === m ? "bg-phosphor text-[#0a1008]" : "text-muted hover:text-ink"
               }`}
             >
-              {/* "Terminal · ntc": on a phone, just "Terminal". */}
+              {/* "Window · norte-gui": on a phone, just "Window". */}
               {labels[m].split(" · ")[0]}
               {labels[m].includes(" · ") && <span className="hidden sm:inline"> · {labels[m].split(" · ")[1]}</span>}
             </button>
           ))}
         </div>
-        <div className="flex flex-wrap items-center gap-1.5" aria-label={labels.theme}>
-          <span className="mr-1 font-mono text-[11px] uppercase tracking-[0.12em] text-muted">{labels.theme}</span>
-          {themes.map((t) => (
-            <button
-              key={t.id}
-              type="button"
-              title={t.id}
-              aria-label={t.id}
-              aria-pressed={theme === t.id}
-              onClick={() => {
-                setTheme(theme === t.id ? null : t.id);
-                if (mode === "film") setMode("terminal");
-              }}
-              className={`h-6 w-6 overflow-hidden rounded-full border transition hover:scale-110 ${
-                theme === t.id ? "border-phosphor ring-2 ring-phosphor/40" : "border-white/20"
-              }`}
-              style={{ background: `linear-gradient(135deg, ${t.swatch[0]} 50%, ${t.swatch[1]} 50%)` }}
-            />
-          ))}
-        </div>
+        {mode !== "film" && (
+          <div className="flex flex-wrap items-center gap-1.5" aria-label={labels.theme}>
+            <span className="mr-1 font-mono text-[11px] uppercase tracking-[0.12em] text-muted">{labels.theme}</span>
+            {themes.map((t) => (
+              <button
+                key={t.id}
+                type="button"
+                title={t.id}
+                aria-label={t.id}
+                aria-pressed={theme === t.id}
+                onClick={() => {
+                  setCycling(false);
+                  setTheme(theme === t.id ? null : t.id);
+                  setIndex({ window: panesAt("window"), terminal: panesAt("terminal") });
+                }}
+                className={`h-6 w-6 overflow-hidden rounded-full border transition ${
+                  theme === t.id ? "border-phosphor ring-2 ring-phosphor/40" : "border-white/20 hover:border-white/50"
+                }`}
+                style={{ background: `linear-gradient(135deg, ${t.swatch[0]} 50%, ${t.swatch[1]} 50%)` }}
+              />
+            ))}
+          </div>
+        )}
       </div>
 
-      <div className="tilt">
-        <AppFrame
-          title={title}
-          right={
-            shownMode === "terminal" && shownThemeId === null ? (
-              <button
-                type="button"
-                onClick={() => setPlaying((p) => !p)}
-                className="flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.1em] text-muted hover:text-ink"
-              >
-                <span className={`h-1.5 w-1.5 rounded-full ${playing ? "bg-[#ff5f57] shadow-[0_0_8px_#ff5f57]" : "bg-muted"}`} />
-                {playing ? labels.live : labels.play}
-              </button>
-            ) : (
-              <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-muted">{shownMode === "film" ? "" : (shownThemeId ?? "")}</span>
-            )
-          }
-        >
-          {/* Only the screen on show is in the DOM: each one is thousands of spans. */}
-          <div
-            key={shownMode === "film" ? "film" : shownMode === "window" ? `w${windowFor?.id}` : (shownThemeId ?? `r${frame}`)}
-            className="animate-[fadein_.35s_ease]"
-          >
-            {shownMode === "film" && film && (
-              // Muted, looping, inline: the only way a browser plays a video on its own.
-              // With reduced motion it waits, with controls, on its poster.
-              <video
-                ref={filmRef}
-                poster={film.poster}
-                autoPlay={!still}
-                controls={still}
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                className="block aspect-video w-full bg-black"
-              >
-                <source src={film.webm} type="video/webm" />
-                <source src={film.mp4} type="video/mp4" />
-              </video>
-            )}
-            {shownMode === "terminal" && shownThemeId === null && reel[frame] && <TerminalScreen screen={reel[frame]} cols={cols} />}
-            {shownMode === "terminal" && shownTheme && <TerminalScreen screen={shownTheme.screen} cols={cols} label={shownTheme.id} />}
-            {shownMode === "window" && shownThemeId === null && video && (
-              <video src={video} poster={windows[0]?.src} autoPlay muted loop playsInline className="block w-full" />
-            )}
-            {shownMode === "window" && (shownThemeId !== null || !video) && windowFor && (
-              // eslint-disable-next-line @next/next/no-img-element -- a capture, served as-is
-              <img src={windowFor.src} alt="" className="block w-full" />
-            )}
-          </div>
-        </AppFrame>
-      </div>
+      <AppFrame
+        title={title}
+        right={<span className="font-mono text-[11px] uppercase tracking-[0.1em] text-muted">{themed ? theme : ""}</span>}
+      >
+        {/* Only the screen on show is in the DOM. */}
+        <div key={shownMode === "film" ? "film" : `${shownMode}-${view?.id}-${themed ? theme : ""}`} className="animate-[fadein_.35s_ease]">
+          {shownMode === "film" && film && (
+            // Muted, looping, inline: the only way a browser plays a video on its own.
+            // With reduced motion it waits, with controls, on its poster.
+            <video
+              ref={filmRef}
+              poster={film.poster}
+              autoPlay={!still}
+              controls={still}
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              className="block aspect-video w-full bg-black"
+            >
+              <source src={film.webm} type="video/webm" />
+              <source src={film.mp4} type="video/mp4" />
+            </video>
+          )}
+          {shownMode !== "film" && shot && <TerminalShot shot={shot} cols={cols} label={view?.caption} lazy={false} />}
+        </div>
+      </AppFrame>
+
+      {mode !== "film" && views.length > 1 && (
+        <ol className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4 lg:grid-cols-8">
+          {views.map((v, i) => {
+            const on = index[mode] === i;
+            return (
+              <li key={`${mode}-${v.id}`}>
+                <button
+                  type="button"
+                  aria-pressed={on}
+                  title={v.caption}
+                  onClick={() => pick(mode, i)}
+                  className={`group block w-full overflow-hidden rounded-lg border text-left transition ${
+                    on ? "border-phosphor/70 bg-phosphor/[0.06]" : "border-white/[0.1] hover:border-white/30"
+                  }`}
+                >
+                  {v.src && (
+                    // eslint-disable-next-line @next/next/no-img-element -- a capture, served as-is
+                    <img
+                      src={v.src}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                      className={`block aspect-[3/2] w-full object-cover object-left-top transition ${on ? "" : "opacity-60 group-hover:opacity-100"}`}
+                    />
+                  )}
+                  <span className={`block truncate px-2 py-1.5 font-mono text-[11px] ${on ? "text-ink" : "text-muted group-hover:text-ink"}`}>
+                    {v.caption}
+                  </span>
+                </button>
+              </li>
+            );
+          })}
+        </ol>
+      )}
     </div>
   );
 }

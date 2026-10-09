@@ -1,16 +1,15 @@
 import type { ReactNode } from "react";
-import { COPY, type Extra, type Lang, type Scene } from "@/lib/i18n";
+import { COPY, type Lang } from "@/lib/i18n";
 import { LINKS } from "@/lib/product";
-import { COLS, guiShot, tuiScene } from "@/lib/shots";
 import { type Topic, TOPIC_COPY, TOPICS, topicPath } from "@/lib/topics";
 import { AppFrame } from "./app-frame";
+import { capturesFor } from "./blocks";
 import { CompareTable, NotFor } from "./compare-table";
 import { CopyRow, FinalCta } from "./final-cta";
 import { Footer } from "./footer";
 import { HeroInstall } from "./hero-install";
 import { faqPage, JsonLd, softwareApp } from "./json-ld";
 import { Nav } from "./nav";
-import { TerminalScreen } from "./terminal-screen";
 
 function Eyebrow({ children }: { children: ReactNode }) {
   return <p className="font-mono text-[12px] uppercase tracking-[0.18em] text-phosphor">{children}</p>;
@@ -32,16 +31,7 @@ export function TopicPage({ topic, lang }: { topic: Topic; lang: Lang }) {
   const home = lang === "en" ? "/" : "/es";
   const other: Lang = lang === "en" ? "es" : "en";
 
-  const shot = (ref: string, label: string) => {
-    const [kind, name] = ref.split(":");
-    if (kind === "tui") {
-      const s = tuiScene(lang, name as Scene | Extra);
-      return s ? <TerminalScreen screen={s} cols={COLS} label={label} /> : null;
-    }
-    const src = guiShot(lang, name);
-    // eslint-disable-next-line @next/next/no-img-element -- a capture, served as-is
-    return src ? <img src={src} alt={label} loading="lazy" className="block w-full" /> : null;
-  };
+  const { shot } = capturesFor(lang);
 
   return (
     <main className="min-h-screen overflow-x-clip bg-base text-ink">

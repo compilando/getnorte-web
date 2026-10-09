@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import type { Packed } from "@/lib/ansi";
+import type { Shot } from "@/lib/shots";
 import { AppFrame } from "./app-frame";
-import { TerminalScreen } from "./terminal-screen";
+import { TerminalShot } from "./terminal-screen";
 
 type Step = { scene: string; kicker: string; title: string; body: string; keys: string[] };
 
@@ -11,7 +11,7 @@ type Step = { scene: string; kicker: string; title: string; body: string; keys: 
  * The tour: the steps scroll, the screen stays. The step crossing the middle
  * of the viewport decides which capture is shown.
  */
-export function Tour({ steps, screens, cols }: { steps: Step[]; screens: Record<string, Packed | null>; cols: number }) {
+export function Tour({ steps, screens, cols }: { steps: Step[]; screens: Record<string, Shot | null>; cols: number }) {
   const [active, setActive] = useState(0);
   const refs = useRef<(HTMLElement | null)[]>([]);
 
@@ -35,7 +35,7 @@ export function Tour({ steps, screens, cols }: { steps: Step[]; screens: Record<
       <div className="sticky top-[76px] z-10 order-first self-start lg:order-last lg:top-28">
         <AppFrame title={`ada@norte — ${step?.kicker ?? ""}`}>
           <div key={step?.scene} className="animate-[fadein_.35s_ease]">
-            {shot && <TerminalScreen screen={shot} cols={cols} label={step?.title} />}
+            {shot && <TerminalShot shot={shot} cols={cols} label={step?.title} lazy={false} />}
           </div>
         </AppFrame>
         <div className="mt-3 hidden gap-1 lg:flex" aria-hidden>

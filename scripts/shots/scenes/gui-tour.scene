@@ -6,16 +6,21 @@ keys F3
 wait 2
 shot markdown
 keys Escape
-# The disk map of ada's home, as the window paints it: a treemap.
+# The disk map of Downloads, as the window paints it: a treemap, one colour
+# per kind of file. ada's home is .., Documents, Downloads, …
 keys Home
 open
 keys Home
+open
+keys Home Down Down
 open
 keys M-z
 wait 4
 shot disk-map
 keys M-z
 keys Escape
+keys Home
+open
 # Back to the project, as the terminal's tour does.
 keys Home Down Down Down Down Down
 open

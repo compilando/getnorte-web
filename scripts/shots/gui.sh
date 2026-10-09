@@ -14,6 +14,10 @@ here=$(cd "$(dirname "$0")" && pwd)
 # The window's own default size (tauri.conf.json): resizing it after it maps
 # leaves WebKit repainting at two sizes at once under Xvfb.
 width=${WIDTH:-1200} height=${HEIGHT:-800}
+# Device pixels per CSS pixel, as on a HiDPI screen: the stills stay sharp on
+# one. The display is that much bigger; the window keeps its size in points.
+scale=${SCALE:-2}
+pw=$((width * scale)) ph=$((height * scale))
 locale=C.UTF-8
 [ "$lang" = es ] && locale=es_ES.UTF-8
 settle=${SETTLE:-0.6}
@@ -27,6 +31,24 @@ lang = "$lang"
 show_hidden = false
 row_stripes = true
 splash = "off"
+
+# A few favorites, so Places reads like a home that is lived in. Paths in
+# wire form: a VPath, percent-encoded.
+[[hotlist]]
+name = "Photos"
+path = "file:///home/ada/Photos"
+
+[[hotlist]]
+name = "Tromsø"
+path = "file:///home/ada/Photos/2026-01%20Troms%C3%B8"
+
+[[hotlist]]
+name = "aurora"
+path = "file:///home/ada/projects/aurora"
+
+[[hotlist]]
+name = "Downloads"
+path = "file:///home/ada/Downloads"
 EOF
 rm -rf "$home/.local/state" "$home/.cache" "$home"/.config/norte/{journal,index}.db*
 
@@ -34,7 +56,7 @@ if DISPLAY=$display xdotool getdisplaygeometry >/dev/null 2>&1; then
 	echo "gui.sh: $display is taken; a previous run left its Xvfb behind?" >&2
 	exit 1
 fi
-Xvfb "$display" -screen 0 "${width}x${height}x24" -nolisten tcp >/dev/null 2>&1 &
+Xvfb "$display" -screen 0 "${pw}x${ph}x24" -nolisten tcp >/dev/null 2>&1 &
 xvfb=$!
 app=
 rec=
@@ -80,7 +102,7 @@ while IFS= read -r line || [ -n "$line" ]; do
 	case $verb in
 	run)
 		# shellcheck disable=SC2086 # the scene's arguments are words on purpose
-		setsid "$here/sandbox.sh" "$home" "$bin" env DISPLAY="$display" GDK_BACKEND=x11 LANG="$locale" LC_ALL="$locale" \
+		setsid "$here/sandbox.sh" "$home" "$bin" env DISPLAY="$display" GDK_BACKEND=x11 GDK_SCALE="$scale" LANG="$locale" LC_ALL="$locale" \
 			WEBKIT_DISABLE_DMABUF_RENDERER=1 LIBGL_ALWAYS_SOFTWARE=1 \
 			norte-gui --no-splash $arg </dev/null >"$out/gui.log" 2>&1 &
 		app=$!
@@ -90,8 +112,10 @@ while IFS= read -r line || [ -n "$line" ]; do
 		sleep 6
 		if [ -n "${RECORD:-}" ]; then
 			# -nostdin: it would eat the scene this loop is reading.
-			ffmpeg -nostdin -loglevel error -y -f x11grab -draw_mouse 0 -framerate 24 -video_size "${width}x${height}" -i "$display" \
-				-c:v libvpx-vp9 -b:v 0 -crf 38 -row-mt 1 -deadline realtime -pix_fmt yuv420p "$RECORD" &
+			# Recorded at the display's size, kept at 1.5× the window's: sharp
+			# enough for the page, a third of the bytes of 2×.
+			ffmpeg -nostdin -loglevel error -y -f x11grab -draw_mouse 0 -framerate 24 -video_size "${pw}x${ph}" -i "$display" \
+				-vf "scale=$((width * 3 / 2)):-2:flags=lanczos" -c:v libvpx-vp9 -b:v 0 -crf 38 -row-mt 1 -deadline realtime -pix_fmt yuv420p "$RECORD" &
 			rec=$!
 		fi
 		;;

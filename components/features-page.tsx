@@ -1,7 +1,6 @@
-import type { Packed } from "@/lib/ansi";
 import { COPY, fill, type Lang } from "@/lib/i18n";
 import { COMMANDS, LINKS, RELEASE, THEMES } from "@/lib/product";
-import { COLS, guiShot, tuiScene, tuiTheme } from "@/lib/shots";
+import { COLS, guiShot, type Shot, tuiShot, tuiThemeShot } from "@/lib/shots";
 import { AppFrame } from "./app-frame";
 import { capturesFor, Eyebrow, Heading, MoreLink, Points, Section } from "./blocks";
 import { CoreDiagram } from "./core-diagram";
@@ -10,7 +9,7 @@ import { Footer } from "./footer";
 import { GalleryTabs } from "./gallery-tabs";
 import { JsonLd, softwareApp } from "./json-ld";
 import { Nav } from "./nav";
-import { TerminalScreen } from "./terminal-screen";
+import { TerminalShot } from "./terminal-screen";
 import { guidesFor } from "./topic-page";
 import { Tour } from "./tour";
 
@@ -26,12 +25,12 @@ export function FeaturesPage({ lang }: { lang: Lang }) {
   const other: Lang = lang === "en" ? "es" : "en";
   const { screen, shot } = capturesFor(lang);
 
-  const screens: Record<string, Packed | null> = {};
-  for (const step of t.tour.steps) screens[step.scene] = tuiScene(lang, step.scene);
+  const screens: Record<string, Shot | null> = {};
+  for (const step of t.tour.steps) screens[step.scene] = tuiShot(lang, step.scene);
   const steps = t.tour.steps.map((s) => ({ ...s, body: fill(s.body, { commands: COMMANDS }) }));
-  const gallery = t.duo.gallery.map(([name, caption]) => ({ caption, screen: tuiScene(lang, name), src: guiShot(lang, name) }));
+  const gallery = t.duo.gallery.map(([name, caption]) => ({ caption, screen: tuiShot(lang, name), src: guiShot(lang, name) }));
   const themes = THEMES.flatMap((id) => {
-    const s = tuiTheme(lang, id);
+    const s = tuiThemeShot(lang, id);
     return s ? [{ id, screen: s }] : [];
   });
   const featured = t.news.items.filter((item) => item[3]);
@@ -129,7 +128,7 @@ export function FeaturesPage({ lang }: { lang: Lang }) {
         <div className="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
           {themes.map(({ id, screen: s }) => (
             <figure key={id} className="rise overflow-hidden rounded-lg border border-white/[0.1]">
-              <TerminalScreen screen={s} cols={COLS} label={id} />
+              <TerminalShot shot={s} cols={COLS} label={id} />
               <figcaption className="bg-[#0c0f10] px-3 py-2 font-mono text-[12px] text-muted">{id}</figcaption>
             </figure>
           ))}

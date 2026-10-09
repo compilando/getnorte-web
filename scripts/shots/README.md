@@ -13,6 +13,7 @@ overrides it), built first there with `just link link-gui` and `just plugins`.
 | `sandbox.sh` | runs a command as ada under `bwrap`: `/home` holds only her home, passwd says `ada`, the hostname is `norte` |
 | `plugins.sh` | installs the official plugins the shots show |
 | `tui.sh` | plays a scene against `ntc` in a detached tmux, keeps each screen as `.ansi` |
+| `kitty.sh` | plays the same scene against `ntc` in a real kitty on Xvfb, one window per `session`, and keeps PNGs: the terminal as the page shows it, with the panel column's icons and the photos in the viewer that tmux never sees. The `.ansi` stay as the fallback when a scene has no kitty picture. `ONLY=kitty make shots` retakes just these; `ONLY=tui` takes tmux and kitty |
 | `gui.sh` | plays the same scene against `norte-gui` on Xvfb, keeps PNGs and, with `RECORD`, a video |
 | `scenes/*.scene` | the scripts: `run`, `keys`, `open`, `type`, `wait`, `shot`, `frame`, and for the terminal also `session` and `sh` |
 | `serve-s3.sh` | inside the sandbox: an S3 bucket served by `rclone` on `:9000`, throttled, and an `archive` connection to it |
@@ -20,7 +21,8 @@ overrides it), built first there with `just link link-gui` and `just plugins`.
 | `play-agent.py` | inside the sandbox: a scripted MCP client (not an AI) that asks for a scope and renames four photos through `norte mcp serve` |
 
 Needs `bwrap`, `tmux`, `magick`, `zip`, `zstd`, `rclone`, `sshd`; for the
-window also `Xvfb`, `xdotool`, `ffmpeg`.
+window also `Xvfb`, `xdotool`, `ffmpeg`; for the terminal in kitty, `kitty`
+and the JetBrains Mono font.
 
 **Two clients on one daemon.** `sh <cmd>` runs a daemon or a server as ada in
 the background, and `session <name>` points the steps after it at a second
@@ -45,7 +47,9 @@ left unapproved: `scenes/grant.scene` photographs the question.
 **Never edit `shoot.sh` while a run is going**: bash reads a script as it
 runs it. The scene files are read per step too; edit them between runs.
 
-**A scene that steps around a bug says so, with the issue.** None does
-today: the disk map (#372), the highlighted code (#373, #379), the marks
-and the docked viewer in the window (#377, #378) were all put back once
-fixed. Shooting found nine bugs; look at the shots as a user would.
+**A scene that steps around a bug says so, with the issue.** One does
+today: the terminal's disk map paints its rectangles in the text colour
+(#423), so the page keeps its text capture and leaves the kitty one out
+(`TEXT_ONLY` in `lib/shots.ts`). The disk map (#372), the highlighted code
+(#373, #379), the marks and the docked viewer in the window (#377, #378)
+were all put back once fixed. Shooting found nine bugs; look at the shots as a user would.

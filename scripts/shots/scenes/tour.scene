@@ -22,10 +22,13 @@ shot code
 keys Escape
 keys Home
 open
-# The disk map of ada's home, measured and painted.
+# The disk map of Downloads, measured and painted: one colour per kind of
+# file. ada's home is .., Documents, Downloads, …
 keys Home
 open
 keys Home
+open
+keys Home Down Down
 open
 keys M-z
 wait 3
@@ -33,6 +36,8 @@ frame
 shot disk-map
 keys M-z
 keys Escape
+keys Home
+open
 # Back to the project for the tour's left pane.
 keys Home Down Down Down Down Down
 open
