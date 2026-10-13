@@ -1,5 +1,5 @@
-[1m[38;2;137;180;250m[48;2;30;30;46m Archivo  Operar  Marcar  Ir  Paneles  Pestañas  Buscar  Ver  Herramientas  Ayuda [0m[38;2;205;214;244m[48;2;30;30;46m                                               [38;2;137;180;250mF9
-[38;2;205;214;244m    [1m[38;2;137;180;250m┌ sincronizar (actualizar) — /home/ada/projects/aurora → /home/ada/Backup/aurora ──────────────────────────────────────────────┐
+[38;2;137;180;250m[48;2;30;30;46m F9 │[1m Archivo  Operar  Marcar  Ir  Paneles  Pestañas  Buscar  Ver  Herramientas  Ayuda [0m[38;2;205;214;244m[48;2;30;30;46m
+    [1m[38;2;137;180;250m┌ sincronizar (actualizar) — /home/ada/projects/aurora → /home/ada/Backup/aurora ──────────────────────────────────────────────┐
 [0m[38;2;205;214;244m[48;2;30;30;46m    [1m[38;2;137;180;250m│[0m[38;2;205;214;244m[48;2;30;30;46mtodo esto se puede deshacer después, salvo lo que cambie entretanto                                                           [1m[38;2;137;180;250m│
 [0m[38;2;205;214;244m[48;2;30;30;46m    [1m[38;2;137;180;250m│[0m[38;2;205;214;244m[48;2;30;30;46m2 a copiar · 1 a sobrescribir · 0 directorios a crear · 0 a borrar · 0 sin tocar                                              [1m[38;2;137;180;250m│
 [0m[38;2;205;214;244m[48;2;30;30;46m    [1m[38;2;137;180;250m│[0m[38;2;205;214;244m[48;2;30;30;46m468 B a escribir, más 2 ficheros cuyo tamaño el provider no dio                                                               [1m[38;2;137;180;250m│
