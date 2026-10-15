@@ -20,11 +20,8 @@ function detect(): Os {
   return "linux";
 }
 
-/**
- * A command to copy. `shown` is what fits in the box, one line per entry,
- * with the long URLs shortened; the copy button always copies `line` whole.
- */
-function Command({ line, shown, t, os }: { line: string; shown?: string[]; t: Copy["hero"]["install"]; os: Os }) {
+/** A command to inspect and copy. The visible text is exactly what gets copied. */
+function Command({ line, t, os }: { line: string; t: Copy["hero"]["install"]; os: Os }) {
   const [copied, setCopied] = useState(false);
   const copy = async () => {
     try {
@@ -37,19 +34,16 @@ function Command({ line, shown, t, os }: { line: string; shown?: string[]; t: Co
     }
   };
   return (
-    <div className="flex items-start gap-3 rounded-lg border border-white/[0.12] bg-black/55 p-3">
-      <code className="min-w-0 flex-1 overflow-x-auto font-mono text-[13px] leading-[1.6] text-ink/90" title={line}>
-        {(shown ?? [line]).map((l) => (
-          <span key={l} className={shown ? "block whitespace-pre" : "block break-all"}>
-            <span className="mr-2 select-none text-phosphor">$</span>
-            {l}
-          </span>
-        ))}
+    <div className="flex flex-col items-start gap-2 rounded-lg border border-white/[0.12] bg-black/55 p-3 sm:flex-row sm:gap-3">
+      <code className="min-w-0 flex-1 whitespace-pre-wrap break-words font-mono text-[12px] leading-[1.65] text-ink/90 [overflow-wrap:anywhere] sm:text-[13px]">
+        <span className="mr-2 select-none text-phosphor">$</span>
+        {line}
       </code>
       <button
         type="button"
         onClick={copy}
-        className={`shrink-0 rounded-md px-2.5 py-1 font-mono text-[11px] font-semibold uppercase tracking-[0.1em] transition ${
+        aria-live="polite"
+        className={`shrink-0 self-end rounded-md px-2.5 py-1 font-mono text-[11px] font-semibold uppercase tracking-[0.1em] transition sm:self-auto ${
           copied ? "bg-white/10 text-phosphor" : "bg-phosphor text-[#0a1008] hover:bg-[#c6ff74]"
         }`}
       >
@@ -83,13 +77,12 @@ export function HeroInstall({
 
   return (
     <div>
-      <div className="flex items-center gap-1" role="tablist" aria-label={t.label}>
+      <div className="flex items-center gap-1" role="group" aria-label={t.label}>
         {(["linux", "macos", "windows"] as const).map((o) => (
           <button
             key={o}
             type="button"
-            role="tab"
-            aria-selected={os === o}
+            aria-pressed={os === o}
             onClick={() => setOs(o)}
             className={`rounded-full px-3 py-1 font-mono text-[12px] uppercase tracking-[0.1em] transition ${
               os === o ? "bg-white/[0.12] text-ink" : "text-muted hover:text-ink"
@@ -106,7 +99,6 @@ export function HeroInstall({
           <>
             <Command
               line={INSTALL_LINE}
-              shown={["curl …/norte-tui-installer.sh | sh", "curl …/norte-cli-installer.sh | sh"]}
               t={t}
               os={os}
             />
@@ -153,7 +145,6 @@ export function HeroInstall({
             <div className="mt-3">
               <Command
                 line={SOURCE_INSTALL}
-                shown={["cargo install --git …/norte \\", `  --tag v${RELEASE.version} --locked \\`, "  norte-tui norte-cli"]}
                 t={t}
                 os={os}
               />
