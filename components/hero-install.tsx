@@ -3,7 +3,7 @@
 import { track } from "@vercel/analytics";
 import { useEffect, useState } from "react";
 import type { Copy } from "@/lib/i18n";
-import { INSTALL_LINE, megabytes, NOTIFY, RELEASE, SOURCE_INSTALL } from "@/lib/product";
+import { megabytes, NOTIFY, RELEASE, SOURCE_INSTALL, TUI_INSTALL_LINE } from "@/lib/product";
 
 type Os = "linux" | "macos" | "windows";
 
@@ -53,6 +53,44 @@ function Command({ line, t, os }: { line: string; t: Copy["hero"]["install"]; os
   );
 }
 
+function InstallOption({
+  title,
+  body,
+  children,
+}: {
+  title: string;
+  body: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <section className="rounded-xl border border-white/[0.1] bg-white/[0.025] p-3.5">
+      <h3 className="font-mono text-[12px] font-semibold uppercase tracking-[0.1em] text-ink">{title}</h3>
+      <p className="mt-1.5 text-[13px] leading-5 text-ink/60">{body}</p>
+      <div className="mt-3">{children}</div>
+    </section>
+  );
+}
+
+function PackageLinks({ os }: { os: "linux" | "windows" }) {
+  const packages = os === "linux" ? RELEASE.packages : RELEASE.windows;
+  return (
+    <div className="flex flex-wrap gap-2">
+      {packages.map((p) => (
+        <a
+          key={p.ext}
+          href={p.url}
+          onClick={() => track("package_download", { ext: p.ext })}
+          className="group inline-flex items-baseline gap-2 rounded-md border border-white/[0.12] bg-black/40 px-2.5 py-1.5 transition hover:border-phosphor/50"
+        >
+          <span className="font-mono text-[12px] font-semibold text-ink">{p.ext}</span>
+          <span className="font-mono text-[11px] text-muted">{megabytes(p.bytes)}</span>
+          <span className="text-[12px] text-phosphor transition-transform group-hover:translate-y-0.5">↓</span>
+        </a>
+      ))}
+    </div>
+  );
+}
+
 /**
  * The hero's install box: the command for the visitor's system, ready to copy.
  * The server renders Linux, where the binaries are; the browser then switches
@@ -96,53 +134,23 @@ export function HeroInstall({
 
       <div className="mt-3">
         {os === "linux" ? (
-          <>
-            <Command
-              line={INSTALL_LINE}
-              t={t}
-              os={os}
-            />
-            <p className="mt-2 font-mono text-[11px] text-muted">{fill(t.linuxNote, { size: megabytes(RELEASE.binariesBytes) })}</p>
-            <p className="mt-4 text-[13px] text-ink/60">{t.window}</p>
-            <div className="mt-2 flex flex-wrap gap-2">
-              {RELEASE.packages.map((p) => (
-                <a
-                  key={p.ext}
-                  href={p.url}
-                  onClick={() => track("package_download", { ext: p.ext })}
-                  className="group inline-flex items-baseline gap-2 rounded-md border border-white/[0.12] bg-black/40 px-2.5 py-1.5 transition hover:border-phosphor/50"
-                >
-                  <span className="font-mono text-[12px] font-semibold text-ink">{p.ext}</span>
-                  <span className="font-mono text-[11px] text-muted">{megabytes(p.bytes)}</span>
-                  <span className="text-[12px] text-phosphor transition-transform group-hover:translate-y-0.5">↓</span>
-                </a>
-              ))}
-            </div>
-          </>
+          <div className="space-y-3">
+            <InstallOption title={t.tuiTitle} body={t.tuiBody}>
+              <Command line={TUI_INSTALL_LINE} t={t} os={os} />
+              <p className="mt-2 font-mono text-[11px] text-muted">{fill(t.tuiNote, { size: megabytes(RELEASE.tuiBytes) })}</p>
+            </InstallOption>
+            <InstallOption title={t.guiTitle} body={t.guiBody}>
+              <PackageLinks os="linux" />
+            </InstallOption>
+          </div>
         ) : os === "windows" ? (
-          <>
-            <p className="text-[14px] font-medium text-ink">{t.windowsTitle}</p>
-            <div className="mt-3 flex flex-wrap gap-2">
-              {RELEASE.windows.map((p) => (
-                <a
-                  key={p.ext}
-                  href={p.url}
-                  onClick={() => track("package_download", { ext: p.ext })}
-                  className="group inline-flex items-baseline gap-2 rounded-md border border-white/[0.12] bg-black/40 px-2.5 py-1.5 transition hover:border-phosphor/50"
-                >
-                  <span className="font-mono text-[12px] font-semibold text-ink">{p.ext}</span>
-                  <span className="font-mono text-[11px] text-muted">{megabytes(p.bytes)}</span>
-                  <span className="text-[12px] text-phosphor transition-transform group-hover:translate-y-0.5">↓</span>
-                </a>
-              ))}
-            </div>
+          <InstallOption title={t.guiTitle} body={t.guiBody}>
+            <PackageLinks os="windows" />
             <p className="mt-2 font-mono text-[11px] text-muted">{t.windowsNote}</p>
-          </>
+          </InstallOption>
         ) : (
-          <>
-            <p className="text-[14px] font-medium text-ink">{fill(t.otherTitle, { os: t.os[os] })}</p>
-            <p className="mt-1 text-[13px] leading-5 text-ink/60">{t.otherBody}</p>
-            <div className="mt-3">
+          <InstallOption title={t.tuiTitle} body={`${fill(t.otherTitle, { os: t.os[os] })} ${t.otherBody}`}>
+            <div>
               <Command
                 line={SOURCE_INSTALL}
                 t={t}
@@ -156,7 +164,7 @@ export function HeroInstall({
             >
               👍 {fill(t.notify, { os: t.os[os] })} ↗
             </a>
-          </>
+          </InstallOption>
         )}
       </div>
 

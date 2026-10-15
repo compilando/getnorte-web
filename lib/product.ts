@@ -29,8 +29,8 @@ export const RELEASE = {
   all: `${REPO}/releases`,
   tuiInstaller: `${DOWNLOAD}/norte-tui-installer.sh`,
   cliInstaller: `${DOWNLOAD}/norte-cli-installer.sh`,
-  /** The two tar.xz the installers fetch (norte-tui-…, norte-cli-…), in bytes. */
-  binariesBytes: 15_226_612 + 13_627_628,
+  /** The tar.xz fetched by the terminal installer, in bytes. */
+  tuiBytes: 15_226_612,
   /** The window's packages, as the release lists them; each carries ntc and norte too. */
   packages: [
     { ext: ".deb", url: `${DOWNLOAD}/norte_${VERSION}_amd64.deb`, bytes: 51_477_826 },
@@ -45,9 +45,9 @@ export const RELEASE = {
   ],
 } as const;
 
-/** Both installers in one line: the file manager, then the CLI and daemon. */
+/** The terminal file manager, ready to paste into a shell. */
 const CURL = "curl --proto '=https' --tlsv1.2 -LsSf";
-export const INSTALL_LINE = `${CURL} ${RELEASE.tuiInstaller} | sh && ${CURL} ${RELEASE.cliInstaller} | sh`;
+export const TUI_INSTALL_LINE = `${CURL} ${RELEASE.tuiInstaller} | sh`;
 
 /**
  * Where to wait for binaries: one issue per system, so its 👍 count is that
