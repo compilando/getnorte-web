@@ -49,11 +49,8 @@ const en = {
   nav: {
     links: [
       ["Why norte", "#why"],
-      ["Remotes", "#remotes"],
+      ["How it works", "#core"],
       ["Agents", "#agents"],
-      ["Background work", "#core"],
-      ["Tour", "#tour"],
-      ["Plugins", "#plugins"],
       ["Features", "/features"],
       ["Compare", "/compare"],
     ],
@@ -66,13 +63,13 @@ const en = {
   },
   paths: { home: "/", features: "/features", compare: "/compare", privacy: "/privacy" },
   hero: {
-    eyebrow: "The open-source file commander for the agent era",
-    title: ["A file manager that knows where it's ", "going."],
-    subtitle: "One file manager for your terminal, your desktop and your AI agents.",
+    eyebrow: "File manager · terminal + desktop",
+    title: ["Two panes.", "Everything under control."],
+    subtitle: "Move files fast. Let long jobs run. Give agents limits. Keep a record of every change.",
     lede: "Work across local files, SFTP, S3 and archives through one Rust core. AI agents get only the access you grant, wait for your approval, and every change they make is written down.",
     cta: {
       install: "Install on Linux",
-      demo: "Watch the 20-second demo",
+      demo: "See how it works · 20 s",
       available: "Linux x86_64 · installer, .deb, .rpm, AppImage",
       elsewhere: "Windows: first preview, setup or ZIP. macOS: build from source.",
       trust: ["Free & open source", "AGPL-3.0", "MCP", "No account", "No telemetry"],
@@ -94,9 +91,9 @@ const en = {
       copy: "copy",
       copied: "copied",
     },
-    tabs: { film: "▶ 20 s", terminal: "Terminal · ntc", window: "Window · norte-gui" },
+    tabs: { film: "Demo · 20 s", terminal: "Terminal · ntc", window: "Window · norte-gui" },
     theme: "Theme",
-    caption: "Every screen on this page is norte itself, captured by a script from the current build — no mockups.",
+    caption: "Real captures from the current build. No mockups.",
     views: {
       panes: "Two panes, two photos marked",
       viewer: "Photos, as photos",
@@ -273,7 +270,7 @@ const en = {
       },
     ] as { scene: Scene; kicker: string; title: string; body: string; keys: string[] }[],
     /** The six steps the home page keeps; /features walks them all. */
-    home: ["panes", "viewer", "copy-dialog", "timeline", "terminal", "palette"] as Scene[],
+    home: ["panes", "copy-dialog", "timeline", "terminal"] as Scene[],
     more: "Every feature, in real captures",
   },
   compare: {
@@ -450,7 +447,7 @@ const en = {
     promise: "Written in Rust, with no telemetry.",
     thanks: "Made with love, and in debt to Midnight Commander, Far Manager, Total Commander, Double Commander, Krusader, yazi and every orthodox file manager that came first.",
     groups: [
-      ["Product", [["Why norte", "#why"], ["Agents", "#agents"], ["Plugins", "#plugins"], ["All features", "/features"], ["Themes", "/features#themes"], ["Comparison", "/compare"], ["Download", "#download"]]],
+      ["Product", [["Why norte", "#why"], ["Agents", "#agents"], ["Plugins", "/features#plugins"], ["All features", "/features"], ["Themes", "/features#themes"], ["Comparison", "/compare"], ["Download", "#download"]]],
       ["Build", [["Documentation", "docs"], ["Architecture map", "architecture"], ["Specification", "spec"], ["Decision records", "adr"], ["Plugin authoring", "plugins"]]],
       ["Open source", [["Source code", "repo"], ["Releases", "releases"], ["Changelog", "changelog"], ["Contributing", "contributing"], ["Discussions", "discussions"], ["Sponsor or collaborate", "#join"], ["Security", "security"]]],
     ] as [string, [string, string][]][],
@@ -536,11 +533,8 @@ const es: Copy = {
   nav: {
     links: [
       ["Por qué norte", "#why"],
-      ["Remotos", "#remotes"],
+      ["Cómo funciona", "#core"],
       ["Agentes", "#agents"],
-      ["Segundo plano", "#core"],
-      ["Recorrido", "#tour"],
-      ["Plugins", "#plugins"],
       ["Funciones", "/es/funciones"],
       ["Comparar", "/es/comparar"],
     ],
@@ -553,13 +547,13 @@ const es: Copy = {
   },
   paths: { home: "/es", features: "/es/funciones", compare: "/es/comparar", privacy: "/es/privacidad" },
   hero: {
-    eyebrow: "El gestor de ficheros libre para la era de los agentes",
-    title: ["Tus ficheros tienen un nuevo ", "norte."],
-    subtitle: "Un solo gestor de ficheros para tu terminal, tu escritorio y tus agentes de IA.",
+    eyebrow: "Gestor de ficheros · terminal + escritorio",
+    title: ["Dos paneles.", "Todo bajo control."],
+    subtitle: "Mueve ficheros rápido. Deja tareas en marcha. Pon límites a los agentes. Conserva cada cambio.",
     lede: "Trabaja con ficheros locales, SFTP, S3 y comprimidos desde un único núcleo en Rust. Los agentes de IA solo llegan a donde les dejas, esperan tu aprobación y cada cambio que hacen queda anotado.",
     cta: {
       install: "Instalar en Linux",
-      demo: "Ver la demo de 20 segundos",
+      demo: "Ver cómo funciona · 20 s",
       available: "Linux x86_64 · instalador, .deb, .rpm, AppImage",
       elsewhere: "Windows: primera preview, instalador o ZIP. macOS: se compila desde el código.",
       trust: ["Software libre", "AGPL-3.0", "MCP", "Sin cuenta", "Sin telemetría"],
@@ -581,9 +575,9 @@ const es: Copy = {
       copy: "copiar",
       copied: "copiado",
     },
-    tabs: { film: "▶ 20 s", terminal: "Terminal · ntc", window: "Ventana · norte-gui" },
+    tabs: { film: "Demo · 20 s", terminal: "Terminal · ntc", window: "Ventana · norte-gui" },
     theme: "Tema",
-    caption: "Todas las pantallas de esta página son norte de verdad, capturadas por un script de la versión actual. Sin maquetas.",
+    caption: "Capturas reales de la versión actual. Sin maquetas.",
     views: {
       panes: "Dos paneles, dos fotos marcadas",
       viewer: "Fotos, como fotos",
@@ -759,7 +753,7 @@ const es: Copy = {
         keys: ["F1"],
       },
     ],
-    home: ["panes", "viewer", "copy-dialog", "timeline", "terminal", "palette"],
+    home: ["panes", "copy-dialog", "timeline", "terminal"],
     more: "Todas las funciones, con capturas reales",
   },
   compare: {
@@ -936,7 +930,7 @@ const es: Copy = {
     promise: "Escrito en Rust, sin telemetría.",
     thanks: "Hecho con cariño, y en deuda con Midnight Commander, Far Manager, Total Commander, Double Commander, Krusader, yazi y cada gestor ortodoxo que vino antes.",
     groups: [
-      ["Producto", [["Por qué norte", "#why"], ["Agentes", "#agents"], ["Plugins", "#plugins"], ["Todas las funciones", "/es/funciones"], ["Temas", "/es/funciones#themes"], ["Comparación", "/es/comparar"], ["Descargar", "#download"]]],
+      ["Producto", [["Por qué norte", "#why"], ["Agentes", "#agents"], ["Plugins", "/es/funciones#plugins"], ["Todas las funciones", "/es/funciones"], ["Temas", "/es/funciones#themes"], ["Comparación", "/es/comparar"], ["Descargar", "#download"]]],
       ["Construir", [["Documentación", "docs"], ["Mapa de arquitectura", "architecture"], ["Especificación", "spec"], ["Decisiones (ADR)", "adr"], ["Escribir plugins", "plugins"]]],
       ["Código abierto", [["Código fuente", "repo"], ["Versiones", "releases"], ["Cambios", "changelog"], ["Contribuir", "contributing"], ["Discusiones", "discussions"], ["Patrocinar o colaborar", "#join"], ["Seguridad", "security"]]],
     ],

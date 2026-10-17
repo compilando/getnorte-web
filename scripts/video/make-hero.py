@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""The hero film: about twenty seconds of real captures, one caption per scene.
+"""The hero film: one file-moving story in twenty seconds, from real captures.
 
 Nothing here is drawn by hand: every screen is a capture from shots/tui or the
 window's recorded tour, composed onto the aurora with a caption, and chained
@@ -32,38 +32,34 @@ MONO_BOLD = "/usr/share/fonts/TTF/JetBrainsMono-ExtraBold.ttf"
 
 CAPTIONS = {
     "en": [
-        "Two panes. Any terminal.",
-        "Or a native window. Same core.",
-        "One daemon. Every screen sees the same work.",
-        "Agents ask. You approve.",
-        "Plugins, sandboxed. You approve every capability.",
+        "Source and destination, always in view.",
+        "Terminal or desktop. Same files, same keys.",
+        "Press F5. Confirm once, then keep working.",
+        "The copy runs in the background. Pause it any time.",
+        "Every change is recorded in the journal.",
     ],
     "es": [
-        "Dos paneles. En cualquier terminal.",
-        "O una ventana nativa. El mismo núcleo.",
-        "Un daemon. Todas las pantallas ven el mismo trabajo.",
-        "Los agentes piden. Tú apruebas.",
-        "Plugins aislados. Cada permiso lo apruebas tú.",
+        "Origen y destino, siempre a la vista.",
+        "Terminal o ventana. Mismos ficheros, mismas teclas.",
+        "Pulsa F5. Confirmas una vez y sigues.",
+        "La copia sigue en segundo plano. Páusala cuando quieras.",
+        "Cada cambio queda anotado en el diario.",
     ],
 }
 TAGLINE = {
-    "en": "The open-source file commander for the agent era.",
-    "es": "El gestor de ficheros libre para la era de los agentes.",
+    "en": "Your files. Your rules.",
+    "es": "Tus ficheros. Tus reglas.",
 }
 
-# (kind, source, seconds, caption). Sources are relative to shots/tui/<lang>.
+# One journey, not a feature reel: orient, choose a frontend, copy, let it run,
+# and verify the result. Sources are relative to shots/tui/<lang>.
 PLAN = [
-    ("ansi", "reel:0", 1.1, 0),
-    ("ansi", "reel:1", 1.0, 0),
-    ("ansi", "reel:5", 1.0, 0),
-    ("ansi", "reel:6", 1.4, 0),
-    ("gui", (28.0, 4.2), 4.2, 1),
-    ("pair", ("daemon-a", "daemon-b"), 3.8, 2),
-    ("ansi", "agent-scope", 1.8, 3),
-    ("ansi", "agent-ask", 2.4, 3),
-    ("ansi", "agent-timeline", 1.6, 3),
-    ("ansi", "grant", 2.8, 4),
-    ("end", None, 2.8, None),
+    ("ansi", "panes", 3.6, 0),
+    ("gui", (34.0, 4.2), 4.2, 1),
+    ("ansi", "copy-dialog", 3.5, 2),
+    ("ansi", "jobs-paused", 3.6, 3),
+    ("ansi", "timeline", 3.5, 4),
+    ("end", None, 3.35, None),
 ]
 
 

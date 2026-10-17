@@ -1,7 +1,7 @@
 import { COMPARE_ONLY } from "@/lib/compare";
 import { COPY, fill, type Lang, type Scene } from "@/lib/i18n";
-import { COMMANDS, DECISIONS, LINKS, RELEASE, REPO, THEME_ACCENTS, THEMES, type Theme } from "@/lib/product";
-import { COLS, guiShot, heroFilm, type Shot, tuiShot, tuiTheme, tuiThemeShot } from "@/lib/shots";
+import { COMMANDS } from "@/lib/product";
+import { COLS, guiShot, heroFilm, type Shot, tuiShot, tuiThemeShot } from "@/lib/shots";
 import { AgentSteps } from "./agent-steps";
 import { AppFrame } from "./app-frame";
 import { capturesFor, Eyebrow, Heading, MoreLink, Points, Section } from "./blocks";
@@ -15,19 +15,18 @@ import { HeroStage } from "./hero-stage";
 import { Join } from "./join";
 import { Nav } from "./nav";
 import { SignalStrip } from "./signal-strip";
-import { TerminalShot } from "./terminal-screen";
 import { guidesFor } from "./topic-page";
 import { Tour } from "./tour";
 
 /** The hero's views, in order; shoot.sh's hero theme paints the panes. */
-const HERO_VIEWS = ["panes", "viewer", "markdown", "disk-map", "goto", "palette", "terminal", "settings"];
-const HERO_THEME: Theme = "catppuccin-mocha";
+const HERO_VIEWS = ["panes"];
+const HERO_THEME = "catppuccin-mocha";
 
 /**
  * The home page tells the idea, in this order: what norte is, why, the one
- * core behind the terminal and the window, the agents, the work that goes on
- * and its journal, then a short tour, plugins, the comparison in brief,
- * what is new, the call for collaborators and sponsors, and the download. The rest lives on /features and /compare.
+ * work that carries on in the background, remotes, governed agents, a short
+ * product tour, an honest comparison and the next step. Detail lives on
+ * /features and /compare instead of making the home page carry the whole manual.
  */
 export function Landing({ lang }: { lang: Lang }) {
   const t = COPY[lang];
@@ -45,27 +44,12 @@ export function Landing({ lang }: { lang: Lang }) {
   const heroTerminals = HERO_VIEWS.filter((id) => id !== "disk-map").flatMap((id) =>
     heroView(id, id === "panes" ? tuiThemeShot(lang, HERO_THEME) : tuiShot(lang, id as Scene)),
   );
-  const themes = THEMES.flatMap((id) => {
-    const s = tuiTheme(lang, id);
-    if (!s) return [];
-    return [
-      {
-        id,
-        swatch: [s.bg ?? "#000", THEME_ACCENTS[id]] as [string, string],
-        window: { src: guiShot(lang, `panes-${id}`) },
-        terminal: tuiThemeShot(lang, id) ?? undefined,
-      },
-    ];
-  });
-
   // The short tour: the six steps named in the copy, in the tour's order.
   const tourSteps = t.tour.steps.filter((s) => t.tour.home.includes(s.scene));
   const screens: Record<string, Shot | null> = {};
   for (const step of tourSteps) screens[step.scene] = tuiShot(lang, step.scene);
   const steps = tourSteps.map((s) => ({ ...s, body: fill(s.body, { commands: COMMANDS }) }));
 
-  const guiPanes = guiShot(lang, `panes-${HERO_THEME}`);
-  const tuiPanes = tuiThemeShot(lang, HERO_THEME);
   const tiles = t.remotes.tiles.filter(([scene]) => t.remotes.home.includes(scene));
 
   return (
@@ -75,40 +59,38 @@ export function Landing({ lang }: { lang: Lang }) {
 
       {/* Hero */}
       <section id="top" className="noise relative overflow-hidden pt-[68px]">
-        <div className="aurora-bg pointer-events-none absolute inset-x-0 top-0 h-[860px] opacity-95" />
-        <div className="page-grid pointer-events-none absolute inset-x-0 top-0 h-[1080px] opacity-45 [mask-image:linear-gradient(to_bottom,black,transparent_78%)]" />
-        <div className="relative mx-auto max-w-[1440px] px-4 pb-20 pt-10 sm:px-8 sm:pt-16 lg:px-12 lg:pb-28 lg:pt-12">
-          <div className="grid grid-cols-1 items-end gap-8 lg:grid-cols-[1.3fr_.7fr] lg:gap-12">
-            <div className="max-w-5xl">
+        <div className="aurora-bg pointer-events-none absolute inset-x-0 top-0 h-full opacity-90" />
+        <div className="page-grid pointer-events-none absolute inset-0 opacity-35 [mask-image:linear-gradient(to_bottom,black,transparent_92%)]" />
+        <div className="relative mx-auto max-w-[1440px] px-4 py-10 sm:px-8 sm:py-14 lg:flex lg:min-h-[calc(100dvh-68px)] lg:items-center lg:px-12 lg:py-10">
+          <div className="grid w-full grid-cols-1 items-center gap-10 lg:grid-cols-[.82fr_1.18fr] lg:gap-12 xl:gap-14">
+            <div className="max-w-xl">
               <p className="mb-5 font-mono text-[12px] uppercase tracking-[0.16em] text-phosphor">{t.hero.eyebrow}</p>
-              <h1 className="max-w-[1000px] text-balance text-[44px] font-medium leading-[0.94] tracking-[-0.07em] text-ink sm:text-[64px] lg:text-[72px] xl:text-[80px]">
+              <h1 className="text-balance text-[46px] font-medium leading-[0.94] tracking-[-0.065em] text-ink sm:text-[62px] lg:text-[52px] xl:text-[58px]">
                 {t.hero.title[0]}
-                <span className="text-phosphor">{t.hero.title[1]}</span>
+                <span className="text-phosphor"> {t.hero.title[1]}</span>
               </h1>
-              <p className="mt-6 max-w-3xl text-balance text-xl font-medium leading-snug tracking-[-0.02em] text-ink sm:text-2xl">
+              <p className="mt-6 max-w-lg text-balance text-lg font-medium leading-7 tracking-[-0.02em] text-ink/85 sm:text-xl">
                 {t.hero.subtitle}
               </p>
-              <p className="mt-4 max-w-2xl text-base leading-7 sm:text-lg sm:leading-8" style={{ color: "#d8ded9" }}>
-                {t.hero.lede}
+              <div className="mt-8">
+                <HeroCta t={t.hero} />
+              </div>
+              <p className="mt-6 font-mono text-[11px] uppercase tracking-[0.1em] text-ink/60">
+                {t.hero.cta.trust.join(" · ")}
               </p>
             </div>
-            <div className="rounded-2xl border border-white/[0.1] bg-black/35 p-5 backdrop-blur-md lg:mb-2 lg:bg-black/25">
-              <HeroCta t={t.hero} />
+            <div id="stage" className="min-w-0 scroll-mt-24">
+              <HeroStage
+                windows={heroWindows}
+                terminals={heroTerminals}
+                cols={COLS}
+                film={heroFilm(lang)}
+                labels={{ ...t.hero.tabs, theme: t.hero.theme }}
+              />
+              <p className="mt-4 text-center font-mono text-[11px] uppercase tracking-[0.09em] text-muted">
+                <span className="text-phosphor">●</span> {t.hero.caption}
+              </p>
             </div>
-          </div>
-
-          <div id="stage" className="mx-auto mt-10 max-w-[1240px] scroll-mt-24">
-            <HeroStage
-              windows={heroWindows}
-              terminals={heroTerminals}
-              themes={themes}
-              cols={COLS}
-              film={heroFilm(lang)}
-              labels={{ ...t.hero.tabs, theme: t.hero.theme }}
-            />
-            <p className="mt-6 text-center font-mono text-[12px] uppercase tracking-[0.1em] text-muted">
-              <span className="text-phosphor">●</span> {t.hero.caption}
-            </p>
           </div>
         </div>
       </section>
@@ -136,46 +118,6 @@ export function Landing({ lang }: { lang: Lang }) {
               <p className="mt-3 text-[15px] leading-6 text-ink/70">{body}</p>
             </article>
           ))}
-        </div>
-      </Section>
-
-      {/* Free and open source */}
-      <Section id="open" className="border-t border-line/60">
-        <Heading eyebrow={t.open.eyebrow} title={t.open.title} body={t.open.body} />
-        <div className="mt-14 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          {t.open.items.map(([title, body]) => (
-            <article key={title} className="rise rounded-2xl border border-white/[0.09] bg-surface p-6">
-              <p className="font-mono text-[14px] font-semibold text-phosphor">{title}</p>
-              <p className="mt-3 text-[15px] leading-6 text-ink/75">{fill(body, { decisions: DECISIONS })}</p>
-            </article>
-          ))}
-        </div>
-        <div className="mt-10 flex flex-wrap gap-x-10 gap-y-4">
-          <MoreLink href={REPO}>{t.open.source}</MoreLink>
-          <MoreLink href={LINKS.licensing}>{t.open.license}</MoreLink>
-          <MoreLink href={LINKS.contributing}>{t.open.contributing}</MoreLink>
-        </div>
-      </Section>
-
-      {/* One core: the terminal and the window */}
-      <Section id="duo" className="border-t border-line/60">
-        <Heading eyebrow={t.duo.eyebrow} title={t.duo.title} body={t.duo.body} />
-        <div className="mt-14 grid grid-cols-1 gap-6 lg:grid-cols-2">
-          <figure className="rise">
-            <AppFrame title="ntc">{tuiPanes && <TerminalShot shot={tuiPanes} cols={COLS} label={t.duo.terminal} />}</AppFrame>
-            <figcaption className="mt-3 font-mono text-[12px] text-muted">{t.duo.terminal}</figcaption>
-          </figure>
-          <figure className="rise">
-            <AppFrame title="norte-gui">
-              {guiPanes ? (
-                // eslint-disable-next-line @next/next/no-img-element -- a capture, served as-is
-                <img src={guiPanes} alt={t.duo.window} className="block w-full" />
-              ) : (
-                <div className="grid aspect-[132/38] place-items-center p-6 text-center font-mono text-[12px] text-muted">{t.duo.missing}</div>
-              )}
-            </AppFrame>
-            <figcaption className="mt-3 font-mono text-[12px] text-muted">{t.duo.window}</figcaption>
-          </figure>
         </div>
       </Section>
 
@@ -270,34 +212,6 @@ export function Landing({ lang }: { lang: Lang }) {
         </div>
       </Section>
 
-      {/* Plugins */}
-      <Section id="plugins" className="border-t border-line/60">
-        <Heading eyebrow={t.plugins.eyebrow} title={t.plugins.title} body={t.plugins.body} />
-
-        <div className="mt-14 grid grid-cols-1 gap-12 lg:grid-cols-[1.25fr_.75fr] lg:gap-16">
-          <figure className="rise">
-            <AppFrame title="ada@norte — F12">{screen("grant", t.plugins.grant)}</AppFrame>
-            <figcaption className="mt-3 font-mono text-[12px] text-muted">{t.plugins.grant}</figcaption>
-          </figure>
-          <Points items={t.plugins.points} />
-        </div>
-
-        <h3 className="mt-20 font-mono text-[12px] uppercase tracking-[0.16em] text-phosphor">{t.plugins.kindsTitle}</h3>
-        <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          {t.plugins.kinds.map(([kind, body, examples]) => (
-            <article key={kind} className="rise rounded-2xl border border-white/[0.09] bg-surface p-5 transition hover:border-phosphor/40">
-              <p className="font-mono text-[14px] font-semibold text-ink">{kind}</p>
-              <p className="mt-2 text-[15px] leading-6 text-ink/70">{body}</p>
-              <p className="mt-4 font-mono text-[12px] leading-5 text-phosphor/80">{examples}</p>
-            </article>
-          ))}
-        </div>
-        <div className="mt-10 flex flex-wrap gap-x-10 gap-y-4">
-          <MoreLink href={`${t.paths.features}#plugins`}>{t.plugins.more}</MoreLink>
-          <MoreLink href={LINKS.plugins}>{t.plugins.guide}</MoreLink>
-        </div>
-      </Section>
-
       {/* The comparison, in brief */}
       <Section id="compare" className="border-t border-line/60">
         <Heading eyebrow={t.compare.eyebrow} title={t.compare.title} body={t.compare.summary} />
@@ -319,27 +233,6 @@ export function Landing({ lang }: { lang: Lang }) {
         </div>
         <div className="mt-14">
           <NotFor t={t.compare} />
-        </div>
-      </Section>
-
-      {/* What's new */}
-      <Section id="new" className="border-t border-line/60">
-        <Eyebrow>{fill(t.news.eyebrow, { version: RELEASE.label })}</Eyebrow>
-        <h2 className="mt-5 max-w-4xl text-balance text-4xl font-medium leading-[1.02] tracking-[-0.055em] text-ink sm:text-6xl">{t.news.title}</h2>
-        <div className="mt-14 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          {t.news.items.map(([title, body, tag]) => (
-            <article
-              key={title}
-              className="rise sheen relative overflow-hidden rounded-2xl border border-white/[0.09] bg-surface p-6 transition hover:border-phosphor/40"
-            >
-              <p className="font-mono text-[12px] text-phosphor">{tag}</p>
-              <h3 className="mt-6 text-xl font-medium tracking-[-0.03em] text-ink">{title}</h3>
-              <p className="mt-3 text-[15px] leading-6 text-muted">{body}</p>
-            </article>
-          ))}
-        </div>
-        <div className="mt-10">
-          <MoreLink href={`${t.paths.features}#new`}>{t.news.more}</MoreLink>
         </div>
       </Section>
 
