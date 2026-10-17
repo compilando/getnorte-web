@@ -58,7 +58,7 @@ export function HeroStage({
     item === "film" ? Boolean(film) : item === "window" ? windows.length > 0 : terminals.length > 0,
   );
   const view = mode === "window" ? windows[0] : mode === "terminal" ? terminals[0] : undefined;
-  const title = mode === "film" ? "norte — 20 s" : mode === "terminal" ? "ntc — terminal" : "norte — desktop";
+  const title = mode === "terminal" ? "ntc — terminal" : "norte — desktop";
 
   function pick(next: Mode) {
     setMode(next);
@@ -97,9 +97,9 @@ export function HeroStage({
         </span>
       </div>
 
-      <AppFrame title={title}>
-        <div key={mode} className="animate-[fadein_.25s_ease]">
-          {mode === "film" && film && (
+      <div key={mode} className="animate-[fadein_.25s_ease]">
+        {mode === "film" && film ? (
+          <div className="overflow-hidden rounded-xl border border-white/[0.12] bg-black shadow-[0_24px_70px_rgba(0,0,0,.42)]">
             <video
               ref={videoRef}
               poster={film.poster}
@@ -113,10 +113,13 @@ export function HeroStage({
               <source src={film.webm} type="video/webm" />
               <source src={film.mp4} type="video/mp4" />
             </video>
-          )}
-          {mode !== "film" && view && <TerminalShot shot={view} cols={cols} label={view.caption} lazy={false} />}
-        </div>
-      </AppFrame>
+          </div>
+        ) : (
+          <AppFrame title={title}>
+            {view && <TerminalShot shot={view} cols={cols} label={view.caption} lazy={false} />}
+          </AppFrame>
+        )}
+      </div>
     </div>
   );
 }

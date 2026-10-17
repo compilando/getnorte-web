@@ -54,12 +54,12 @@ TAGLINE = {
 # One journey, not a feature reel: orient, choose a frontend, copy, let it run,
 # and verify the result. Sources are relative to shots/tui/<lang>.
 PLAN = [
+    ("end", None, 3.35, None),
     ("ansi", "panes", 3.6, 0),
     ("gui", (34.0, 4.2), 4.2, 1),
     ("ansi", "copy-dialog", 3.5, 2),
     ("ansi", "jobs-paused", 3.6, 3),
     ("ansi", "timeline", 3.5, 4),
-    ("end", None, 3.35, None),
 ]
 
 

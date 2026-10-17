@@ -61,18 +61,21 @@ export function Landing({ lang }: { lang: Lang }) {
       <section id="top" className="noise relative overflow-hidden pt-[68px]">
         <div className="aurora-bg pointer-events-none absolute inset-x-0 top-0 h-full opacity-90" />
         <div className="page-grid pointer-events-none absolute inset-0 opacity-35 [mask-image:linear-gradient(to_bottom,black,transparent_92%)]" />
-        <div className="relative mx-auto max-w-[1440px] px-4 py-10 sm:px-8 sm:py-14 lg:flex lg:min-h-[calc(100dvh-68px)] lg:items-center lg:px-12 lg:py-10">
-          <div className="grid w-full grid-cols-1 items-center gap-10 lg:grid-cols-[.82fr_1.18fr] lg:gap-12 xl:gap-14">
-            <div className="max-w-xl">
+        <div className="relative mx-auto max-w-[1540px] px-4 pb-14 pt-7 sm:px-8 sm:pb-16 sm:pt-9 lg:px-10 lg:pb-20 lg:pt-8">
+          <div className="grid w-full grid-cols-1 items-center gap-12 lg:grid-cols-[.7fr_1.3fr] lg:gap-14 xl:gap-20">
+            <div className="max-w-2xl">
               <p className="mb-5 font-mono text-[12px] uppercase tracking-[0.16em] text-phosphor">{t.hero.eyebrow}</p>
-              <h1 className="text-balance text-[46px] font-medium leading-[0.94] tracking-[-0.065em] text-ink sm:text-[62px] lg:text-[52px] xl:text-[58px]">
+              <h1 className="text-balance text-[50px] font-medium leading-[0.93] tracking-[-0.068em] text-ink sm:text-[68px] lg:text-[64px] xl:text-[72px]">
                 {t.hero.title[0]}
                 <span className="text-phosphor"> {t.hero.title[1]}</span>
               </h1>
-              <p className="mt-6 max-w-lg text-balance text-lg font-medium leading-7 tracking-[-0.02em] text-ink/85 sm:text-xl">
+              <p className="mt-7 max-w-xl text-balance text-lg font-medium leading-7 tracking-[-0.02em] text-ink sm:text-xl sm:leading-8">
                 {t.hero.subtitle}
               </p>
-              <div className="mt-8">
+              <p className="mt-5 max-w-xl border-l border-phosphor/40 pl-4 text-[15px] leading-6 text-ink/75 sm:text-base sm:leading-7">
+                {t.hero.lede}
+              </p>
+              <div className="mt-9">
                 <HeroCta t={t.hero} />
               </div>
               <p className="mt-6 font-mono text-[11px] uppercase tracking-[0.1em] text-ink/60">

@@ -65,8 +65,8 @@ const en = {
   hero: {
     eyebrow: "File manager · terminal + desktop",
     title: ["Two panes.", "Everything under control."],
-    subtitle: "Move files fast. Let long jobs run. Give agents limits. Keep a record of every change.",
-    lede: "Work across local files, SFTP, S3 and archives through one Rust core. AI agents get only the access you grant, wait for your approval, and every change they make is written down.",
+    subtitle: "A two-pane file manager for local files, SFTP and S3, in your terminal or on your desktop.",
+    lede: "Copies keep running in the background. AI agents only reach what you authorize. Every operation is recorded in one journal.",
     cta: {
       install: "Install on Linux",
       demo: "See how it works · 20 s",
@@ -549,8 +549,8 @@ const es: Copy = {
   hero: {
     eyebrow: "Gestor de ficheros · terminal + escritorio",
     title: ["Dos paneles.", "Todo bajo control."],
-    subtitle: "Mueve ficheros rápido. Deja tareas en marcha. Pon límites a los agentes. Conserva cada cambio.",
-    lede: "Trabaja con ficheros locales, SFTP, S3 y comprimidos desde un único núcleo en Rust. Los agentes de IA solo llegan a donde les dejas, esperan tu aprobación y cada cambio que hacen queda anotado.",
+    subtitle: "Un gestor de dos paneles para trabajar en local, SFTP y S3 desde la terminal o el escritorio.",
+    lede: "Las copias siguen en segundo plano. Los agentes de IA solo acceden a lo que autorizas. Cada operación queda registrada en un único diario.",
     cta: {
       install: "Instalar en Linux",
       demo: "Ver cómo funciona · 20 s",
