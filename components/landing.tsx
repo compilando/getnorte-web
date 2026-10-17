@@ -215,12 +215,24 @@ export function Landing({ lang }: { lang: Lang }) {
           ))}
         </div>
 
-        <div className="mt-12 grid grid-cols-1 gap-10 lg:grid-cols-[1.1fr_.9fr] lg:gap-12">
-          <Points items={t.core.points} />
-          <div className="page-grid rise self-start rounded-2xl border border-white/[0.09] bg-surface/60 p-4 sm:p-6">
-            <CoreDiagram t={t.core} />
-          </div>
+        <div className="page-grid rise mt-12 overflow-hidden rounded-2xl border border-white/[0.09] bg-surface/60 px-4 py-5 sm:px-8 sm:py-7 lg:px-10 lg:py-8">
+          <CoreDiagram t={t.core} />
         </div>
+
+        <ol className="mt-8 grid grid-cols-1 border-t border-line lg:grid-cols-3">
+          {t.core.points.map(([title, body], i) => (
+            <li
+              key={title}
+              className="rise grid grid-cols-[1.75rem_1fr] gap-x-2 border-b border-line py-6 lg:block lg:border-b-0 lg:border-r lg:px-7 lg:py-7 lg:first:pl-0 lg:last:border-r-0 lg:last:pr-0"
+            >
+              <span className="font-mono text-[11px] tracking-[0.12em] text-phosphor">{String(i + 1).padStart(2, "0")}</span>
+              <div className="lg:mt-5">
+                <h3 className="text-xl font-medium leading-tight tracking-[-0.03em] text-ink">{title}</h3>
+                <p className="mt-3 max-w-sm text-[15px] leading-6 text-muted">{body}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
       </Section>
 
       {/* Tour, short */}
