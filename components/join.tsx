@@ -19,7 +19,7 @@ export function Join({ t, contributing }: { t: Copy["join"]; contributing: strin
     <Section id="join" className="border-t border-line/60">
       <Heading eyebrow={t.eyebrow} title={t.title} body={t.body} />
 
-      <div className="mt-14 grid grid-cols-1 gap-3 lg:grid-cols-[1.1fr_.9fr_.9fr]">
+      <div className="mt-10 grid grid-cols-1 gap-3 lg:grid-cols-[1.1fr_.9fr_.9fr]">
         <a
           href={REPO}
           className="rise group relative flex flex-col overflow-hidden rounded-2xl border border-white/[0.09] bg-surface p-6 transition hover:border-phosphor/40 lg:p-8"
@@ -44,7 +44,7 @@ export function Join({ t, contributing }: { t: Copy["join"]; contributing: strin
         ))}
       </div>
 
-      <div className="mt-10 flex flex-wrap items-center gap-x-10 gap-y-4">
+      <div className="mt-8 flex flex-wrap items-center gap-x-10 gap-y-4">
         <p className="inline-flex flex-wrap items-center gap-3 text-lg text-ink/70">
           {t.write}
           <a

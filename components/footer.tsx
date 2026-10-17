@@ -28,7 +28,7 @@ export function Footer({
     return href.startsWith("#") ? `${base}${href}` : href;
   };
   return (
-    <footer id="docs" className="px-4 py-16 sm:px-8 lg:px-12 lg:py-20">
+    <footer id="docs" className="px-4 py-14 sm:px-8 lg:px-12 lg:py-16">
       <div className="mx-auto grid grid-cols-1 max-w-[1340px] gap-14 lg:grid-cols-[1fr_1.2fr]">
         <div>
           <a href={home} aria-label="norte"><Brand /></a>
@@ -66,7 +66,7 @@ export function Footer({
           ))}
         </div>
       </div>
-      <div className="mx-auto mt-16 flex max-w-[1340px] flex-col gap-4 border-t border-line pt-7 font-mono text-[11px] uppercase tracking-[0.11em] text-muted sm:flex-row sm:items-center sm:justify-between">
+      <div className="mx-auto mt-12 flex max-w-[1340px] flex-col gap-4 border-t border-line pt-7 font-mono text-[11px] uppercase tracking-[0.11em] text-muted sm:flex-row sm:items-center sm:justify-between">
         <p>© {new Date().getFullYear()} norte contributors</p>
         <p className="flex flex-wrap gap-x-6 gap-y-2">
           <a href={t.privacy[1]} className="transition-colors hover:text-ink">{t.privacy[0]}</a>

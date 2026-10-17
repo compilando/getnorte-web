@@ -72,7 +72,7 @@ export function Landing({ lang }: { lang: Lang }) {
               <p className="mt-7 max-w-xl text-balance text-lg font-medium leading-7 tracking-[-0.02em] text-ink sm:text-xl sm:leading-8">
                 {t.hero.subtitle}
               </p>
-              <p className="mt-5 max-w-xl border-l border-phosphor/40 pl-4 text-[15px] leading-6 text-ink/75 sm:text-base sm:leading-7">
+              <p className="mt-5 max-w-xl border-l border-phosphor/40 pl-4 text-[15px] leading-6 text-[#cbd2cc] sm:text-base sm:leading-7">
                 {t.hero.lede}
               </p>
               <div className="mt-9">
@@ -112,7 +112,7 @@ export function Landing({ lang }: { lang: Lang }) {
             {t.principles.lead}
           </p>
         </div>
-        <div className="mt-16 grid grid-cols-1 gap-12 border-t border-line pt-10 lg:grid-cols-[1.12fr_.88fr] lg:gap-16">
+        <div className="mt-12 grid grid-cols-1 gap-10 border-t border-line pt-8 lg:grid-cols-[1.12fr_.88fr] lg:gap-12">
           <article className="rise">
             <div className="flex items-start gap-5">
               <span className="pt-1 font-mono text-[13px] text-phosphor">{t.principles.items[0][0]}</span>
@@ -147,7 +147,7 @@ export function Landing({ lang }: { lang: Lang }) {
       {/* Remotes and archives */}
       <Section id="remotes" className="border-t border-line/60">
         <Heading eyebrow={t.remotes.eyebrow} title={t.remotes.title} body={t.remotes.body} />
-        <div className="mt-14 grid grid-cols-1 gap-x-6 gap-y-10 md:grid-cols-2">
+        <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 md:grid-cols-2">
           {tiles.map(([scene, tag, caption]) => (
             <figure key={scene} className="rise">
               <AppFrame title={`ada@norte — ${tag}`}>{screen(scene, caption)}</AppFrame>
@@ -164,7 +164,7 @@ export function Landing({ lang }: { lang: Lang }) {
       <Section id="agents" className="border-t border-line/60">
         <Heading eyebrow={t.agents.eyebrow} title={t.agents.title} body={t.agents.body} />
 
-        <ol className="mt-12 grid grid-cols-1 gap-2 sm:grid-cols-4" aria-label={t.agents.flowLabel}>
+        <ol className="mt-10 grid grid-cols-1 gap-2 sm:grid-cols-4" aria-label={t.agents.flowLabel}>
           {t.agents.flow.map(([who, what], i) => (
             <li key={who} className="relative rounded-xl border border-white/[0.09] bg-surface px-4 py-3">
               <span className="font-mono text-[12px] uppercase tracking-[0.12em] text-phosphor">{who}</span>
@@ -178,7 +178,7 @@ export function Landing({ lang }: { lang: Lang }) {
           ))}
         </ol>
 
-        <div className="rise mt-10">
+        <div className="rise mt-8">
           <AgentSteps
             steps={t.agents.steps.map(([, title, body, frame]) => ({ title, body, frame }))}
             screens={t.agents.steps.map(([scene, title]) => screen(scene, title))}
@@ -186,7 +186,7 @@ export function Landing({ lang }: { lang: Lang }) {
           />
         </div>
 
-        <div className="mt-16 grid grid-cols-1 gap-12 lg:grid-cols-[1.1fr_.9fr] lg:gap-16">
+        <div className="mt-12 grid grid-cols-1 gap-10 lg:grid-cols-[1.1fr_.9fr] lg:gap-12">
           <Points items={t.agents.points} />
           <div className="self-start overflow-hidden rounded-xl border border-white/[0.12] bg-black/45">
             <CopyRow label={t.agents.hookup} command={t.agents.hookupCommand} t={t.cta} />
@@ -198,7 +198,7 @@ export function Landing({ lang }: { lang: Lang }) {
       <Section id="core" className="border-t border-line/60">
         <Heading eyebrow={t.core.eyebrow} title={t.core.title} body={t.core.body} />
 
-        <div className="mt-14 grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <div className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-2">
           {(
             [
               ["daemon-a", "ada@norte — ntc #1", t.core.first],
@@ -215,7 +215,7 @@ export function Landing({ lang }: { lang: Lang }) {
           ))}
         </div>
 
-        <div className="mt-16 grid grid-cols-1 gap-12 lg:grid-cols-[1.1fr_.9fr] lg:gap-16">
+        <div className="mt-12 grid grid-cols-1 gap-10 lg:grid-cols-[1.1fr_.9fr] lg:gap-12">
           <Points items={t.core.points} />
           <div className="page-grid rise self-start rounded-2xl border border-white/[0.09] bg-surface/60 p-4 sm:p-6">
             <CoreDiagram t={t.core} />
@@ -238,7 +238,7 @@ export function Landing({ lang }: { lang: Lang }) {
       {/* The comparison, in brief */}
       <Section id="compare" className="border-t border-line/60">
         <Heading eyebrow={t.compare.eyebrow} title={t.compare.title} body={t.compare.summary} />
-        <div className="mt-14 rounded-2xl border border-white/[0.09] bg-surface p-6 sm:p-8">
+        <div className="mt-10 rounded-2xl border border-white/[0.09] bg-surface p-6 sm:p-8">
           <h3 className="font-mono text-[12px] uppercase tracking-[0.16em] text-phosphor">{t.compare.onlyTitle}</h3>
           <ul className="mt-6 grid grid-cols-1 gap-x-10 gap-y-4 sm:grid-cols-2">
             {COMPARE_ONLY.map((row) => (
@@ -254,7 +254,7 @@ export function Landing({ lang }: { lang: Lang }) {
             <MoreLink href={t.paths.compare}>{t.compare.more}</MoreLink>
           </div>
         </div>
-        <div className="mt-14">
+        <div className="mt-10">
           <NotFor t={t.compare} />
         </div>
       </Section>

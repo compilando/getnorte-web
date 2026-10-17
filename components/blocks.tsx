@@ -11,7 +11,7 @@ export function Eyebrow({ children }: { children: ReactNode }) {
 
 export function H2({ children }: { children: ReactNode }) {
   return (
-    <h2 className="mt-5 max-w-4xl text-balance text-4xl font-medium leading-[1.02] tracking-[-0.055em] text-ink sm:text-6xl">
+    <h2 className="mt-4 max-w-5xl text-balance text-4xl font-medium leading-[1.02] tracking-[-0.055em] text-ink sm:text-6xl">
       {children}
     </h2>
   );
@@ -19,21 +19,20 @@ export function H2({ children }: { children: ReactNode }) {
 
 export function Section({ id, children, className = "" }: { id?: string; children: ReactNode; className?: string }) {
   return (
-    <section id={id} className={`relative scroll-mt-20 py-24 sm:py-32 ${className}`}>
+    <section id={id} className={`relative scroll-mt-20 py-16 sm:py-20 ${className}`}>
       <div className="mx-auto max-w-[1440px] px-4 sm:px-8 lg:px-12">{children}</div>
     </section>
   );
 }
 
-/** A section's opening: eyebrow and title on one side, what it says on the other. */
+/** A compact section opening: one reading column keeps the explanation attached
+ * to its title instead of floating on the far side of a wide screen. */
 export function Heading({ eyebrow, title, body }: { eyebrow: ReactNode; title: ReactNode; body?: ReactNode }) {
   return (
-    <div className="grid grid-cols-1 gap-10 lg:grid-cols-[.8fr_1.2fr] lg:items-end">
-      <div>
-        <Eyebrow>{eyebrow}</Eyebrow>
-        <H2>{title}</H2>
-      </div>
-      {body && <div className="max-w-xl text-lg leading-8 text-ink/65">{body}</div>}
+    <div className="max-w-5xl">
+      <Eyebrow>{eyebrow}</Eyebrow>
+      <H2>{title}</H2>
+      {body && <div className="mt-5 max-w-3xl text-lg leading-8 text-ink/65">{body}</div>}
     </div>
   );
 }

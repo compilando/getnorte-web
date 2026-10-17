@@ -47,7 +47,7 @@ export function FinalCta({ t }: { t: Copy["cta"] }) {
   ];
   return (
     <section id="download" className="scroll-mt-20 px-3 pb-3 sm:px-5 sm:pb-5">
-      <div className="noise relative overflow-hidden rounded-[28px] border border-white/[0.1] bg-[#0b100d] px-4 py-24 sm:px-8 sm:py-28 lg:py-32">
+      <div className="noise relative overflow-hidden rounded-[28px] border border-white/[0.1] bg-[#0b100d] px-4 py-16 sm:px-8 sm:py-20 lg:py-24">
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,9,10,.96),rgba(7,9,10,.58),rgba(7,9,10,.2)),url('/norte-aurora.webp')] bg-cover bg-center opacity-80" />
         <div className="page-grid absolute inset-0 opacity-30 [mask-image:linear-gradient(to_right,black,transparent)]" />
 
@@ -57,7 +57,7 @@ export function FinalCta({ t }: { t: Copy["cta"] }) {
             {t.title}
           </h2>
 
-          <div className="mt-12 grid grid-cols-1 gap-8 lg:grid-cols-[1.15fr_.85fr] lg:gap-12">
+          <div className="mt-10 grid grid-cols-1 gap-8 lg:grid-cols-[1.15fr_.85fr] lg:gap-12">
             <div className="min-w-0">
               <p className="max-w-xl text-base leading-7 text-ink/65 sm:text-lg">{t.body}</p>
 

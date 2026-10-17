@@ -33,7 +33,7 @@ export function ComparePage({ lang }: { lang: Lang }) {
       <section className="pb-24 sm:pb-32">
         <div className="mx-auto max-w-[1440px] px-4 sm:px-8 lg:px-12">
           <CompareTable t={t.compare} lang={lang} />
-          <div className="mt-16">
+          <div className="mt-12">
             <NotFor t={t.compare} />
           </div>
         </div>

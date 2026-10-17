@@ -80,7 +80,7 @@ export function FeaturesPage({ lang }: { lang: Lang }) {
 
       <Section id="remotes" className="border-t border-line/60">
         <Heading eyebrow={t.remotes.eyebrow} title={t.remotes.title} body={t.remotes.body} />
-        <div className="mt-14 grid grid-cols-1 gap-x-6 gap-y-10 md:grid-cols-2">
+        <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 md:grid-cols-2">
           {t.remotes.tiles.map(([scene, tag, caption]) => (
             <figure key={scene} className="rise">
               <AppFrame title={`ada@norte — ${tag}`}>{screen(scene, caption)}</AppFrame>
@@ -95,10 +95,10 @@ export function FeaturesPage({ lang }: { lang: Lang }) {
 
       <Section id="core" className="border-t border-line/60">
         <Heading eyebrow={t.core.eyebrow} title={t.core.title} body={t.core.body} />
-        <div className="page-grid rise mt-14 rounded-2xl border border-white/[0.09] bg-surface/60 p-4 sm:p-8">
+        <div className="page-grid rise mt-10 rounded-2xl border border-white/[0.09] bg-surface/60 p-4 sm:p-8">
           <CoreDiagram t={t.core} />
         </div>
-        <div className="mt-16 grid grid-cols-1 gap-12 lg:grid-cols-[1.1fr_.9fr] lg:gap-16">
+        <div className="mt-12 grid grid-cols-1 gap-10 lg:grid-cols-[1.1fr_.9fr] lg:gap-12">
           <Points items={t.core.points} />
           <div>
             <div className="overflow-hidden rounded-xl border border-white/[0.12] bg-black/45">
@@ -125,7 +125,7 @@ export function FeaturesPage({ lang }: { lang: Lang }) {
             </>
           }
         />
-        <div className="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+        <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
           {themes.map(({ id, screen: s }) => (
             <figure key={id} className="rise overflow-hidden rounded-lg border border-white/[0.1]">
               <TerminalShot shot={s} cols={COLS} label={id} />
@@ -137,7 +137,7 @@ export function FeaturesPage({ lang }: { lang: Lang }) {
 
       <Section id="plugins" className="border-t border-line/60">
         <Heading eyebrow={t.plugins.eyebrow} title={t.plugins.atWork} body={t.plugins.body} />
-        <div className="mt-14 grid grid-cols-1 gap-6 lg:grid-cols-3">
+        <div className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-3">
           {t.plugins.shots.map(([scene, caption]) => (
             <figure key={scene} className="rise">
               <AppFrame title={`ada@norte — ${caption.split(":")[0]}`}>{screen(scene, caption)}</AppFrame>
@@ -147,7 +147,7 @@ export function FeaturesPage({ lang }: { lang: Lang }) {
         </div>
         <p className="mt-6 max-w-3xl text-[14px] leading-6 text-muted">{t.plugins.limits}</p>
 
-        <div className="mt-16 grid grid-cols-1 gap-8 lg:grid-cols-[1.2fr_.8fr] lg:items-center">
+        <div className="mt-12 grid grid-cols-1 gap-8 lg:grid-cols-[1.2fr_.8fr] lg:items-center">
           <div className="overflow-hidden rounded-xl border border-white/[0.12] bg-black/45">
             <div className="border-b border-white/[0.09] px-4 py-3 font-mono text-[11px] uppercase tracking-[0.12em] text-muted sm:px-5">
               {t.plugins.build}
@@ -165,7 +165,7 @@ export function FeaturesPage({ lang }: { lang: Lang }) {
       <Section id="new" className="border-t border-line/60">
         <Eyebrow>{fill(t.news.eyebrow, { version: RELEASE.label })}</Eyebrow>
         <h2 className="mt-5 max-w-4xl text-balance text-4xl font-medium leading-[1.02] tracking-[-0.055em] text-ink sm:text-6xl">{t.news.title}</h2>
-        <div className="mt-14 grid grid-cols-1 gap-3 lg:grid-cols-2">
+        <div className="mt-10 grid grid-cols-1 gap-3 lg:grid-cols-2">
           {featured.map(([title, body, tag, ref]) => (
             <article key={title} className="rise relative overflow-hidden rounded-2xl border border-white/[0.09] bg-surface">
               <div className="border-b border-white/[0.08]">{ref && shot(ref, title)}</div>

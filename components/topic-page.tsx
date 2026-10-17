@@ -58,7 +58,7 @@ export function TopicPage({ topic, lang }: { topic: Topic; lang: Lang }) {
       </section>
 
       {c.sections.map((s, i) => (
-        <section key={s.h2} className="border-t border-line/60 py-20 sm:py-28">
+        <section key={s.h2} className="border-t border-line/60 py-16 sm:py-20">
           <div
             className={`mx-auto grid max-w-[1440px] items-center gap-10 px-4 sm:px-8 lg:gap-16 lg:px-12 ${
               i % 2 ? "lg:grid-cols-[1.2fr_.8fr]" : "lg:grid-cols-[.8fr_1.2fr]"
@@ -77,7 +77,7 @@ export function TopicPage({ topic, lang }: { topic: Topic; lang: Lang }) {
       ))}
 
       {c.extras?.includes("agentSetup") && (
-        <section className="border-t border-line/60 py-20 sm:py-28">
+        <section className="border-t border-line/60 py-16 sm:py-20">
           <div className="mx-auto max-w-[1100px] px-4 sm:px-8">
             <Eyebrow>{t.agents.hookup}</Eyebrow>
             <div className="mt-6 overflow-hidden rounded-xl border border-white/[0.12] bg-black/45">
@@ -94,23 +94,23 @@ export function TopicPage({ topic, lang }: { topic: Topic; lang: Lang }) {
       )}
 
       {c.extras?.includes("compare") && (
-        <section className="border-t border-line/60 py-20 sm:py-28">
+        <section className="border-t border-line/60 py-16 sm:py-20">
           <div className="mx-auto max-w-[1440px] px-4 sm:px-8 lg:px-12">
             <Eyebrow>{t.compare.eyebrow}</Eyebrow>
             <h2 className="mt-4 max-w-4xl text-balance text-3xl font-medium leading-[1.05] tracking-[-0.045em] text-ink sm:text-5xl">
               {t.compare.title}
             </h2>
-            <div className="mt-12">
+            <div className="mt-10">
               <CompareTable t={t.compare} lang={lang} />
             </div>
-            <div className="mt-14">
+            <div className="mt-10">
               <NotFor t={t.compare} />
             </div>
           </div>
         </section>
       )}
 
-      <section className="border-t border-line/60 py-20 sm:py-28">
+      <section className="border-t border-line/60 py-16 sm:py-20">
         <div className="mx-auto max-w-[1100px] px-4 sm:px-8">
           <Eyebrow>FAQ</Eyebrow>
           <div className="mt-8 divide-y divide-line border-y border-line">
