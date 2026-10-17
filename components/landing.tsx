@@ -102,25 +102,45 @@ export function Landing({ lang }: { lang: Lang }) {
 
       {/* Why norte */}
       <Section id="why">
-        <div className="max-w-5xl">
+        <div className="max-w-6xl">
           <Eyebrow>{t.principles.eyebrow}</Eyebrow>
-          <p className="mt-6 font-mono text-base text-muted sm:text-lg">
-            <span className="text-phosphor">&gt;</span> {t.principles.lead}
-          </p>
-          <h2 className="mt-6 text-balance text-4xl font-medium leading-[1.02] tracking-[-0.055em] text-ink sm:text-6xl lg:text-7xl">
+          <h2 className="mt-5 text-balance text-4xl font-medium leading-[1.02] tracking-[-0.055em] text-ink sm:text-6xl lg:text-7xl">
             {t.principles.title}
             <span className="text-muted">{t.principles.muted}</span>
           </h2>
+          <p className="mt-7 max-w-3xl text-lg leading-8 text-ink/70 sm:text-xl">
+            {t.principles.lead}
+          </p>
         </div>
-        <div className="mt-16 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          {t.principles.items.map(([n, title, body]) => (
-            <article key={n} className="rise group relative overflow-hidden rounded-2xl border border-white/[0.09] bg-surface p-6 transition-colors hover:border-phosphor/40 lg:p-7">
-              <span className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-phosphor/50 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
-              <span className="font-mono text-4xl font-medium tracking-[-0.04em] text-phosphor/30 transition-colors group-hover:text-phosphor">{n}</span>
-              <h3 className="mt-6 text-xl font-medium tracking-[-0.025em] text-ink">{title}</h3>
-              <p className="mt-3 text-[15px] leading-6 text-ink/70">{body}</p>
-            </article>
-          ))}
+        <div className="mt-16 grid grid-cols-1 gap-12 border-t border-line pt-10 lg:grid-cols-[1.12fr_.88fr] lg:gap-16">
+          <article className="rise">
+            <div className="flex items-start gap-5">
+              <span className="pt-1 font-mono text-[13px] text-phosphor">{t.principles.items[0][0]}</span>
+              <div>
+                <h3 className="text-3xl font-medium leading-tight tracking-[-0.045em] text-ink sm:text-4xl">{t.principles.items[0][1]}</h3>
+                <p className="mt-4 max-w-xl text-base leading-7 text-ink/70">{t.principles.items[0][2]}</p>
+              </div>
+            </div>
+            <div className="mt-8">
+              <AppFrame title="ada@norte — SFTP">{screen("sftp", t.principles.items[0][1])}</AppFrame>
+            </div>
+            <p className="mt-4 font-mono text-[12px] uppercase tracking-[0.11em] text-phosphor">
+              Local <span className="px-2 text-muted">→</span> SFTP <span className="px-2 text-muted">→</span> S3
+              <span className="px-2 text-muted">→</span> ZIP / TAR / RAR
+            </p>
+          </article>
+
+          <ol className="rise divide-y divide-line border-y border-line">
+            {t.principles.items.slice(1).map(([n, title, body]) => (
+              <li key={n} className="grid grid-cols-[2.5rem_1fr] gap-4 py-8 first:pt-1 lg:py-9">
+                <span className="pt-1 font-mono text-[13px] text-phosphor">{n}</span>
+                <div>
+                  <h3 className="text-2xl font-medium leading-tight tracking-[-0.035em] text-ink">{title}</h3>
+                  <p className="mt-3 max-w-lg text-[15px] leading-6 text-ink/70">{body}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
         </div>
       </Section>
 

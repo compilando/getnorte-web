@@ -380,14 +380,14 @@ const en = {
   },
   principles: {
     eyebrow: "Why norte",
-    lead: "mc, Far and Total Commander got the model right decades ago. norte keeps it and builds on it.",
-    title: "The two panes you know. ",
-    muted: "Plus remotes, scripts and AI agents that need your permission.",
+    lead: "Two panes for people. Jobs that outlive the window. Clear limits for agents.",
+    title: "The familiar model, ",
+    muted: "ready for how files move now.",
     items: [
-      ["01", "One namespace", "Local disks, SFTP, FTP, S3 and archives behave like one filesystem."],
-      ["02", "Work that runs on its own", "Copies, comparisons, syncs and indexes are tasks you can watch, pause or cancel."],
-      ["03", "You stay in charge", "Agents ask, you decide, the core enforces it, and the journal records who did what."],
-      ["04", "Nothing phones home", "No account, no cloud, no telemetry — not even opt-in. Diagnostics stay on your machine."],
+      ["01", "Everything is a pane", "Browse local disks, SFTP, S3 and archives the same way, with the same keys and the same operations."],
+      ["02", "Start the copy. norte finishes it.", "It keeps running in the background when a window closes. Pause it, resume it or cancel it cleanly."],
+      ["03", "An agent asks. You set the limit.", "Choose which folders it can reach, which operations it can run and for how long."],
+      ["04", "No account. No cloud. No telemetry.", "norte works on your machine, and its diagnostics stay there too."],
     ] as [string, string, string][],
   },
   open: {
@@ -863,14 +863,14 @@ const es: Copy = {
   },
   principles: {
     eyebrow: "Por qué norte",
-    lead: "mc, Far y Total Commander acertaron con el modelo hace décadas. norte lo conserva y construye encima.",
-    title: "Los dos paneles de siempre. ",
-    muted: "Y además remotos, scripts y agentes de IA que necesitan tu permiso.",
+    lead: "Dos paneles para humanos. Tareas que sobreviven a la ventana. Límites claros para agentes.",
+    title: "El modelo conocido, ",
+    muted: "preparado para el trabajo de ahora.",
     items: [
-      ["01", "Un solo espacio de nombres", "Discos locales, SFTP, FTP, S3 y archivos comprimidos se comportan como un único sistema de ficheros."],
-      ["02", "Trabajo que va solo", "Copias, comparaciones, sincronizaciones e índices son tareas que puedes seguir, pausar o cancelar."],
-      ["03", "Tú tienes el control", "Los agentes piden, tú decides, el núcleo lo aplica, y el diario anota quién hizo qué."],
-      ["04", "Nada llama a casa", "Sin cuenta, sin nube, sin telemetría, ni siquiera opcional. Los diagnósticos se quedan en tu máquina."],
+      ["01", "Todo es un panel", "Recorre discos locales, SFTP, S3 y comprimidos de la misma forma, con las mismas teclas y las mismas operaciones."],
+      ["02", "Empiezas una copia. norte la termina.", "Sigue en segundo plano aunque cierres la ventana. Puedes pausarla, reanudarla o cancelarla limpiamente."],
+      ["03", "Un agente pide permiso. Tú marcas el límite.", "Decides qué carpetas puede tocar, qué operaciones puede hacer y durante cuánto tiempo."],
+      ["04", "Sin cuenta. Sin nube. Sin telemetría.", "norte trabaja en tu máquina y sus diagnósticos se quedan allí."],
     ],
   },
   open: {
