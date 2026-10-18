@@ -313,8 +313,15 @@ const en = {
   themes: {
     eyebrow: "Ten themes, both frontends",
     title: "Make it look like the rest of your desk.",
-    body: "Catppuccin, Gruvbox, Nord, VS Code, two CRT phosphors and norte's own. One theme file paints the terminal and the window alike, follows your desktop's light and dark, and can be written from scratch.",
-    pick: "Click one to try it in the hero.",
+    body: "Catppuccin, Gruvbox, Nord, VS Code, two CRT phosphors and norte's own. One theme file paints the terminal and the window alike, and the window can follow your desktop between a light one and a dark one.",
+    pick: "Pick one: real captures, nothing recoloured.",
+    window: "Window",
+    terminal: "Terminal",
+    group: "Theme",
+    setting: "In norte.toml",
+    alt: "norte in the {theme} theme, {mode}",
+    importTitle: "Yours is not here? Bring it from VS Code.",
+    importBody: "norte theme import reads a VS Code colour theme and writes a norte theme the picker offers by name. --use makes it the one you see.",
   },
   agents: {
     eyebrow: "Agents, governed",
@@ -473,7 +480,6 @@ const en = {
       ["What's new", "#new"],
     ] as [string, string][],
     galleryTitle: "The same screens, in the terminal and in the window",
-    themesPick: "Each one paints the terminal and the window alike.",
   },
   comparePage: {
     title: "norte vs Midnight Commander, Far, Total Commander and yazi",
@@ -796,8 +802,15 @@ const es: Copy = {
   themes: {
     eyebrow: "Diez temas, dos frontends",
     title: "Que se parezca al resto de tu escritorio.",
-    body: "Catppuccin, Gruvbox, Nord, VS Code, dos fósforos CRT y el propio de norte. Un solo fichero de tema pinta la terminal y la ventana, sigue el claro y oscuro de tu escritorio y se puede escribir desde cero.",
-    pick: "Pulsa uno para probarlo arriba.",
+    body: "Catppuccin, Gruvbox, Nord, VS Code, dos fósforos CRT y el propio de norte. Un solo fichero de tema pinta la terminal y la ventana, y la ventana puede seguir a tu escritorio entre uno claro y uno oscuro.",
+    pick: "Elige uno: capturas reales, nada recoloreado.",
+    window: "Ventana",
+    terminal: "Terminal",
+    group: "Tema",
+    setting: "En norte.toml",
+    alt: "norte con el tema {theme}, en la {mode}",
+    importTitle: "¿No está el tuyo? Tráelo de VS Code.",
+    importBody: "norte theme import lee un tema de color de VS Code y escribe un tema de norte que el selector ofrece por su nombre. Con --use pasa a ser el que ves.",
   },
   agents: {
     eyebrow: "Agentes, con reglas",
@@ -956,7 +969,6 @@ const es: Copy = {
       ["Novedades", "#new"],
     ],
     galleryTitle: "Las mismas pantallas, en la terminal y en la ventana",
-    themesPick: "Cada uno pinta igual la terminal y la ventana.",
   },
   comparePage: {
     title: "norte frente a Midnight Commander, Far, Total Commander y yazi",

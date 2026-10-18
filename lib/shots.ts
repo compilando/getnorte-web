@@ -2,7 +2,7 @@ import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { pack, parseScreen, type Packed } from "./ansi";
 import type { Extra, Lang, Scene } from "./i18n";
-import type { Theme } from "./product";
+import { type Theme, THEME_LOOKS, THEMES } from "./product";
 
 /**
  * What scripts/shots/shoot.sh wrote, read at build time. The page is
@@ -66,6 +66,18 @@ export function guiShot(lang: Lang, name: string): string | null {
 export function kittyShot(lang: Lang, name: string): string | null {
   const rel = `/shots/kitty/${lang}/${name}.webp`;
   return existsSync(path.join(ROOT, "public", rel)) ? rel : null;
+}
+
+/** One theme for the theme picker: its look, and the panes scene in it, in the window and in kitty. */
+export type ThemeView = { id: Theme; name: string; bg: string; accent: string; window: string | null; terminal: string | null };
+
+export function themeViews(lang: Lang): ThemeView[] {
+  return THEMES.map((id) => ({
+    id,
+    ...THEME_LOOKS[id],
+    window: guiShot(lang, `panes-${id}`),
+    terminal: kittyShot(lang, `panes-${id}`),
+  })).filter((v) => v.window || v.terminal);
 }
 
 /** The hero film, when scripts/video/make-hero.py has made it for this language. */

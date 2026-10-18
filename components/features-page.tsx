@@ -1,6 +1,6 @@
 import { COPY, fill, type Lang } from "@/lib/i18n";
-import { COMMANDS, LINKS, RELEASE, THEMES } from "@/lib/product";
-import { COLS, guiShot, type Shot, tuiShot, tuiThemeShot } from "@/lib/shots";
+import { COMMANDS, LINKS, RELEASE } from "@/lib/product";
+import { COLS, guiShot, type Shot, tuiShot } from "@/lib/shots";
 import { AppFrame } from "./app-frame";
 import { capturesFor, Eyebrow, Heading, MoreLink, Points, Section } from "./blocks";
 import { CoreDiagram } from "./core-diagram";
@@ -9,7 +9,7 @@ import { Footer } from "./footer";
 import { GalleryTabs } from "./gallery-tabs";
 import { breadcrumbs, JsonLd, softwareApp } from "./json-ld";
 import { Nav } from "./nav";
-import { TerminalShot } from "./terminal-screen";
+import { ThemesSection } from "./themes-section";
 import { guidesFor } from "./topic-page";
 import { Tour } from "./tour";
 
@@ -29,10 +29,6 @@ export function FeaturesPage({ lang }: { lang: Lang }) {
   for (const step of t.tour.steps) screens[step.scene] = tuiShot(lang, step.scene);
   const steps = t.tour.steps.map((s) => ({ ...s, body: fill(s.body, { commands: COMMANDS }) }));
   const gallery = t.duo.gallery.map(([name, caption]) => ({ caption, screen: tuiShot(lang, name), src: guiShot(lang, name) }));
-  const themes = THEMES.flatMap((id) => {
-    const s = tuiThemeShot(lang, id);
-    return s ? [{ id, screen: s }] : [];
-  });
   const featured = t.news.items.filter((item) => item[3]);
   const plain = t.news.items.filter((item) => !item[3]);
 
@@ -115,26 +111,7 @@ export function FeaturesPage({ lang }: { lang: Lang }) {
         </div>
       </Section>
 
-      <Section id="themes" className="border-t border-line/60">
-        <Heading
-          eyebrow={t.themes.eyebrow}
-          title={t.themes.title}
-          body={
-            <>
-              <p>{t.themes.body}</p>
-              <p className="mt-3 font-mono text-[12px] uppercase tracking-[0.1em] text-muted">{f.themesPick}</p>
-            </>
-          }
-        />
-        <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-          {themes.map(({ id, screen: s }) => (
-            <figure key={id} className="rise overflow-hidden rounded-lg border border-white/[0.1]">
-              <TerminalShot shot={s} cols={COLS} label={id} />
-              <figcaption className="bg-[#0c0f10] px-3 py-2 font-mono text-[12px] text-muted">{id}</figcaption>
-            </figure>
-          ))}
-        </div>
-      </Section>
+      <ThemesSection lang={lang} />
 
       <Section id="plugins" className="border-t border-line/60">
         <Heading eyebrow={t.plugins.eyebrow} title={t.plugins.atWork} body={t.plugins.body} />

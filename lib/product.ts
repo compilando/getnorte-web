@@ -103,21 +103,23 @@ export const THEMES = [
 export type Theme = (typeof THEMES)[number];
 
 /**
- * Each theme's accent: the `bg` of `selection` in its preset,
- * crates/norte-theme/presets/<theme>.toml. Copied here because the site no
- * longer builds inside a norte checkout; retake them when a preset changes.
+ * Each theme as its swatch shows it: the name people know it by, the `bg` of
+ * `background` and an accent — the `bg` of `selection`, or of `button` in the
+ * two VS Code presets, whose selection barely differs from their background.
+ * From crates/norte-theme/presets/<theme>.toml, copied here because the site
+ * no longer builds inside a norte checkout; retake them when a preset changes.
  */
-export const THEME_ACCENTS: Record<Theme, string> = {
-  "catppuccin-mocha": "#89b4fa",
-  default: "#5fafd7",
-  nord: "#88c0d0",
-  "gruvbox-dark": "#83a598",
-  "vscode-dark": "#04395e",
-  "retro-crt": "#2ee65c",
-  "retro-crt-amber": "#ffb000",
-  "catppuccin-latte": "#1e66f5",
-  "gruvbox-light": "#b57614",
-  "vscode-light": "#e8e8e8",
+export const THEME_LOOKS: Record<Theme, { name: string; bg: string; accent: string }> = {
+  "catppuccin-mocha": { name: "Catppuccin Mocha", bg: "#1e1e2e", accent: "#89b4fa" },
+  default: { name: "norte", bg: "#1c1c1c", accent: "#5fafd7" },
+  nord: { name: "Nord", bg: "#2e3440", accent: "#88c0d0" },
+  "gruvbox-dark": { name: "Gruvbox Dark", bg: "#282828", accent: "#83a598" },
+  "vscode-dark": { name: "VS Code Dark", bg: "#1f1f1f", accent: "#0078d4" },
+  "retro-crt": { name: "Retro CRT", bg: "#0a0f0a", accent: "#2ee65c" },
+  "retro-crt-amber": { name: "Retro CRT Amber", bg: "#100c04", accent: "#ffb000" },
+  "catppuccin-latte": { name: "Catppuccin Latte", bg: "#eff1f5", accent: "#1e66f5" },
+  "gruvbox-light": { name: "Gruvbox Light", bg: "#fbf1c7", accent: "#b57614" },
+  "vscode-light": { name: "VS Code Light", bg: "#ffffff", accent: "#005fb8" },
 };
 
 export const LINKS = {

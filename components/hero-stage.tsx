@@ -5,9 +5,6 @@ import type { Shot } from "@/lib/shots";
 import { AppFrame } from "./app-frame";
 import { TerminalShot } from "./terminal-screen";
 
-/** Kept for theme cards on deeper pages. The home hero no longer exposes ten
- * theme controls before visitors understand the product. */
-export const THEME_EVENT = "norte:theme";
 export const DEMO_EVENT = "norte:demo";
 
 type Labels = { film: string; terminal: string; window: string; theme: string };
@@ -29,7 +26,6 @@ export function HeroStage({
 }: {
   windows: View[];
   terminals: View[];
-  themes?: { id: string; swatch: [string, string]; window?: Shot; terminal?: Shot }[];
   film?: Film | null;
   cols: number;
   labels: Labels;

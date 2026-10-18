@@ -15,6 +15,7 @@ import { HeroStage } from "./hero-stage";
 import { Join } from "./join";
 import { Nav } from "./nav";
 import { SignalStrip } from "./signal-strip";
+import { ThemesSection } from "./themes-section";
 import { guidesFor } from "./topic-page";
 import { Tour } from "./tour";
 
@@ -250,6 +251,8 @@ export function Landing({ lang }: { lang: Lang }) {
           <MoreLink href={t.paths.features}>{t.tour.more}</MoreLink>
         </div>
       </Section>
+
+      <ThemesSection lang={lang} />
 
       {/* The comparison, in brief */}
       <Section id="compare" className="border-t border-line/60">
