@@ -8,6 +8,7 @@ export const metadata: Metadata = metadataFor("es", {
   description: COPY.es.comparePage.description,
   path: COPY.es.paths.compare,
   paths: { en: COPY.en.paths.compare, es: COPY.es.paths.compare },
+  card: "compare-es",
 });
 
 export default function Page() {

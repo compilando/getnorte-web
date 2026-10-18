@@ -19,6 +19,7 @@ export function generateMetadata({ params }: { params: { topic: string } }): Met
     description: c.description,
     path: topicPath(topic, "es"),
     paths: { en: topicPath(topic, "en"), es: topicPath(topic, "es") },
+    card: `${topic}-es`,
   });
 }
 

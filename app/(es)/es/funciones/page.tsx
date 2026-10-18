@@ -8,6 +8,7 @@ export const metadata: Metadata = metadataFor("es", {
   description: COPY.es.features.description,
   path: COPY.es.paths.features,
   paths: { en: COPY.en.paths.features, es: COPY.es.paths.features },
+  card: "features-es",
 });
 
 export default function Page() {

@@ -3,19 +3,24 @@ import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import type { ReactNode } from "react";
 import { COPY, type Lang } from "@/lib/i18n";
+import { CARDS, cardPath } from "@/lib/og";
 import { SITE } from "@/lib/product";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
 const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jetbrains", display: "swap" });
 
 /** Served by this site: the card must not depend on another repository's layout. */
-const ogImage = `${SITE}/og.png`;
+const defaultImage = `${SITE}/og.jpg`;
 
-/** A page other than the home page: its own words, and its twin in the other language. */
-export type PageMeta = { title: string; description: string; path: string; paths: Record<Lang, string> };
+/**
+ * A page other than the home page: its own words, its twin in the other
+ * language, and the key of its share card in lib/og.ts, if it has one.
+ */
+export type PageMeta = { title: string; description: string; path: string; paths: Record<Lang, string>; card?: string };
 
 export function metadataFor(lang: Lang, page?: PageMeta): Metadata {
-  const t = page ?? { ...COPY[lang].meta, path: lang === "en" ? "/" : "/es", paths: { en: "/", es: "/es" } };
+  const t = page ?? { ...COPY[lang].meta, path: lang === "en" ? "/" : "/es", paths: { en: "/", es: "/es" }, card: `home-${lang}` };
+  const ogImage = t.card && CARDS[t.card] ? `${SITE}${cardPath(t.card)}` : defaultImage;
   return {
     metadataBase: new URL(SITE),
     title: t.title,
