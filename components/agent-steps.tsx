@@ -50,7 +50,15 @@ export function AgentSteps({ steps, screens, caption }: { steps: Step[]; screens
         ))}
       </ol>
 
-      <p className="mt-5 min-h-[3rem] max-w-2xl text-sm leading-6 text-ink/70">{steps[active].body}</p>
+      {/* Every body in one grid cell, the inactive ones invisible: the block is as
+          tall as the longest, so walking the steps never moves the page below. */}
+      <div className="mt-5 grid max-w-2xl text-sm leading-6 text-ink/70">
+        {steps.map((s, i) => (
+          <p key={s.title} aria-hidden={i !== active} className={`[grid-area:1/1] ${i === active ? "" : "invisible"}`}>
+            {s.body}
+          </p>
+        ))}
+      </div>
 
       <div className="mt-4">
         {screens.map((screen, i) => (

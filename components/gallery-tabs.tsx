@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useAfterPaint } from "@/lib/after-paint";
+import { shotSize } from "@/lib/shot-sizes";
 import type { Shot } from "@/lib/shots";
 import { TerminalShot } from "./terminal-screen";
 
@@ -53,7 +54,7 @@ export function GalleryTabs({
                 <TerminalShot shot={item.screen} cols={cols} label={item.caption} />
               ) : (
                 // eslint-disable-next-line @next/next/no-img-element -- a capture, served as-is
-                <img src={item.src ?? ""} alt={item.caption} loading="lazy" className="block w-full" />
+                <img src={item.src ?? ""} alt={item.caption} {...shotSize(item.src ?? "")} loading="lazy" className="block w-full" />
               )}
             </div>
             <figcaption className="mt-2 font-mono text-[12px] text-muted">{item.caption}</figcaption>

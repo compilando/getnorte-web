@@ -3,6 +3,7 @@ import path from "node:path";
 import { pack, parseScreen, type Packed } from "./ansi";
 import type { Extra, Lang, Scene } from "./i18n";
 import { type Theme, THEME_LOOKS, THEMES } from "./product";
+import { SHOT_SIZE, type ShotKind } from "./shot-sizes";
 
 /**
  * What scripts/shots/shoot.sh wrote, read at build time. The page is
@@ -52,10 +53,36 @@ export function tuiThemeShot(lang: Lang, theme: Theme): Shot | null {
   return screen ? { screen } : null;
 }
 
+/** A WebP's width and height, from its header: lossy (VP8), lossless (VP8L) or extended (VP8X). */
+function webpSize(file: string): [number, number] | null {
+  const b = readFileSync(file);
+  if (b.toString("ascii", 0, 4) !== "RIFF" || b.toString("ascii", 8, 12) !== "WEBP") return null;
+  const chunk = b.toString("ascii", 12, 16);
+  if (chunk === "VP8 ") return [b.readUInt16LE(26) & 0x3fff, b.readUInt16LE(28) & 0x3fff];
+  if (chunk === "VP8L") {
+    const bits = b.readUInt32LE(21);
+    return [(bits & 0x3fff) + 1, ((bits >> 14) & 0x3fff) + 1];
+  }
+  if (chunk === "VP8X") return [b.readUIntLE(24, 3) + 1, b.readUIntLE(27, 3) + 1];
+  return null;
+}
+
+/** The capture's public path if it exists, after checking it has the size SHOT_SIZE promises the page. */
+function capture(kind: ShotKind, lang: Lang, name: string): string | null {
+  const rel = `/shots/${kind}/${lang}/${name}.webp`;
+  const file = path.join(ROOT, "public", rel);
+  if (!existsSync(file)) return null;
+  const size = webpSize(file);
+  const [w, h] = SHOT_SIZE[kind];
+  if (!size || size[0] !== w || size[1] !== h) {
+    throw new Error(`${rel} is ${size ? size.join("x") : "not a WebP"}, not ${w}x${h}: update SHOT_SIZE in lib/shot-sizes.ts`);
+  }
+  return rel;
+}
+
 /** Window captures: public/shots/gui/<lang>/<name>.webp, when shoot-gui.sh ran. */
 export function guiShot(lang: Lang, name: string): string | null {
-  const rel = `/shots/gui/${lang}/${name}.webp`;
-  return existsSync(path.join(ROOT, "public", rel)) ? rel : null;
+  return capture("gui", lang, name);
 }
 
 /**
@@ -64,8 +91,7 @@ export function guiShot(lang: Lang, name: string): string | null {
  * icons and the photos in the viewer.
  */
 export function kittyShot(lang: Lang, name: string): string | null {
-  const rel = `/shots/kitty/${lang}/${name}.webp`;
-  return existsSync(path.join(ROOT, "public", rel)) ? rel : null;
+  return capture("kitty", lang, name);
 }
 
 /** One theme for the theme picker: its look, and the panes scene in it, in the window and in kitty. */

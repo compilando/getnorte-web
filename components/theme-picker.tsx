@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { shotSize } from "@/lib/shot-sizes";
 import type { ThemeView } from "@/lib/shots";
 import { AppFrame } from "./app-frame";
 
@@ -19,8 +20,6 @@ type Labels = {
   copied: string;
 };
 
-/** The captures' own sizes, so the frame keeps its height while the next one loads. */
-const SIZE: Record<Mode, [number, number]> = { window: [2400, 1600], terminal: [2377, 1483] };
 const IMPORT = "norte theme import dracula.json --use";
 
 function Copy({ text, labels }: { text: string; labels: Pick<Labels, "copy" | "copied"> }) {
@@ -57,7 +56,6 @@ export function ThemePicker({ themes, labels }: { themes: PickerTheme[]; labels:
 
   const modes = (["window", "terminal"] as const).filter((m) => themes.some((t) => t[m]));
   const src = theme[mode] ?? theme.window ?? theme.terminal;
-  const [width, height] = SIZE[theme[mode] ? mode : theme.window ? "window" : "terminal"];
   const setting = `[ui]\ntheme = "${theme.id}"`;
 
   const warm = (t: PickerTheme) => {
@@ -90,8 +88,7 @@ export function ThemePicker({ themes, labels }: { themes: PickerTheme[]; labels:
             key={src}
             src={src ?? undefined}
             alt={theme.alt[mode]}
-            width={width}
-            height={height}
+            {...shotSize(src ?? "")}
             loading="lazy"
             decoding="async"
             className="block h-auto w-full animate-[fadein_.25s_ease]"

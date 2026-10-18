@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import type { Extra, Lang, Scene } from "@/lib/i18n";
+import { shotSize } from "@/lib/shot-sizes";
 import { COLS, guiShot, tuiShot } from "@/lib/shots";
 import { TerminalShot } from "./terminal-screen";
 
@@ -81,7 +82,7 @@ export function capturesFor(lang: Lang) {
     if (kind === "tui") return screen(name as Scene | Extra, label);
     const src = guiShot(lang, name);
     // eslint-disable-next-line @next/next/no-img-element -- a capture, served as-is
-    return src ? <img src={src} alt={label} loading="lazy" className="block w-full" /> : null;
+    return src ? <img src={src} alt={label} {...shotSize(src)} loading="lazy" className="block w-full" /> : null;
   };
   return { screen, shot };
 }

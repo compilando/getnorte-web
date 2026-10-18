@@ -1,4 +1,5 @@
 import type { Packed } from "@/lib/ansi";
+import { shotSize } from "@/lib/shot-sizes";
 import type { Shot } from "@/lib/shots";
 import { termHtml } from "@/lib/term-html";
 
@@ -19,7 +20,16 @@ import { termHtml } from "@/lib/term-html";
 export function TerminalShot({ shot, cols, label, lazy = true }: { shot: Shot; cols: number; label?: string; lazy?: boolean }) {
   if (shot.src) {
     // eslint-disable-next-line @next/next/no-img-element -- a capture, served as-is
-    return <img src={shot.src} alt={label ?? ""} loading={lazy ? "lazy" : undefined} decoding="async" className="block w-full" />;
+    return (
+      <img
+        src={shot.src}
+        alt={label ?? ""}
+        {...shotSize(shot.src)}
+        loading={lazy ? "lazy" : undefined}
+        decoding="async"
+        className="block w-full"
+      />
+    );
   }
   return shot.screen ? <TerminalScreen screen={shot.screen} cols={cols} label={label} /> : null;
 }
