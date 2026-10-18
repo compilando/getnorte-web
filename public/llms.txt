@@ -24,11 +24,16 @@ Status: alpha (v0.3.0-alpha.16). Linux x86_64 binaries and a first, unsigned Win
 ## Pages
 
 - [Home](https://getnorte.dev/): overview, real captures, install
+- [Features](https://getnorte.dev/features): every feature, in real captures
+- [Comparison](https://getnorte.dev/compare): norte next to Midnight Commander, Far Manager, Total Commander and yazi, with sources
 - [Terminal file manager](https://getnorte.dev/terminal-file-manager)
 - [SFTP & S3 file manager](https://getnorte.dev/sftp-s3-file-manager)
 - [File manager for AI agents (MCP)](https://getnorte.dev/file-manager-for-ai-agents-mcp)
 - [Total Commander alternative for Linux](https://getnorte.dev/total-commander-alternative-for-linux)
-- [Spanish version](https://getnorte.dev/es)
+- [Midnight Commander alternative](https://getnorte.dev/midnight-commander-alternative)
+- [Far Manager keys on Linux](https://getnorte.dev/far-manager-for-linux)
+- [Privacy](https://getnorte.dev/privacy): what the program and the site collect
+- [Spanish version](https://getnorte.dev/es): every page above, in Spanish
 
 ## Project
 
