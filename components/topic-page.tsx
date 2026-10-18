@@ -8,7 +8,7 @@ import { CompareTable, NotFor } from "./compare-table";
 import { CopyRow, FinalCta } from "./final-cta";
 import { Footer } from "./footer";
 import { HeroInstall } from "./hero-install";
-import { faqPage, JsonLd, softwareApp } from "./json-ld";
+import { breadcrumbs, faqPage, JsonLd, softwareApp } from "./json-ld";
 import { Nav } from "./nav";
 
 function Eyebrow({ children }: { children: ReactNode }) {
@@ -37,6 +37,7 @@ export function TopicPage({ topic, lang }: { topic: Topic; lang: Lang }) {
     <main className="min-h-screen overflow-x-clip bg-base text-ink">
       <JsonLd data={softwareApp(c.description, lang)} />
       <JsonLd data={faqPage(c.faq)} />
+      <JsonLd data={breadcrumbs(home, c.label, topicPath(topic, lang))} />
       <Nav t={t.nav} home={home} base={home} otherHref={topicPath(topic, other)} />
 
       <section className="noise relative overflow-hidden pt-[68px]">

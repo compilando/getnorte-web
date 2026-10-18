@@ -42,9 +42,9 @@ export type Extra =
 
 const en = {
   meta: {
-    title: "norte — the open-source file commander for the agent era",
+    title: "norte — open-source two-pane file manager for terminal & desktop",
     description:
-      "Two panes, a terminal and a desktop window over one asynchronous Rust core. Local, SFTP, FTP, S3 and archives, a journal of every change, a policy agents cannot skip, and no telemetry.",
+      "Open-source two-pane file manager in Rust for terminal and desktop: SFTP, S3, archives, background copies, a journal, and AI agents under your rules.",
   },
   nav: {
     links: [
@@ -457,9 +457,9 @@ const en = {
     privacy: ["Privacy", "/privacy"] as [string, string],
   },
   features: {
-    title: "Every norte feature, in real captures — norte",
+    title: "norte features: the two-pane file manager, in real captures",
     description:
-      "The whole tour of norte: two panes, the viewer, the disk map, background jobs, the journal, remotes and archives, ten themes, sandboxed plugins, and what is new in the latest alpha.",
+      "Every norte feature in real captures: two panes, viewer, disk map, background jobs, the journal, SFTP/S3 and archives, ten themes and sandboxed plugins.",
     eyebrow: "Features",
     h1: "Everything norte does, one capture at a time.",
     lede: "The home page tells the idea. This is the detail: every step of the tour, every remote, every theme and the plugins at work — all captured from the current build.",
@@ -476,9 +476,9 @@ const en = {
     themesPick: "Each one paints the terminal and the window alike.",
   },
   comparePage: {
-    title: "norte vs Midnight Commander, Far, Total Commander and yazi — norte",
+    title: "norte vs Midnight Commander, Far, Total Commander and yazi",
     description:
-      "A feature-by-feature comparison of norte with Midnight Commander, Far Manager, Total Commander and yazi: terminal and window, SFTP and S3, the journal, agents under a policy, sandboxed plugins, platforms and licenses.",
+      "norte vs Midnight Commander, Far Manager, Total Commander and yazi, feature by feature: SFTP, S3, journal, AI agents, plugins, platforms and licenses.",
     h1: "norte next to the file managers you know.",
   },
   privacyPage: {
@@ -526,9 +526,9 @@ export type Copy = typeof en;
 
 const es: Copy = {
   meta: {
-    title: "norte — el gestor de ficheros libre para la era de los agentes",
+    title: "norte — gestor de ficheros libre de dos paneles",
     description:
-      "Dos paneles, una terminal y una ventana de escritorio sobre un único núcleo asíncrono en Rust. Local, SFTP, FTP, S3 y archivos comprimidos, un diario de cada cambio, una política que los agentes no se saltan y sin telemetría.",
+      "Gestor de ficheros libre de dos paneles, en Rust, para terminal y escritorio: SFTP, S3, comprimidos, copias en segundo plano, un diario y agentes con reglas.",
   },
   nav: {
     links: [
@@ -940,9 +940,9 @@ const es: Copy = {
     privacy: ["Privacidad", "/es/privacidad"],
   },
   features: {
-    title: "Todas las funciones de norte, con capturas reales — norte",
+    title: "Funciones de norte, el gestor de ficheros de dos paneles",
     description:
-      "El recorrido completo de norte: dos paneles, el visor, el mapa de disco, las tareas en segundo plano, el diario, remotos y comprimidos, diez temas, plugins aislados y las novedades de la última alfa.",
+      "Cada función de norte en capturas reales: dos paneles, visor, mapa de disco, tareas en segundo plano, el diario, SFTP/S3, comprimidos, diez temas y plugins.",
     eyebrow: "Funciones",
     h1: "Todo lo que hace norte, captura a captura.",
     lede: "La portada cuenta la idea. Esto es el detalle: cada paso del recorrido, cada remoto, cada tema y los plugins en acción, todo capturado de la versión actual.",
@@ -959,9 +959,9 @@ const es: Copy = {
     themesPick: "Cada uno pinta igual la terminal y la ventana.",
   },
   comparePage: {
-    title: "norte frente a Midnight Commander, Far, Total Commander y yazi — norte",
+    title: "norte frente a Midnight Commander, Far, Total Commander y yazi",
     description:
-      "Una comparación función a función de norte con Midnight Commander, Far Manager, Total Commander y yazi: terminal y ventana, SFTP y S3, el diario, agentes bajo una política, plugins aislados, plataformas y licencias.",
+      "norte frente a Midnight Commander, Far Manager, Total Commander y yazi, función a función: SFTP, S3, diario, agentes de IA, plugins y licencias.",
     h1: "norte junto a los gestores de ficheros que ya conoces.",
   },
   privacyPage: {

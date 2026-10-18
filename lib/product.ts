@@ -21,6 +21,8 @@ const DOWNLOAD = `${REPO}/releases/download/v${VERSION}`;
 export const RELEASE = {
   version: VERSION,
   label: "v0.3 alpha",
+  /** The day the release was published, as GitHub lists it. */
+  date: "2026-10-16",
   /** crates/norte-proto/src/methods.rs, `PROTOCOL_VERSION`. */
   protocol: "0.87.0",
   /** The window packages have the version in their names; the tiles point at
@@ -43,6 +45,19 @@ export const RELEASE = {
     { ext: "setup.exe", url: `${DOWNLOAD}/norte_${VERSION}_x64-setup.exe`, bytes: 38_166_900 },
     { ext: ".zip", url: `${DOWNLOAD}/norte-${VERSION}-x86_64-pc-windows-msvc.zip`, bytes: 56_481_620 },
   ],
+} as const;
+
+/**
+ * When each page's words last changed, for the sitemap's lastmod: bump the
+ * entry with the edit. A release bump changes the home page and /features.
+ * A date that moves on every deploy teaches search engines to ignore it.
+ */
+export const UPDATED = {
+  home: "2026-10-18",
+  features: "2026-10-18",
+  compare: "2026-10-18",
+  topics: "2026-10-18",
+  privacy: "2026-10-09",
 } as const;
 
 /** The terminal file manager, ready to paste into a shell. */

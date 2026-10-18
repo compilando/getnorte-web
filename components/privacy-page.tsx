@@ -1,11 +1,11 @@
 import { COPY, fill, type Lang } from "@/lib/i18n";
-import { EMAIL } from "@/lib/product";
+import { EMAIL, UPDATED as PAGES_UPDATED } from "@/lib/product";
 import { Footer } from "./footer";
 import { Nav } from "./nav";
 import { guidesFor } from "./topic-page";
 
-/** When the policy last changed: bump it with every edit to `privacyPage`. */
-const UPDATED = "2026-10-09";
+/** When the policy last changed: bump `UPDATED.privacy` with every edit to `privacyPage`. */
+const UPDATED = PAGES_UPDATED.privacy;
 
 /** What the program and the site collect, which is the address signers and stores ask for. */
 export function PrivacyPage({ lang }: { lang: Lang }) {

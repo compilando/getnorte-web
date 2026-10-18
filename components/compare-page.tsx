@@ -2,7 +2,7 @@ import { COPY, type Lang } from "@/lib/i18n";
 import { CompareTable, NotFor } from "./compare-table";
 import { FinalCta } from "./final-cta";
 import { Footer } from "./footer";
-import { JsonLd, softwareApp } from "./json-ld";
+import { breadcrumbs, JsonLd, softwareApp } from "./json-ld";
 import { Nav } from "./nav";
 import { guidesFor } from "./topic-page";
 
@@ -11,10 +11,13 @@ export function ComparePage({ lang }: { lang: Lang }) {
   const t = COPY[lang];
   const home = t.paths.home;
   const other: Lang = lang === "en" ? "es" : "en";
+  /** The nav's own name for this page. */
+  const crumb = t.nav.links.find(([, href]) => href === t.paths.compare)?.[0] ?? t.comparePage.h1;
 
   return (
     <main className="min-h-screen overflow-x-clip bg-base text-ink">
       <JsonLd data={softwareApp(t.comparePage.description, lang)} />
+      <JsonLd data={breadcrumbs(home, crumb, t.paths.compare)} />
       <Nav t={t.nav} home={home} base={home} otherHref={COPY[other].paths.compare} />
 
       <section className="noise relative overflow-hidden pt-[68px]">

@@ -1,14 +1,13 @@
 import type { MetadataRoute } from "next";
 import { COPY } from "@/lib/i18n";
-import { SITE } from "@/lib/product";
+import { SITE, UPDATED } from "@/lib/product";
 import { TOPICS, topicPath } from "@/lib/topics";
 
 /** Every page in both languages, each naming its other-language twin. */
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
   const home: MetadataRoute.Sitemap[number] = {
     url: `${SITE}/`,
-    lastModified: now,
+    lastModified: UPDATED.home,
     changeFrequency: "weekly",
     priority: 1,
     alternates: { languages: { en: `${SITE}/`, es: `${SITE}/es` } },
@@ -17,7 +16,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const topics = TOPICS.flatMap((topic) =>
     (["en", "es"] as const).map((lang) => ({
       url: `${SITE}${topicPath(topic, lang)}`,
-      lastModified: now,
+      lastModified: UPDATED.topics,
       changeFrequency: "monthly" as const,
       priority: 0.8,
       alternates: { languages: { en: `${SITE}${topicPath(topic, "en")}`, es: `${SITE}${topicPath(topic, "es")}` } },
@@ -26,7 +25,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const pages = (["features", "compare"] as const).flatMap((page) =>
     (["en", "es"] as const).map((lang) => ({
       url: `${SITE}${COPY[lang].paths[page]}`,
-      lastModified: now,
+      lastModified: UPDATED[page],
       changeFrequency: "monthly" as const,
       priority: 0.9,
       alternates: { languages: { en: `${SITE}${COPY.en.paths[page]}`, es: `${SITE}${COPY.es.paths[page]}` } },
@@ -34,7 +33,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   );
   const privacy = (["en", "es"] as const).map((lang) => ({
     url: `${SITE}${COPY[lang].paths.privacy}`,
-    lastModified: now,
+    lastModified: UPDATED.privacy,
     changeFrequency: "yearly" as const,
     priority: 0.3,
     alternates: { languages: { en: `${SITE}${COPY.en.paths.privacy}`, es: `${SITE}${COPY.es.paths.privacy}` } },

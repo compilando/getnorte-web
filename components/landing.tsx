@@ -10,7 +10,7 @@ import { CoreDiagram } from "./core-diagram";
 import { CopyRow, FinalCta } from "./final-cta";
 import { Footer } from "./footer";
 import { HeroCta } from "./hero-cta";
-import { JsonLd, softwareApp } from "./json-ld";
+import { JsonLd, softwareApp, webSite } from "./json-ld";
 import { HeroStage } from "./hero-stage";
 import { Join } from "./join";
 import { Nav } from "./nav";
@@ -55,6 +55,7 @@ export function Landing({ lang }: { lang: Lang }) {
   return (
     <main className="min-h-screen overflow-x-clip bg-base text-ink">
       <JsonLd data={softwareApp(t.meta.description, lang)} />
+      <JsonLd data={webSite(lang)} />
       <Nav t={t.nav} home={home} />
 
       {/* Hero */}
@@ -64,8 +65,11 @@ export function Landing({ lang }: { lang: Lang }) {
         <div className="relative mx-auto max-w-[1540px] px-4 pb-14 pt-7 sm:px-8 sm:pb-16 sm:pt-9 lg:px-10 lg:pb-20 lg:pt-8">
           <div className="grid w-full grid-cols-1 items-center gap-12 lg:grid-cols-[.7fr_1.3fr] lg:gap-14 xl:gap-20">
             <div className="max-w-2xl">
-              <p className="mb-5 font-mono text-[12px] uppercase tracking-[0.16em] text-phosphor">{t.hero.eyebrow}</p>
+              {/* The eyebrow opens the h1, so the heading names what norte is. */}
               <h1 className="text-balance text-[50px] font-medium leading-[0.93] tracking-[-0.068em] text-ink sm:text-[68px] lg:text-[64px] xl:text-[72px]">
+                <span className="mb-5 block font-mono text-[12px] font-normal uppercase leading-normal tracking-[0.16em] text-phosphor">
+                  {t.hero.eyebrow}
+                </span>
                 {t.hero.title[0]}
                 <span className="text-phosphor"> {t.hero.title[1]}</span>
               </h1>

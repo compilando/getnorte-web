@@ -7,7 +7,7 @@ import { CoreDiagram } from "./core-diagram";
 import { CopyRow, FinalCta } from "./final-cta";
 import { Footer } from "./footer";
 import { GalleryTabs } from "./gallery-tabs";
-import { JsonLd, softwareApp } from "./json-ld";
+import { breadcrumbs, JsonLd, softwareApp } from "./json-ld";
 import { Nav } from "./nav";
 import { TerminalShot } from "./terminal-screen";
 import { guidesFor } from "./topic-page";
@@ -39,6 +39,7 @@ export function FeaturesPage({ lang }: { lang: Lang }) {
   return (
     <main className="min-h-screen overflow-x-clip bg-base text-ink">
       <JsonLd data={softwareApp(f.description, lang)} />
+      <JsonLd data={breadcrumbs(home, f.eyebrow, t.paths.features)} />
       <Nav t={t.nav} home={home} base={home} otherHref={COPY[other].paths.features} />
 
       <section className="noise relative overflow-hidden pt-[68px]">
