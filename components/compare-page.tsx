@@ -15,7 +15,7 @@ export function ComparePage({ lang }: { lang: Lang }) {
   const crumb = t.nav.links.find(([, href]) => href === t.paths.compare)?.[0] ?? t.comparePage.h1;
 
   return (
-    <main className="min-h-screen overflow-x-clip bg-base text-ink">
+    <main className="min-h-screen overflow-x-clip bg-night text-ink">
       <JsonLd data={softwareApp(t.comparePage.description, lang)} />
       <JsonLd data={breadcrumbs(home, crumb, t.paths.compare)} />
       <Nav t={t.nav} home={home} base={home} otherHref={COPY[other].paths.compare} />

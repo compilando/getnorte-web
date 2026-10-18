@@ -21,7 +21,7 @@ export function PrivacyPage({ lang }: { lang: Lang }) {
   });
 
   return (
-    <main className="min-h-screen overflow-x-clip bg-base text-ink">
+    <main className="min-h-screen overflow-x-clip bg-night text-ink">
       <Nav t={t.nav} home={home} base={home} otherHref={COPY[other].paths.privacy} />
 
       <section className="noise relative overflow-hidden pt-[68px]">

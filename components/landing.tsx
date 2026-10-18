@@ -53,7 +53,7 @@ export function Landing({ lang }: { lang: Lang }) {
   const tiles = t.remotes.tiles.filter(([scene]) => t.remotes.home.includes(scene));
 
   return (
-    <main className="min-h-screen overflow-x-clip bg-base text-ink">
+    <main className="min-h-screen overflow-x-clip bg-night text-ink">
       <JsonLd data={softwareApp(t.meta.description, lang)} />
       <JsonLd data={webSite(lang)} />
       <Nav t={t.nav} home={home} />

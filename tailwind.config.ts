@@ -8,7 +8,9 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        base: "#07090A",
+        // Not "base": Tailwind would make text-base a colour as well as a size,
+        // and sm:text-base turned the hero's lede #07090A on a #07090A page.
+        night: "#07090A",
         surface: "#0E1214",
         elevated: "#151A1D",
         line: "#252B2D",

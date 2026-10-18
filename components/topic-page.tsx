@@ -34,7 +34,7 @@ export function TopicPage({ topic, lang }: { topic: Topic; lang: Lang }) {
   const { shot } = capturesFor(lang);
 
   return (
-    <main className="min-h-screen overflow-x-clip bg-base text-ink">
+    <main className="min-h-screen overflow-x-clip bg-night text-ink">
       <JsonLd data={softwareApp(c.description, lang)} />
       <JsonLd data={faqPage(c.faq)} />
       <JsonLd data={breadcrumbs(home, c.label, topicPath(topic, lang))} />

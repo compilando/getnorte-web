@@ -39,7 +39,7 @@ export function HeroCta({ t }: { t: Copy["hero"] }) {
             window.dispatchEvent(new CustomEvent(DEMO_EVENT));
             track("demo_play", { from: "hero" });
           }}
-          className="inline-flex h-12 items-center justify-center gap-2 whitespace-nowrap rounded-full border border-line bg-base/45 px-6 font-mono text-xs font-semibold uppercase tracking-[0.08em] text-ink backdrop-blur-md transition duration-200 hover:-translate-y-0.5 hover:border-muted/70 hover:bg-elevated/80"
+          className="inline-flex h-12 items-center justify-center gap-2 whitespace-nowrap rounded-full border border-line bg-night/45 px-6 font-mono text-xs font-semibold uppercase tracking-[0.08em] text-ink backdrop-blur-md transition duration-200 hover:-translate-y-0.5 hover:border-muted/70 hover:bg-elevated/80"
         >
           <span className="text-phosphor" aria-hidden>
             ▶

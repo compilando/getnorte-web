@@ -37,7 +37,7 @@ export function FeaturesPage({ lang }: { lang: Lang }) {
   const plain = t.news.items.filter((item) => !item[3]);
 
   return (
-    <main className="min-h-screen overflow-x-clip bg-base text-ink">
+    <main className="min-h-screen overflow-x-clip bg-night text-ink">
       <JsonLd data={softwareApp(f.description, lang)} />
       <JsonLd data={breadcrumbs(home, f.eyebrow, t.paths.features)} />
       <Nav t={t.nav} home={home} base={home} otherHref={COPY[other].paths.features} />

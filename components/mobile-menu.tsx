@@ -48,7 +48,7 @@ export function MobileMenu({ links, download, other, github, email, labels }: Pr
         <div
           id="mobile-menu"
           // Opaque and full height: a blur inside the header's own backdrop blur does nothing.
-          className="fixed inset-x-0 top-[68px] z-40 h-[calc(100dvh-68px)] overflow-y-auto border-t border-white/[0.08] bg-base px-4 pb-8 pt-4 sm:px-8"
+          className="fixed inset-x-0 top-[68px] z-40 h-[calc(100dvh-68px)] overflow-y-auto border-t border-white/[0.08] bg-night px-4 pb-8 pt-4 sm:px-8"
         >
           <nav aria-label={labels.open} className="mx-auto max-w-[1440px]">
             <ul className="divide-y divide-white/[0.06]">
