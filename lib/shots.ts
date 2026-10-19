@@ -106,23 +106,13 @@ export function themeViews(lang: Lang): ThemeView[] {
   })).filter((v) => v.window || v.terminal);
 }
 
-type Film = { webm: string; mp4: string; poster: string };
-
-function film(lang: Lang, name: "hero" | "hero-full"): Film | null {
-  const base = `/video/${name}-${lang}`;
+/** The hero film, when scripts/video/make-hero.py has made it for this language. */
+export function heroFilm(lang: Lang): { webm: string; mp4: string; poster: string } | null {
+  const base = `/video/hero-${lang}`;
   const has = (ext: string) => existsSync(path.join(ROOT, "public", `${base}${ext}`));
   return has(".webm") && has(".mp4") && has("-poster.webp")
     ? { webm: `${base}.webm`, mp4: `${base}.mp4`, poster: `${base}-poster.webp` }
     : null;
-}
-
-/** The looping hero and the longer, user-invoked demo made by make-hero.py. */
-export function heroFilm(lang: Lang): Film | null {
-  return film(lang, "hero");
-}
-
-export function heroFullFilm(lang: Lang): Film | null {
-  return film(lang, "hero-full");
 }
 
 /** The window's recorded tour, when shoot.sh could record it. */

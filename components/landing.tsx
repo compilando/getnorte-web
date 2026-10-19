@@ -1,6 +1,7 @@
 import { COMPARE_ONLY } from "@/lib/compare";
-import { COPY, type Lang, type Scene } from "@/lib/i18n";
-import { COLS, guiShot, heroFilm, heroFullFilm, type Shot, tuiShot, tuiThemeShot } from "@/lib/shots";
+import { COPY, fill, type Lang, type Scene } from "@/lib/i18n";
+import { COMMANDS } from "@/lib/product";
+import { COLS, guiShot, heroFilm, type Shot, tuiShot, tuiThemeShot } from "@/lib/shots";
 import { AgentSteps } from "./agent-steps";
 import { AppFrame } from "./app-frame";
 import { capturesFor, Eyebrow, Heading, MoreLink, Points, Section } from "./blocks";
@@ -13,10 +14,10 @@ import { JsonLd, softwareApp, webSite } from "./json-ld";
 import { HeroStage } from "./hero-stage";
 import { Join } from "./join";
 import { Nav } from "./nav";
-import { ScrollStory } from "./scroll-story";
 import { SignalStrip } from "./signal-strip";
 import { ThemesSection } from "./themes-section";
 import { guidesFor } from "./topic-page";
+import { Tour } from "./tour";
 
 /** The hero's views, in order; shoot.sh's hero theme paints the panes. */
 const HERO_VIEWS = ["panes"];
@@ -44,27 +45,26 @@ export function Landing({ lang }: { lang: Lang }) {
   const heroTerminals = HERO_VIEWS.filter((id) => id !== "disk-map").flatMap((id) =>
     heroView(id, id === "panes" ? tuiThemeShot(lang, HERO_THEME) : tuiShot(lang, id as Scene)),
   );
-  const storyScreens: Record<string, Shot | null> = {};
-  for (const [scene] of t.story.steps) storyScreens[scene] = tuiShot(lang, scene);
-  const storySteps = t.story.steps.map(([scene, title, body]) => ({ scene, title, body }));
-  const loopFilm = heroFilm(lang);
-  const fullFilm = heroFullFilm(lang);
+  // The short tour: the six steps named in the copy, in the tour's order.
+  const tourSteps = t.tour.steps.filter((s) => t.tour.home.includes(s.scene));
+  const screens: Record<string, Shot | null> = {};
+  for (const step of tourSteps) screens[step.scene] = tuiShot(lang, step.scene);
+  const steps = tourSteps.map((s) => ({ ...s, body: fill(s.body, { commands: COMMANDS }) }));
 
   const tiles = t.remotes.tiles.filter(([scene]) => t.remotes.home.includes(scene));
 
   return (
     <main className="min-h-screen overflow-x-clip bg-night text-ink">
-      {loopFilm && <link rel="preload" as="image" href={loopFilm.poster} fetchPriority="high" />}
       <JsonLd data={softwareApp(t.meta.description, lang)} />
       <JsonLd data={webSite(lang)} />
       <Nav t={t.nav} home={home} />
 
       {/* Hero */}
       <section id="top" className="noise relative overflow-hidden pt-[68px]">
-        <div className="aurora-bg pointer-events-none absolute inset-x-0 top-0 h-full opacity-55" />
-        <div className="page-grid pointer-events-none absolute inset-0 opacity-25 [mask-image:linear-gradient(to_bottom,black,transparent_92%)]" />
-        <div className="relative mx-auto flex min-h-[calc(100dvh-68px)] max-w-[1600px] items-center px-4 py-8 sm:px-8 sm:py-10 lg:px-10 lg:py-12">
-          <div className="grid w-full grid-cols-1 items-center gap-10 lg:grid-cols-[.62fr_1.38fr] lg:gap-12 xl:gap-16">
+        <div className="aurora-bg pointer-events-none absolute inset-x-0 top-0 h-full opacity-90" />
+        <div className="page-grid pointer-events-none absolute inset-0 opacity-35 [mask-image:linear-gradient(to_bottom,black,transparent_92%)]" />
+        <div className="relative mx-auto max-w-[1540px] px-4 pb-14 pt-7 sm:px-8 sm:pb-16 sm:pt-9 lg:px-10 lg:pb-20 lg:pt-8">
+          <div className="grid w-full grid-cols-1 items-center gap-12 lg:grid-cols-[.7fr_1.3fr] lg:gap-14 xl:gap-20">
             <div className="max-w-2xl">
               {/* The eyebrow opens the h1, so the heading names what norte is. */}
               <h1 className="text-balance text-[50px] font-medium leading-[0.93] tracking-[-0.068em] text-ink sm:text-[68px] lg:text-[64px] xl:text-[72px]">
@@ -77,39 +77,33 @@ export function Landing({ lang }: { lang: Lang }) {
               <p className="mt-7 max-w-xl text-balance text-lg font-medium leading-7 tracking-[-0.02em] text-ink sm:text-xl sm:leading-8">
                 {t.hero.subtitle}
               </p>
+              <p className="mt-5 max-w-xl border-l border-phosphor/40 pl-4 text-[15px] leading-6 text-[#cbd2cc] sm:text-base sm:leading-7">
+                {t.hero.lede}
+              </p>
               <div className="mt-9">
                 <HeroCta t={t.hero} />
               </div>
+              <p className="mt-6 font-mono text-[11px] uppercase tracking-[0.1em] text-ink/60">
+                {t.hero.cta.trust.join(" · ")}
+              </p>
             </div>
-            <div id="stage" className="min-w-0 scroll-mt-24 lg:-mr-8 xl:-mr-14 2xl:-mr-20">
+            <div id="stage" className="min-w-0 scroll-mt-24">
               <HeroStage
                 windows={heroWindows}
                 terminals={heroTerminals}
                 cols={COLS}
-                film={loopFilm}
-                fullFilm={fullFilm}
-                labels={t.hero.filmControls}
+                film={heroFilm(lang)}
+                labels={{ ...t.hero.tabs, theme: t.hero.theme }}
               />
+              <p className="mt-4 text-center font-mono text-[11px] uppercase tracking-[0.09em] text-muted">
+                <span className="text-phosphor">●</span> {t.hero.caption}
+              </p>
             </div>
           </div>
         </div>
       </section>
 
       <SignalStrip signals={t.signals} />
-
-      <section id="tour" className="relative scroll-mt-20 border-b border-line/60 py-16 sm:py-20 lg:py-24">
-        <div className="mx-auto max-w-[1440px] px-4 sm:px-8 lg:px-12">
-          <h2 className="max-w-4xl text-balance text-4xl font-medium leading-[1.02] tracking-[-0.055em] text-ink sm:text-6xl lg:text-7xl">
-            {t.story.title}
-          </h2>
-          <div className="mt-8 lg:mt-4">
-            <ScrollStory steps={storySteps} screens={storyScreens} cols={COLS} label={t.story.label} />
-          </div>
-          <div className="mt-10 lg:-mt-14">
-            <MoreLink href={t.paths.features}>{t.tour.more}</MoreLink>
-          </div>
-        </div>
-      </section>
 
       {/* Why norte */}
       <Section id="why">
@@ -244,6 +238,18 @@ export function Landing({ lang }: { lang: Lang }) {
             </li>
           ))}
         </ol>
+      </Section>
+
+      {/* Tour, short */}
+      <Section id="tour" className="border-t border-line/60">
+        <Eyebrow>{t.tour.eyebrow}</Eyebrow>
+        <h2 className="mt-5 max-w-4xl text-balance text-4xl font-medium leading-[1.02] tracking-[-0.055em] text-ink sm:text-6xl">{t.tour.title}</h2>
+        <div className="mt-8">
+          <Tour steps={steps} screens={screens} cols={COLS} />
+        </div>
+        <div className="mt-10">
+          <MoreLink href={t.paths.features}>{t.tour.more}</MoreLink>
+        </div>
       </Section>
 
       <ThemesSection lang={lang} />

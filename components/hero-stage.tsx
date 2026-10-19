@@ -1,6 +1,5 @@
 "use client";
 
-import { track } from "@vercel/analytics";
 import { useEffect, useRef, useState } from "react";
 import type { Shot } from "@/lib/shots";
 import { AppFrame } from "./app-frame";
@@ -8,183 +7,115 @@ import { TerminalShot } from "./terminal-screen";
 
 export const DEMO_EVENT = "norte:demo";
 
-type Labels = {
-  play: string;
-  pause: string;
-  real: string;
-  fullTitle: string;
-  close: string;
-};
+type Labels = { film: string; terminal: string; window: string; theme: string };
 type Film = { webm: string; mp4: string; poster: string };
 export type View = Shot & { id: string; caption: string };
-/** The product is the stage. The short film plays without browser chrome; the
- * explicit pause control and reduced-motion poster keep the loop accessible. */
+type Mode = "window" | "terminal" | "film";
+
+/**
+ * One decision at a time: watch the story, inspect the desktop app, or inspect
+ * the terminal app. The old eight-thumbnail carousel and theme picker made the
+ * hero feel like a control panel before the value proposition had landed.
+ */
 export function HeroStage({
   windows,
   terminals,
   film,
-  fullFilm,
   cols,
   labels,
 }: {
   windows: View[];
   terminals: View[];
   film?: Film | null;
-  fullFilm?: Film | null;
   cols: number;
   labels: Labels;
 }) {
+  const first: Mode = film ? "film" : windows.length ? "window" : "terminal";
+  const [mode, setMode] = useState<Mode>(first);
   const [reduceMotion, setReduceMotion] = useState(false);
-  const [playing, setPlaying] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const fullVideoRef = useRef<HTMLVideoElement>(null);
-  const dialogRef = useRef<HTMLDialogElement>(null);
-  const stageRef = useRef<HTMLDivElement>(null);
-  const userPausedRef = useRef(false);
-  const canAutoplayRef = useRef(false);
-  const inViewRef = useRef(true);
 
   useEffect(() => {
-    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
-    const canAutoplay = !media.matches && !connection?.saveData;
-    canAutoplayRef.current = canAutoplay;
-    setReduceMotion(media.matches);
-    if (!canAutoplay) {
-      videoRef.current?.pause();
-      setPlaying(false);
-    } else {
-      void videoRef.current?.play().catch(() => {});
-    }
+    setReduceMotion(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
     const onDemo = () => {
+      setMode("film");
       window.requestAnimationFrame(() => {
-        if (fullFilm && dialogRef.current && fullVideoRef.current) {
-          videoRef.current?.pause();
-          if (!dialogRef.current.open) dialogRef.current.showModal();
-          fullVideoRef.current.currentTime = 0;
-          void fullVideoRef.current.play().catch(() => {});
-          return;
-        }
         const video = videoRef.current;
         if (!video) return;
         video.currentTime = 0;
-        void video.play().then(() => setPlaying(true)).catch(() => {});
+        void video.play().catch(() => {});
       });
     };
-    const observer = new IntersectionObserver(([entry]) => {
-      inViewRef.current = entry.isIntersecting;
-      if (!entry.isIntersecting) {
-        videoRef.current?.pause();
-      } else if (canAutoplayRef.current && !userPausedRef.current && !dialogRef.current?.open) {
-        void videoRef.current?.play().catch(() => {});
-      }
-    }, { threshold: 0.15 });
-    if (stageRef.current) observer.observe(stageRef.current);
     window.addEventListener(DEMO_EVENT, onDemo);
-    return () => {
-      window.removeEventListener(DEMO_EVENT, onDemo);
-      observer.disconnect();
-    };
-  }, [fullFilm]);
+    return () => window.removeEventListener(DEMO_EVENT, onDemo);
+  }, []);
 
-  function togglePlayback() {
-    const video = videoRef.current;
-    if (!video) return;
-    if (video.paused) {
-      userPausedRef.current = false;
-      void video.play().then(() => setPlaying(true)).catch(() => {});
-      track("hero_video_play");
-    } else {
-      userPausedRef.current = true;
-      video.pause();
-      setPlaying(false);
-      track("hero_video_pause");
+  const modes = (["film", "window", "terminal"] as const).filter((item) =>
+    item === "film" ? Boolean(film) : item === "window" ? windows.length > 0 : terminals.length > 0,
+  );
+  const view = mode === "window" ? windows[0] : mode === "terminal" ? terminals[0] : undefined;
+  const title = mode === "terminal" ? "ntc — terminal" : "norte — desktop";
+
+  function pick(next: Mode) {
+    setMode(next);
+    if (next === "film") {
+      window.requestAnimationFrame(() => {
+        const video = videoRef.current;
+        if (video?.ended) video.currentTime = 0;
+        if (!reduceMotion) void video?.play().catch(() => {});
+      });
     }
   }
-
-  function resumeLoop() {
-    fullVideoRef.current?.pause();
-    if (canAutoplayRef.current && !userPausedRef.current && inViewRef.current) {
-      void videoRef.current?.play().catch(() => {});
-    }
-  }
-
-  const fallback = windows[0] ?? terminals[0];
 
   return (
-    <div ref={stageRef} className="hero-film group relative isolate overflow-hidden rounded-2xl border border-white/[0.14] bg-black shadow-terminal">
-      {film ? (
-        <video
-          ref={videoRef}
-          poster={film.poster}
-          loop
-          muted
-          playsInline
-          preload="metadata"
-          onPlay={() => setPlaying(true)}
-          onPause={() => setPlaying(false)}
-          className="block aspect-video w-full bg-black object-cover"
-        >
-          <source src={film.webm} type="video/webm" />
-          <source src={film.mp4} type="video/mp4" />
-        </video>
-      ) : (
-        <AppFrame title="norte desktop">
-          {fallback && <TerminalShot shot={fallback} cols={cols} label={fallback.caption} lazy={false} />}
-        </AppFrame>
-      )}
-
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/70 to-transparent" />
-      <p className="pointer-events-none absolute bottom-4 left-4 hidden font-mono text-[11px] uppercase tracking-[0.1em] text-white/75 sm:block">
-        {labels.real}
-      </p>
-      {film && !reduceMotion && (
-        <button
-          type="button"
-          onClick={togglePlayback}
-          className="absolute bottom-3 right-3 inline-flex h-10 items-center gap-2 rounded-full border border-white/20 bg-black/60 px-4 font-mono text-[11px] uppercase tracking-[0.08em] text-white backdrop-blur-md transition-[transform,background-color,border-color] duration-200 hover:-translate-y-0.5 hover:border-white/40 hover:bg-black/80 active:translate-y-0"
-        >
-          <span aria-hidden>{playing ? "Ⅱ" : "▶"}</span>
-          {playing ? labels.pause : labels.play}
-        </button>
-      )}
-
-      {fullFilm && (
-        <dialog
-          ref={dialogRef}
-          aria-labelledby="hero-demo-title"
-          onClose={resumeLoop}
-          onClick={(event) => {
-            if (event.target === event.currentTarget) event.currentTarget.close();
-          }}
-          className="m-auto w-[min(1180px,calc(100%-2rem))] max-w-none overflow-hidden rounded-2xl border border-white/15 bg-[#090c0d] p-0 text-ink shadow-terminal backdrop:bg-black/85 backdrop:backdrop-blur-sm"
-        >
-          <div className="flex items-center justify-between gap-4 border-b border-white/10 px-4 py-3 sm:px-5">
-            <h2 id="hero-demo-title" className="text-base font-medium tracking-[-0.02em] sm:text-lg">
-              {labels.fullTitle}
-            </h2>
+    <div className="overflow-hidden rounded-2xl border border-white/[0.12] bg-black/35 p-2 shadow-terminal backdrop-blur-md sm:p-3">
+      <div className="mb-3 flex items-center justify-between gap-3 px-1">
+        <div className="inline-flex min-w-0 rounded-full border border-white/[0.12] bg-black/45 p-1" role="tablist" aria-label="Product view">
+          {modes.map((item) => (
             <button
+              key={item}
               type="button"
-              onClick={() => dialogRef.current?.close()}
-              className="inline-flex h-9 items-center rounded-full border border-white/15 px-4 font-mono text-[11px] uppercase tracking-[0.08em] text-ink transition-[transform,background-color,border-color] hover:border-white/35 hover:bg-white/[0.06] active:scale-[0.98]"
+              role="tab"
+              aria-selected={mode === item}
+              onClick={() => pick(item)}
+              className={`min-w-0 whitespace-nowrap rounded-full px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.08em] transition sm:px-4 sm:text-[12px] ${
+                mode === item ? "bg-phosphor text-[#0a1008]" : "text-muted hover:text-ink"
+              }`}
             >
-              {labels.close}
+              {labels[item].split(" · ")[0]}
+              {item === "film" && <span className="hidden sm:inline"> · 20 s</span>}
             </button>
+          ))}
+        </div>
+        <span className="hidden items-center gap-2 font-mono text-[11px] uppercase tracking-[0.1em] text-muted sm:flex">
+          <span className="h-1.5 w-1.5 rounded-full bg-phosphor shadow-[0_0_8px_#B7FF52]" />
+          norte v0.3
+        </span>
+      </div>
+
+      <div key={mode} className="animate-[fadein_.25s_ease]">
+        {mode === "film" && film ? (
+          <div className="overflow-hidden rounded-xl border border-white/[0.12] bg-black shadow-[0_24px_70px_rgba(0,0,0,.42)]">
+            <video
+              ref={videoRef}
+              poster={film.poster}
+              autoPlay={!reduceMotion}
+              controls
+              muted
+              playsInline
+              preload="metadata"
+              className="block aspect-video w-full bg-black"
+            >
+              <source src={film.webm} type="video/webm" />
+              <source src={film.mp4} type="video/mp4" />
+            </video>
           </div>
-          <video
-            ref={fullVideoRef}
-            poster={fullFilm.poster}
-            controls
-            playsInline
-            preload="metadata"
-            onEnded={() => track("demo_complete")}
-            className="block aspect-video w-full bg-black"
-          >
-            <source src={fullFilm.webm} type="video/webm" />
-            <source src={fullFilm.mp4} type="video/mp4" />
-          </video>
-        </dialog>
-      )}
+        ) : (
+          <AppFrame title={title}>
+            {view && <TerminalShot shot={view} cols={cols} label={view.caption} lazy={false} />}
+          </AppFrame>
+        )}
+      </div>
     </div>
   );
 }
