@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""The hero film: one file-moving story in twenty seconds, from real captures.
+"""The hero film: one fast file-moving story, from real captures.
 
 Nothing here is drawn by hand: every screen is a capture from shots/tui or the
 window's recorded tour, composed onto the aurora with a caption, and chained
 with crossfades by ffmpeg.
 
 usage: make-hero.py [lang ...]        (default: en es)
-writes public/video/hero-<lang>.{webm,mp4} and hero-<lang>-poster.webp
+writes the short hero loop and the full demo under public/video/
 
 Needs Pillow, ffmpeg (libvpx-vp9, libx264), and the fonts ansi2png.py uses.
 """
@@ -23,7 +23,7 @@ from ansi2png import render_image  # noqa: E402
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 W, H, FPS = 1440, 810, 30
-FADE = 0.35
+FADE = 0.22
 PHOSPHOR, INK, MUTED = (183, 255, 82), (241, 245, 239), (137, 147, 140)
 BOX = (36, 20, W - 36, 690)  # where the screens go; the caption sits below
 SANS = "/usr/share/fonts/Adwaita/AdwaitaSans-Regular.ttf"
@@ -51,15 +51,26 @@ TAGLINE = {
     "es": "Tus ficheros. Tus reglas.",
 }
 
-# One journey, not a feature reel: orient, choose a frontend, copy, let it run,
-# and verify the result. Sources are relative to shots/tui/<lang>.
-PLAN = [
-    ("end", None, 3.35, None),
-    ("ansi", "panes", 3.6, 0),
-    ("gui", (34.0, 4.2), 4.2, 1),
-    ("ansi", "copy-dialog", 3.5, 2),
-    ("ansi", "jobs-paused", 3.6, 3),
-    ("ansi", "timeline", 3.5, 4),
+# One journey, not a feature reel: open on the product, change frontend, copy,
+# let the work run, and verify the result. Repeating the first scene at the end
+# makes the browser loop feel like a continuation instead of a hard reset.
+# Sources are relative to shots/tui/<lang>.
+SHORT_PLAN = [
+    ("ansi", "panes", 1.80, 0, "push"),
+    ("gui", (34.0, 2.65), 2.65, 1, None),
+    ("ansi", "copy-dialog", 2.00, 2, "right"),
+    ("ansi", "jobs-paused", 2.10, 3, "left"),
+    ("ansi", "timeline", 2.15, 4, "push"),
+    ("ansi", "panes", 1.00, 0, "settle"),
+]
+
+FULL_PLAN = [
+    ("ansi", "panes", 2.90, 0, "push"),
+    ("gui", (34.0, 4.20), 4.20, 1, None),
+    ("ansi", "copy-dialog", 3.10, 2, "right"),
+    ("ansi", "jobs-paused", 3.10, 3, "left"),
+    ("ansi", "timeline", 3.10, 4, "push"),
+    ("end", None, 2.00, None, "settle"),
 ]
 
 
@@ -175,11 +186,12 @@ def run(*args):
     subprocess.run(["ffmpeg", "-v", "error", "-y", *args], check=True)
 
 
-def build(lang):
-    tmp = tempfile.mkdtemp(prefix=f"norte-hero-{lang}-")
+def build(lang, name, plan):
+    tmp = tempfile.mkdtemp(prefix=f"norte-{name}-{lang}-")
+    base = os.path.join(ROOT, "public", "video", f"{name}-{lang}")
     bg = backdrop()
     clips, durations = [], []
-    for i, (kind, src, secs, cap) in enumerate(PLAN):
+    for i, (kind, src, secs, cap, motion) in enumerate(plan):
         out = f"{tmp}/c{i:02d}.mp4"
         if kind == "gui":
             start, length = src
@@ -194,8 +206,26 @@ def build(lang):
             png = f"{tmp}/c{i:02d}.png"
             still(bg, lang, kind, src, cap).convert("RGB").save(png)
             if i == 0:
-                Image.open(png).save(os.path.join(ROOT, "public", "video", f"hero-{lang}-poster.webp"), quality=86)
-            run("-loop", "1", "-t", str(secs), "-i", png, "-vf", "format=yuv420p", "-r", str(FPS),
+                Image.open(png).save(f"{base}-poster.webp", quality=86)
+            frames = max(1, round(secs * FPS))
+            progress = f"on/{frames}"
+            if motion == "right":
+                x = f"(iw-iw/zoom)*{progress}"
+                zoom = "1.045"
+            elif motion == "left":
+                x = f"(iw-iw/zoom)*(1-{progress})"
+                zoom = "1.045"
+            elif motion == "settle":
+                x = "iw/2-(iw/zoom/2)"
+                zoom = f"1.035-0.035*{progress}"
+            else:
+                x = "iw/2-(iw/zoom/2)"
+                zoom = f"1+0.045*{progress}"
+            zoompan = (
+                f"zoompan=z='{zoom}':x='{x}':y='ih/2-(ih/zoom/2)':"
+                f"d=1:s={W}x{H}:fps={FPS},format=yuv420p"
+            )
+            run("-framerate", str(FPS), "-loop", "1", "-t", str(secs), "-i", png, "-vf", zoompan, "-r", str(FPS),
                 "-c:v", "libx264", "-crf", "10", "-preset", "fast", out)
         clips.append(out)
         durations.append(secs)
@@ -212,17 +242,17 @@ def build(lang):
     run(*inputs, "-filter_complex", ";".join(graph), "-map", last, "-r", str(FPS),
         "-c:v", "libx264", "-crf", "8", "-preset", "fast", "-pix_fmt", "yuv420p", joined)
 
-    base = os.path.join(ROOT, "public", "video", f"hero-{lang}")
     run("-i", joined, "-c:v", "libvpx-vp9", "-b:v", "0", "-crf", "38", "-row-mt", "1", "-deadline", "good",
         "-cpu-used", "2", "-pix_fmt", "yuv420p", "-an", f"{base}.webm")
     run("-i", joined, "-c:v", "libx264", "-crf", "27", "-preset", "slow", "-pix_fmt", "yuv420p",
         "-movflags", "+faststart", "-an", f"{base}.mp4")
     total = sum(durations) - FADE * (len(durations) - 1)
     sizes = ", ".join(f"{ext} {os.path.getsize(f'{base}.{ext}') / 1e6:.1f} MB" for ext in ("webm", "mp4"))
-    print(f"{lang}: {total:.1f} s, {sizes}")
+    print(f"{name}-{lang}: {total:.1f} s, {sizes}")
 
 
 if __name__ == "__main__":
     os.makedirs(os.path.join(ROOT, "public", "video"), exist_ok=True)
     for lang in sys.argv[1:] or ["en", "es"]:
-        build(lang)
+        build(lang, "hero", SHORT_PLAN)
+        build(lang, "hero-full", FULL_PLAN)

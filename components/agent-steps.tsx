@@ -25,13 +25,12 @@ export function AgentSteps({ steps, screens, caption }: { steps: Step[]; screens
 
   return (
     <div>
-      <ol className="grid grid-cols-1 gap-2 sm:grid-cols-3" role="tablist">
+      <ol className="grid grid-cols-1 gap-2 sm:grid-cols-3">
         {steps.map((s, i) => (
           <li key={s.title}>
             <button
               type="button"
-              role="tab"
-              aria-selected={i === active}
+              aria-pressed={i === active}
               onClick={() => {
                 setActive(i);
                 setAuto(false);

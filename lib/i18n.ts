@@ -69,7 +69,7 @@ const en = {
     lede: "Copies keep running in the background. AI agents only reach what you authorize. Every operation is recorded in one journal.",
     cta: {
       install: "Install on Linux",
-      demo: "See how it works · 20 s",
+      demo: "Watch the demo",
       available: "Linux x86_64 · installer, .deb, .rpm, AppImage",
       elsewhere: "Windows: first preview, setup or ZIP. macOS: build from source.",
       trust: ["Free & open source", "AGPL-3.0", "MCP", "No account", "No telemetry"],
@@ -91,7 +91,14 @@ const en = {
       copy: "copy",
       copied: "copied",
     },
-    tabs: { film: "Demo · 20 s", terminal: "Terminal · ntc", window: "Window · norte-gui" },
+    tabs: { film: "Demo · 11 s", terminal: "Terminal · ntc", window: "Window · norte-gui" },
+    filmControls: {
+      play: "Play",
+      pause: "Pause",
+      real: "Real product capture",
+      fullTitle: "How norte works",
+      close: "Close demo",
+    },
     theme: "Theme",
     caption: "Real captures from the current build. No mockups.",
     views: {
@@ -104,6 +111,15 @@ const en = {
       terminal: "A shell in a panel",
       settings: "Settings with real controls",
     } as Record<string, string>,
+  },
+  story: {
+    title: "A copy that gets out of your way.",
+    label: "How a copy works in norte",
+    steps: [
+      ["copy-dialog", "Confirm once.", "Source and destination stay in view. F5 opens the plan, and nothing moves until you approve it."],
+      ["jobs-paused", "Keep using both panes.", "The job runs in the shared core, with pause, resume and cancel always available."],
+      ["timeline", "Check the journal.", "Every completed change records what happened, when it happened and who started it."],
+    ] as [Scene | Extra, string, string][],
   },
   signals: [
     "Two panes",
@@ -559,7 +575,7 @@ const es: Copy = {
     lede: "Las copias siguen en segundo plano. Los agentes de IA solo acceden a lo que autorizas. Cada operación queda registrada en un único diario.",
     cta: {
       install: "Instalar en Linux",
-      demo: "Ver cómo funciona · 20 s",
+      demo: "Ver la demo",
       available: "Linux x86_64 · instalador, .deb, .rpm, AppImage",
       elsewhere: "Windows: primera preview, instalador o ZIP. macOS: se compila desde el código.",
       trust: ["Software libre", "AGPL-3.0", "MCP", "Sin cuenta", "Sin telemetría"],
@@ -581,7 +597,14 @@ const es: Copy = {
       copy: "copiar",
       copied: "copiado",
     },
-    tabs: { film: "Demo · 20 s", terminal: "Terminal · ntc", window: "Ventana · norte-gui" },
+    tabs: { film: "Demo · 11 s", terminal: "Terminal · ntc", window: "Ventana · norte-gui" },
+    filmControls: {
+      play: "Reproducir",
+      pause: "Pausar",
+      real: "Captura real del producto",
+      fullTitle: "Cómo funciona norte",
+      close: "Cerrar demo",
+    },
     theme: "Tema",
     caption: "Capturas reales de la versión actual. Sin maquetas.",
     views: {
@@ -594,6 +617,15 @@ const es: Copy = {
       terminal: "Un shell en un panel",
       settings: "Ajustes con controles de verdad",
     },
+  },
+  story: {
+    title: "Una copia que no te interrumpe.",
+    label: "Cómo funciona una copia en norte",
+    steps: [
+      ["copy-dialog", "Confirmas una vez.", "Origen y destino siguen a la vista. F5 abre el plan y nada se mueve hasta que lo apruebas."],
+      ["jobs-paused", "Sigues usando los dos paneles.", "La tarea vive en el núcleo compartido, siempre con pausa, reanudación y cancelación disponibles."],
+      ["timeline", "Compruebas el diario.", "Cada cambio terminado registra qué ocurrió, cuándo ocurrió y quién lo inició."],
+    ],
   },
   signals: [
     "Dos paneles",

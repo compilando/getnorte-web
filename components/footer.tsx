@@ -47,7 +47,7 @@ export function Footer({
             </a>
           </div>
           <p className="mt-8 font-mono text-[11px] uppercase tracking-[0.12em] text-muted">{t.promise}</p>
-          <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.12em] text-muted/60">
+          <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.12em] text-muted">
             v{RELEASE.version} · protocol {RELEASE.protocol}
           </p>
         </div>
