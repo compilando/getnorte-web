@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 320" role="img" aria-labelledby="title desc">
+  <title id="title">norte wordmark on light</title>
+  <desc id="desc">The norte compass symbol and lowercase name on a light background.</desc>
+  <rect width="1200" height="320" rx="48" fill="#F1F5EF"/>
+  <circle cx="160" cy="160" r="104" fill="#132015" fill-opacity=".035" stroke="#132015" stroke-opacity=".34" stroke-width="5"/>
+  <g fill="#132015">
+    <path d="M131.6 101.7a5 5 0 0 1 6.8 2l53.2 107.2a5 5 0 1 1-9 4.5l-53-107a5 5 0 0 1 2-6.7Z"/>
+    <circle cx="148" cy="137" r="14"/>
+  </g>
+  <text x="310" y="213" fill="#132015" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="150" font-weight="600" letter-spacing="-6">norte</text>
+</svg>
